@@ -3,307 +3,47 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Java Multithreading | Blog</title>
+  <title>Java Multithreading | DevBlog</title>
   <meta name="robots" content="noindex, Nofollow, Noimageindex">
+  <meta name="description" content="Hướng dẫn toàn diện về Java Multithreading - từ cơ bản đến nâng cao. Tìm hiểu về Thread, Synchronization, Executor Framework và các kỹ thuật lập trình đa luồng.">
+  <meta name="keywords" content="Java Multithreading, Thread, Synchronization, Concurrent Programming, Executor Framework">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="css/style.css" rel="stylesheet" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
   <link rel="icon" href="images/favicon.png" type="image/x-icon" />
 
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* Custom styles for article readability */
+    /* ===== VARIABLES ===== */
     :root {
-      --primary-color: #0b3d91;
-      --secondary-color: #0077b5;
-      --light-bg: #f3f6fa;
-      --dark-text: #222;
-      --light-text: #555;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #7e22ce;
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #cbd5e1;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
-    body,
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    a,
-    li,
-    span {
-      font-family: 'Be Vietnam Pro', sans-serif;
-      line-height: 1.8;
-      letter-spacing: 0.25px;
-      color: var(--dark-text);
-      font-weight: 400;
-    }
-
-    .single-blog p,
-    .single-blog li {
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .single-blog pre {
-      background-color: var(--light-bg);
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 16px;
-      overflow-x: auto;
-      margin: 20px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    .single-blog pre code {
-      font-size: 16px;
-      font-family: 'Courier New', monospace;
-    }
-
-    /* Tiêu đề chính & phụ */
-    h1,
-    h2,
-    h3 {
-      font-weight: 700;
-      color: var(--primary-color);
-      letter-spacing: 0.5px;
-      margin-top: 30px;
-    }
-
-    .blog-single .title {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      color: var(--primary-color);
-    }
-
-    /* Đoạn văn in đậm */
-    strong,
-    b {
-      font-weight: 600;
-      color: #111;
-    }
-
-    /* Trích dẫn */
-    blockquote {
-      background: var(--light-bg);
-      border-left: 4px solid var(--secondary-color);
-      padding: 20px;
-      border-radius: 6px;
-      margin: 25px 0;
-    }
-
-    blockquote p {
-      font-style: italic;
-      color: #333;
-      font-weight: 500;
-      margin: 0;
-    }
-
-    /* Liên kết */
-    a {
-      color: var(--secondary-color);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: #005b8c;
-      text-decoration: underline;
-    }
-
-    /* Caption hình ảnh */
-    .caption {
-      font-style: italic;
-      color: var(--light-text);
-      font-size: 15px;
-      text-align: center;
-      display: block;
-      margin-top: 8px;
-    }
-
-    /* Code highlighting */
-    code {
-      background-color: #f1f1f1;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-    }
-
-    /* Navigation */
-    .main-nav {
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 15px 0;
-    }
-
-    .main-nav .navbar-brand img {
-      max-height: 40px;
-    }
-
-    .main-nav .nav-link {
-      font-weight: 500;
-      color: var(--dark-text);
-      margin: 0 10px;
-    }
-
-    .main-nav .nav-link:hover {
-      color: var(--secondary-color);
-    }
-
-    .main-nav-social li {
-      display: inline-block;
-      margin-left: 15px;
-    }
-
-    .main-nav-social a {
-      color: var(--dark-text);
-      font-size: 18px;
-    }
-
-    .main-nav-social a:hover {
-      color: var(--secondary-color);
-    }
-
-    /* Blog content */
-    .blog-single {
-      padding: 60px 0;
-    }
-
-    .blog-single img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin: 25px 0;
-    }
-
-    .meta {
-      list-style: none;
-      padding: 0;
-      margin-bottom: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .meta li {
-      display: flex;
-      align-items: center;
-      color: var(--light-text);
-    }
-
-    .meta i {
-      margin-right: 5px;
-    }
-
-    /* Instagram section */
-    .instagram {
-      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-      padding: 40px 0;
-      text-align: center;
-      color: white;
-    }
-
-    .instagram a {
-      color: white;
-      font-size: 18px;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-
-    .instagram-item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .instagram-item-thum {
-      width: calc(16.66% - 10px);
-      overflow: hidden;
-      border-radius: 8px;
-    }
-
-    .instagram-item-thum img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .instagram-item-thum:hover img {
-      transform: scale(1.05);
-    }
-
-    /* Footer */
-    .footer {
-      background-color: #f8f9fa;
-      padding: 40px 0 20px;
-      text-align: center;
-    }
-
-    .footer-logo img {
-      max-height: 40px;
-      margin-bottom: 20px;
-    }
-
-    .footer-nav ul {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      list-style: none;
-      padding: 0;
-      margin-bottom: 20px;
-    }
-
-    .footer-nav li {
-      margin: 0 15px;
-    }
-
-    .sociale-icon ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      padding: 0;
-      margin-bottom: 20px;
-    }
-
-    .sociale-icon li {
-      margin: 0 10px;
-    }
-
-    .copy-right {
-      color: var(--light-text);
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .instagram-item-thum {
-        width: calc(33.33% - 10px);
-      }
-
-      .blog-single .title {
-        font-size: 28px;
-      }
-
-      .single-blog p,
-      .single-blog li {
-        font-size: 16px;
-      }
-    }
-
-
-    /* ===== RESET & BASE STYLES ===== */
+    /* ===== GLOBAL STYLES ===== */
     * {
       margin: 0;
       padding: 0;
@@ -311,10 +51,11 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: var(--text-dark);
-      background-color: var(--bg-light);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.7;
+      color: var(--dark);
+      background: var(--light);
+      overflow-x: hidden;
     }
 
     .container {
@@ -323,59 +64,56 @@
       padding: 0 20px;
     }
 
-    /* ===== HEADER NAVIGATION ===== */
+    /* ===== NAVBAR ===== */
     .main-nav {
-      background: var(--bg-white);
-      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      transition: var(--transition);
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      transition: var(--transition);
     }
 
     .main-nav.scrolled {
-      padding: 8px 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-lg);
+      padding: 0.75rem 0;
     }
 
-    .main-nav .container {
+    .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 20px;
     }
 
-    /* Logo Styles */
     .navbar-brand {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
-    .logo-main {
-      height: 40px;
-      width: auto;
-      transition: var(--transition);
+    .navbar-brand::before {
+      content: "🚀";
+      font-size: 1.5rem;
     }
 
-    .main-nav.scrolled .logo-main {
-      height: 35px;
-    }
-
-    /* Navigation Links */
     .nav-list {
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 2rem;
     }
 
     .navbar-nav {
       display: flex;
       list-style: none;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
+      gap: 1.5rem;
     }
 
     .nav-item {
@@ -383,527 +121,734 @@
     }
 
     .nav-link {
-      text-decoration: none;
-      color: var(--text-dark);
       font-weight: 500;
-      font-size: 16px;
-      padding: 8px 0;
+      color: var(--dark);
+      padding: 0.5rem 1rem;
+      transition: var(--transition);
       position: relative;
-      transition: var(--transition);
+      text-decoration: none;
+      border-radius: var(--radius);
     }
 
-    .nav-link:hover {
-      color: var(--primary-color);
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.1);
     }
 
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary-color);
-      transition: var(--transition);
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    /* Social Icons */
     .main-nav-social {
       display: flex;
       list-style: none;
-      gap: 15px;
-      margin: 0;
-      padding: 0;
+      gap: 0.75rem;
     }
 
     .main-nav-social a {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: var(--bg-light);
+      width: 40px;
+      height: 40px;
+      background: var(--light);
       border-radius: 50%;
-      color: var(--text-dark);
-      text-decoration: none;
+      color: var(--dark);
       transition: var(--transition);
+      text-decoration: none;
+      border: 1px solid var(--border);
     }
 
     .main-nav-social a:hover {
-      background: var(--primary-color);
+      background: var(--primary);
       color: white;
       transform: translateY(-2px);
+      box-shadow: var(--shadow);
     }
 
-    /* Toggle Button */
     .navbar-toggler {
       display: none;
-      flex-direction: column;
       background: none;
       border: none;
       cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
       padding: 5px;
-    }
-
-    .navbar-toggler:focus {
-      outline: none;
     }
 
     .icon-bar {
       width: 25px;
       height: 3px;
-      background: var(--text-dark);
-      margin: 3px 0;
-      transition: var(--transition);
+      background-color: var(--dark);
       border-radius: 2px;
+      transition: var(--transition);
     }
 
-    .navbar-toggler.collapsed .icon-bar:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .navbar-toggler.collapsed .icon-bar:nth-child(2) {
-      opacity: 0;
-    }
-
-    .navbar-toggler.collapsed .icon-bar:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-
-    /* ===== RESPONSIVE DESIGN ===== */
-    @media (max-width: 992px) {
-      .navbar-toggler {
-        display: flex;
-      }
-
-      .nav-list {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--bg-white);
-        flex-direction: column;
-        padding: 20px;
-        box-shadow: var(--shadow);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: var(--transition);
-      }
-
-      .nav-list.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .navbar-nav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-      }
-
-      .nav-item {
-        width: 100%;
-        border-bottom: 1px solid #eee;
-      }
-
-      .nav-link {
-        display: block;
-        padding: 15px 0;
-        width: 100%;
-      }
-
-      .nav-link::after {
-        display: none;
-      }
-
-      .main-nav-social {
-        justify-content: center;
-        margin-top: 20px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .main-nav .container {
-        padding: 10px 15px;
-      }
-
-      .logo-main {
-        height: 35px;
-      }
-
-      .main-nav-social a {
-        width: 32px;
-        height: 32px;
-      }
-
-      .nav-list {
-        top: 60px;
-      }
-    }
-
-    .blog-single img {
-    width: 100%;
-    max-width: 900px;
-    height: auto;
-    border-radius: 16px;
-    box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.15),
-        0 4px 12px rgba(0, 0, 0, 0.08);
-    margin: 45px auto;
-    display: block;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 4px solid #ffffff;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    filter: 
-        brightness(1.02) 
-        contrast(1.05) 
-        saturate(1.1);
-    position: relative;
-    object-fit: cover;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Container cho ảnh với overlay effect */
-.blog-single .image-container {
-    position: relative;
-    margin: 45px auto;
-    max-width: 900px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.blog-single .image-container img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: all 0.5s ease;
-    filter: 
-        brightness(1.03) 
-        contrast(1.08)
-        saturate(1.15);
-}
-
-/* Ảnh featured với hiệu ứng nổi bật */
-.blog-single .featured-image {
-    position: relative;
-    margin: 50px auto;
-    max-width: 1000px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 
-        0 25px 80px rgba(0, 0, 0, 0.25),
-        0 8px 25px rgba(0, 0, 0, 0.15);
-    border: 6px solid #ffffff;
-    background: linear-gradient(145deg, #ffffff 0%, #f5f7fa 100%);
-}
-
-.blog-single .featured-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: 
-        brightness(1.05) 
-        contrast(1.1)
-        saturate(1.2);
-    transform: scale(1.01);
-}
-
-/* Ảnh diagram và minh họa với background tối ưu */
-.blog-single .flow-diagram,
-.blog-single .technical-diagram {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 25px;
-    border-radius: 20px;
-    margin: 40px auto;
-    max-width: 920px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 
-        0 10px 35px rgba(0, 0, 0, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.blog-single .flow-diagram img,
-.blog-single .technical-diagram img {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 12px;
-    border: 2px solid #e2e8f0;
-    background: transparent;
-    filter: 
-        brightness(1.04) 
-        contrast(1.12)
-        saturate(1.18);
-    box-shadow: none;
-    margin: 0;
-}
-
-/* Ảnh code và screenshot với style riêng */
-.blog-single .code-screenshot,
-.blog-single pre + img {
-    width: 95%;
-    max-width: 880px;
-    border: 3px solid #f1f5f9;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    border-radius: 14px;
-    box-shadow: 
-        0 8px 30px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    filter: 
-        brightness(1.03) 
-        contrast(1.15)
-        saturate(1.1);
-    padding: 20px;
-    margin: 35px auto;
-}
-
-/* Hiệu ứng hover nâng cao với multiple transforms */
-.blog-single img:hover,
-.blog-single .image-container:hover img {
-    transform: 
-        scale(1.02) 
-        translateY(-5px);
-    box-shadow: 
-        0 25px 80px rgba(0, 0, 0, 0.25),
-        0 15px 40px rgba(0, 0, 0, 0.15),
-        0 0 0 3px rgba(0, 119, 181, 0.1);
-    filter: 
-        brightness(1.08) 
-        contrast(1.2)
-        saturate(1.25);
-    border-color: #ffffff;
-}
-
-.blog-single .featured-image:hover img {
-    transform: 
-        scale(1.03) 
-        translateY(-8px);
-    box-shadow: 
-        0 35px 100px rgba(0, 0, 0, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.2);
-    filter: 
-        brightness(1.1) 
-        contrast(1.25)
-        saturate(1.3);
-}
-
-/* Container cho ảnh có caption */
-.blog-single .captioned-image {
-    position: relative;
-    margin: 45px auto;
-    max-width: 900px;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 
-        0 15px 50px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.blog-single .captioned-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0;
-    border: none;
-    border-radius: 0;
-    filter: 
-        brightness(1.04) 
-        contrast(1.1)
-        saturate(1.15);
-}
-
-/* Caption style */
-.blog-single .image-caption {
-    text-align: center;
-    font-style: italic;
-    color: #64748b;
-    font-size: 15px;
-    margin-top: 15px;
-    padding: 0 20px;
-    line-height: 1.5;
-    font-weight: 500;
-}
-
-/* High-resolution image optimization */
-.blog-single img[src*="high-res"],
-.blog-single img[src*="banner"],
-.blog-single img[src*="featured"] {
-    image-rendering: auto;
-    -webkit-font-smoothing: subpixel-antialiased;
-}
-
-/* Responsive design với breakpoints chi tiết */
-@media (max-width: 1200px) {
-    .blog-single img,
-    .blog-single .image-container,
-    .blog-single .featured-image,
-    .blog-single .captioned-image {
-        max-width: 95%;
-        margin: 40px auto;
-    }
-}
-
-@media (max-width: 768px) {
-    .blog-single img,
-    .blog-single .image-container,
-    .blog-single .featured-image,
-    .blog-single .captioned-image {
-        width: 100%;
-        max-width: 100%;
-        margin: 35px 0;
-        border-radius: 12px;
-        border-width: 3px;
-    }
-    
-    .blog-single .flow-diagram,
-    .blog-single .technical-diagram {
-        padding: 20px;
-        margin: 30px 0;
-        border-radius: 16px;
-    }
-    
-    .blog-single .code-screenshot,
-    .blog-single pre + img {
-        padding: 15px;
-        margin: 30px 0;
-        border-radius: 12px;
-    }
-    
-    .blog-single img:hover,
-    .blog-single .image-container:hover img {
-        transform: scale(1.01) translateY(-3px);
-    }
-    
-    .blog-single .featured-image:hover img {
-        transform: scale(1.02) translateY(-4px);
-    }
-}
-
-@media (max-width: 480px) {
-    .blog-single img,
-    .blog-single .image-container,
-    .blog-single .featured-image,
-    .blog-single .captioned-image {
-        margin: 30px 0;
-        border-radius: 10px;
-        border-width: 2px;
-    }
-    
-    .blog-single .flow-diagram,
-    .blog-single .technical-diagram {
-        padding: 15px;
-        margin: 25px 0;
-    }
-    
-    .blog-single .image-caption {
-        font-size: 14px;
-        margin-top: 12px;
-    }
-}
-
-/* Dark mode optimization */
-@media (prefers-color-scheme: dark) {
-    .blog-single img {
-        border-color: #374151;
-        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-        filter: 
-            brightness(1.08) 
-            contrast(1.12)
-            saturate(1.15);
-    }
-    
-    .blog-single .flow-diagram,
-    .blog-single .technical-diagram {
-        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-        border-color: #4b5563;
-    }
-    
-    .blog-single .code-screenshot,
-    .blog-single pre + img {
-        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-        border-color: #4b5563;
-    }
-    
-    .blog-single .image-caption {
-        color: #9ca3af;
-    }
-}
-
-/* Print optimization */
-@media print {
-    .blog-single img {
-        box-shadow: none;
-        border: 2px solid #000;
-        filter: none;
-        break-inside: avoid;
-    }
-    
-    .blog-single .image-container,
-    .blog-single .featured-image,
-    .blog-single .captioned-image {
-        box-shadow: none;
-        break-inside: avoid;
-    }
-}
-
-/* Performance optimization */
-.blog-single img {
-    will-change: transform, filter;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-/* Loading state */
-.blog-single img[data-src] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.blog-single img.loaded {
-    opacity: 1;
-}
-    /* ===== DEMO CONTENT ===== */
-    .hero {
-      height: 100vh;
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ===== HERO SECTION ===== */
+    .blog-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
+      padding: 140px 0 80px;
       text-align: center;
-      margin-top: 70px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><polygon points="1000,100 1000,0 0,100"/></svg>');
+      background-size: cover;
     }
 
-    .content {
-      padding: 80px 20px;
+    .hero-content {
+      position: relative;
+      z-index: 2;
       max-width: 800px;
       margin: 0 auto;
     }
 
-    .content h2 {
-      color: var(--primary-color);
-      margin-bottom: 20px;
+    .blog-hero .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .content p {
-      margin-bottom: 20px;
+    .hero-description {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .meta i {
+      font-size: 1rem;
+    }
+
+    /* ===== BLOG CONTENT ===== */
+    .blog-single {
+      padding: 80px 0;
+      background: var(--light);
+    }
+
+    .single-blog {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .single-blog::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .single-blog h2,
+    .single-blog h3 {
+      color: var(--dark);
+      margin: 2.5rem 0 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .single-blog h2 {
+      font-size: 2rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .single-blog h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .single-blog p {
+      font-size: 1.1rem;
       line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: var(--dark-light);
+    }
+
+    .single-blog strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .single-blog ul,
+    .single-blog ol {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+
+    .single-blog li {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+      color: var(--dark-light);
+    }
+
+    /* ===== TABLE OF CONTENTS ===== */
+    .toc {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toc::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient);
+    }
+
+    .toc h3 {
+      margin-top: 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toc h3::before {
+      content: "📑";
+      font-size: 1.5rem;
+    }
+
+    .toc ul {
+      columns: 2;
+      gap: 2rem;
+      margin: 1.5rem 0 0;
+    }
+
+    .toc li {
+      margin-bottom: 0.75rem;
+      break-inside: avoid;
+    }
+
+    .toc a {
+      color: var(--dark);
+      transition: var(--transition);
+      display: block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .toc a:hover {
+      background: white;
+      color: var(--primary);
+      transform: translateX(8px);
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .feature-card h4 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ===== CODE BLOCKS ===== */
+    .single-blog pre {
+      background: var(--dark);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+      position: relative;
+    }
+
+    .single-blog code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .single-blog pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .single-blog p code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+    }
+
+    /* ===== CODE COMPARISON ===== */
+    .code-comparison {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .code-example {
+      flex: 1;
+      min-width: 300px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .code-example h5 {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .code-example pre {
+      margin: 0;
+      border-radius: 0;
+      border-left: none;
+    }
+
+    /* ===== BLOCKQUOTE ===== */
+    .single-blog blockquote {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    .single-blog blockquote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.3;
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      font-family: serif;
+    }
+
+    .single-blog blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--dark);
+      margin: 0;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== DIAGRAM CONTAINER ===== */
+    .technical-diagram {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+    }
+
+    .technical-diagram::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .diagram {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* ===== STATE BADGES ===== */
+    .state-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0.25rem;
+      border: 1px solid;
+    }
+
+    .state-new { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+    .state-runnable { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .state-running { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+    .state-blocked { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .state-terminated { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
+
+    /* ===== WARNING BOX ===== */
+    .warning-box {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    .warning-box h4 {
+      color: #92400e;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .warning-box h4 i {
+      color: #f59e0b;
+    }
+
+    /* ===== BEST PRACTICES ===== */
+    .best-practices {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border-left: 4px solid var(--success);
+    }
+
+    /* ===== COMPARISON TABLE ===== */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2.5rem 0;
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table tr:hover {
+      background: #f8fafc;
+    }
+
+    /* ===== LIFECYCLE DIAGRAM ===== */
+    .lifecycle-diagram {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+      border: 1px solid #bae6fd;
+      position: relative;
+    }
+
+    .lifecycle-diagram::before {
+      content: '📊';
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    /* ===== IMAGE STYLING ===== */
+    .blog-single img {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      margin: 3rem auto;
+      display: block;
+      transition: var(--transition);
+      border: 3px solid white;
+    }
+
+    .blog-single img:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-xl), 0 0 0 3px var(--primary-light);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-description {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links h4,
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul,
+    .footer-contact ul {
+      list-style: none;
+    }
+
+    .footer-links li,
+    .footer-contact li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a,
+    .footer-contact a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover,
+    .footer-contact a:hover {
+      color: white;
+    }
+
+    .sociale-icon {
+      margin-top: 2rem;
+    }
+
+    .sociale-icon ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .sociale-icon a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #374151;
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .sociale-icon a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copy-right {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #374151;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .navbar-toggler {
+        display: flex;
+      }
+      
+      .nav-list {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: var(--shadow-lg);
+        display: none;
+        padding: 20px;
+        gap: 10px;
+      }
+      
+      .nav-list.active {
+        display: flex;
+      }
+      
+      .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+      }
+      
+      .nav-item {
+        width: 100%;
+      }
+      
+      .nav-link {
+        padding: 12px 15px;
+        border-radius: 6px;
+        text-align: center;
+      }
+      
+      .main-nav-social {
+        justify-content: center;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        margin-top: 15px;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      .blog-hero .title {
+        font-size: 2.5rem;
+      }
+
+      .single-blog {
+        padding: 2rem;
+      }
+
+      .toc ul {
+        columns: 1;
+      }
+
+      .code-comparison {
+        flex-direction: column;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-hero .title {
+        font-size: 2rem;
+      }
+
+      .single-blog {
+        padding: 1.5rem;
+      }
+
+      .single-blog h2 {
+        font-size: 1.5rem;
+      }
+
+      .single-blog h3 {
+        font-size: 1.25rem;
+      }
+
+      .single-blog pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -911,21 +856,21 @@
 <body>
 
   <!-- Navbar Start -->
-  <nav class="main-nav navbar navbar-expand-lg">
+  <nav class="main-nav navbar">
     <div class="container">
       <!-- Logo -->
       <a class="navbar-brand" href="index.html">
-        <h1>DevFolio</h1>
+        DevBlog
       </a>
-      <!-- Toogle Button -->
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#mainNav">
+      <!-- Toggle Button -->
+      <button class="navbar-toggler" type="button" id="navbarToggle">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="collapse navbar-collapse nav-list" id="mainNav">
+      <div class="nav-list" id="mainNav">
         <!-- Navigation Links -->
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="index.html">Home</a>
           </li>
@@ -933,28 +878,28 @@
             <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="articles.html">Articles</a>
+            <a class="nav-link active" href="articles.html">Articles</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">Contact</a>
           </li>
         </ul>
-        <!-- Social Link -->
+        <!-- Social Links -->
         <ul class="main-nav-social">
           <li>
-            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
           </li>
           <li>
-            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
           </li>
           <li>
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
           </li>
         </ul>
       </div>
@@ -962,75 +907,113 @@
   </nav>
   <!-- Navbar End -->
 
+  <!-- Hero Section -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="title">Java Multithreading</h1>
+        <p class="hero-description">
+          Khám phá sức mạnh của lập trình đa luồng trong Java - từ những khái niệm cơ bản đến các kỹ thuật nâng cao
+        </p>
+        <ul class="meta">
+          <li>
+            <i class="fas fa-user"></i>
+            Tác giả: Thanh Hieu
+          </li>
+          <li>
+            <i class="fas fa-calendar"></i>
+            Ngày đăng: 19 tháng 10, 2024
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            Thời gian đọc: 15 phút
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Content -->
   <section class="blog-single">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-10 order-1 order-lg-2 mx-auto">
-          <article class="single-blog">
-            <p class="title">Java Multithreading</p>
-            <ul class="meta">
-              <li>By <a href="about.html">Thanh Dat</a></li>
-              <li>
-                <i class="fa fa-clock"></i>
-                October 19, 2024
-              </li>
-            </ul>
+      <article class="single-blog">
+        
+        <!-- Table of Contents -->
+        <div class="toc">
+          <h3>Mục Lục</h3>
+          <ul>
+            <li><a href="#introduction">Giới thiệu về Multithreading</a></li>
+            <li><a href="#thread-basics">Thread Cơ Bản</a></li>
+            <li><a href="#thread-lifecycle">Vòng Đời Thread</a></li>
+            <li><a href="#synchronization">Synchronization</a></li>
+            <li><a href="#thread-pools">Thread Pools & Executors</a></li>
+            <li><a href="#concurrent-collections">Concurrent Collections</a></li>
+            <li><a href="#advanced-topics">Chủ Đề Nâng Cao</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#conclusion">Tổng Kết</a></li>
+          </ul>
+        </div>
 
-            <img src="https://tse2.mm.bing.net/th/id/OIP.aNw8mjWErKPOFY_OC2wivwHaEK?pid=Api&P=0&h=220"
-              alt="Java Multithreading Banner">
-            <span class="caption">Hình ảnh minh họa cho Java Multithreading</span>
+        <!-- Introduction -->
+        <h2 id="introduction">1. Giới thiệu về Multithreading</h2>
+        <div class="feature-card">
+          <h4><i class="fas fa-rocket"></i> Tại sao cần Multithreading?</h4>
+          <p>
+            Trong thế giới hiện đại, tốc độ và hiệu năng là yếu tố sống còn của ứng dụng.
+            <strong>Java Multithreading</strong> cho phép bạn thực thi nhiều tác vụ đồng thời (song song) trong cùng
+            một chương trình, giúp tận dụng tối đa tài nguyên CPU và cải thiện trải nghiệm người dùng.
+          </p>
+        </div>
 
-            <br><br>
-            <h3>Giới thiệu</h3>
-            <p>
-              Trong thế giới hiện đại, tốc độ và hiệu năng là yếu tố sống còn của ứng dụng.
-              <strong>Java Multithreading</strong> cho phép bạn thực thi nhiều tác vụ đồng thời (song song) trong cùng
-              một chương trình,
-              giúp tận dụng tối đa tài nguyên CPU và cải thiện trải nghiệm người dùng.
-              <br><br>
-              Trong bài viết này, chúng ta sẽ tìm hiểu những khái niệm then chốt: <strong>Thread</strong>,
-              <strong>Runnable Interface</strong>,
-              <strong>Synchronization</strong> và <strong>Concurrent Programming</strong> trong Java — cùng các ví dụ
-              minh họa dễ hiểu.
-            </p>
+        <p>
+          Multithreading là kỹ thuật cho phép một ứng dụng chạy nhiều luồng (thread) đồng thời trong cùng một tiến trình.
+          Mỗi luồng có thể thực thi một nhiệm vụ riêng biệt, giúp:
+        </p>
+        <ul>
+          <li><strong>Cải thiện hiệu suất</strong> - Tận dụng đa lõi CPU</li>
+          <li><strong>Tăng khả năng đáp ứng</strong> - UI không bị đơ khi xử lý tác vụ nặng</li>
+          <li><strong>Xử lý đồng thời</strong> - Nhiều tác vụ chạy song song</li>
+          <li><strong>Tối ưu tài nguyên</strong> - Chia sẻ bộ nhớ giữa các luồng</li>
+        </ul>
 
-            <h3>1. Thread là gì?</h3>
-            <p>
-              Một <strong>Thread</strong> (luồng) là đơn vị nhỏ nhất của tiến trình (process) có thể được CPU xử lý độc
-              lập.
-              Khi bạn chạy một chương trình Java, mặc định luôn có ít nhất một luồng — gọi là <code>main thread</code>.
-            </p>
-            <img src="https://tse2.mm.bing.net/th/id/OIP.RxrNGK3TvRonbgXMDxlhaQHaCu?pid=Api&P=0&h=220" alt="Java Thread Concept"
-              style="display:block; margin:0 auto;">
-            <span class="caption">Sơ đồ minh họa Main Thread và Worker Thread</span>
-            <br>
-            <p>
-              Mỗi luồng có thể thực thi một nhiệm vụ riêng biệt, và nhiều luồng có thể chạy đồng thời trên các lõi CPU
-              khác nhau.
-              Điều này giúp chương trình của bạn phản hồi nhanh hơn, đặc biệt khi xử lý các tác vụ nặng như I/O, tính
-              toán phức tạp, hay giao tiếp mạng.
-            </p>
-            <p>
-              Để tạo và quản lý luồng trong Java, bạn có thể sử dụng lớp <code>Thread</code> hoặc triển khai
-              <code>Runnable interface</code>.
-            </p>
-            <p>
-              Tại một thời điểm trong quá trình thực thi, <code>Main thread</code> khởi tạo và gọi phương thức
-              <code>start()</code> để tạo ra Worker thread (luồng phụ).
-              Kể từ đó, cả hai luồng chạy song song, mỗi luồng đảm nhiệm một phần công việc riêng biệt
-            </p>
-            <p>
-              Bạn có thể tạo luồng mới bằng hai cách phổ biến:
-            </p>
-            <ul>
-              <li>Kế thừa lớp <code>Thread</code> và override phương thức <code>run()</code>.</li>
-              <li>Triển khai <code>Runnable interface</code> và truyền vào đối tượng Thread.</li>
-            </ul>
+        <div class="technical-diagram">
+          <img src="https://tse2.mm.bing.net/th/id/OIP.aNw8mjWErKPOFY_OC2wivwHaEK?pid=Api&P=0&h=220"
+            alt="Java Multithreading Banner">
+          <span class="caption">Hình ảnh minh họa cho Java Multithreading</span>
+        </div>
 
+        <h3>Kiến trúc Multithreading trong Java</h3>
+        <p>
+          Java cung cấp một framework toàn diện cho lập trình đa luồng thông qua:
+        </p>
+        <ul>
+          <li><strong>Lớp Thread</strong> - Đại diện cho một luồng thực thi</li>
+          <li><strong>Interface Runnable</strong> - Định nghĩa nhiệm vụ có thể chạy</li>
+          <li><strong>Package java.util.concurrent</strong> - Các công cụ concurrent programming</li>
+          <li><strong>Memory Model</strong> - Mô hình bộ nhớ đảm bảo tính nhất quán</li>
+        </ul>
+
+        <!-- Thread Basics -->
+        <h2 id="thread-basics">2. Thread Cơ Bản</h2>
+        <h3>Thread là gì?</h3>
+        <p>
+          Một <strong>Thread</strong> (luồng) là đơn vị nhỏ nhất của tiến trình (process) có thể được CPU xử lý độc
+          lập. Khi bạn chạy một chương trình Java, mặc định luôn có ít nhất một luồng — gọi là <code>main thread</code>.
+        </p>
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Kế thừa Thread Class</h5>
             <pre><code class="language-java">class MyThread extends Thread {
     public void run() {
-        for (int i = 1; i &lt;= 5; i++) {
-            System.out.println(Thread.currentThread().getName() + " đang chạy: " + i);
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(Thread.currentThread().getName() + 
+                             " đang chạy: " + i);
+            try {
+                Thread.sleep(1000); // Giả lập công việc
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
@@ -1039,248 +1022,1012 @@ public class ThreadDemo {
     public static void main(String[] args) {
         MyThread t1 = new MyThread();
         MyThread t2 = new MyThread();
-
-        t1.start();
-        t2.start();
+        
+        t1.setName("Worker-1");
+        t2.setName("Worker-2");
+        
+        t1.start(); // Bắt đầu thread 1
+        t2.start(); // Bắt đầu thread 2
+        
+        System.out.println("Main thread hoàn thành");
     }
 }</code></pre>
-            <p>
-              👉 Mỗi khi bạn gọi <code>start()</code>, Java tạo ra một luồng riêng biệt để thực thi phương thức
-              <code>run()</code>.
-            </p>
-
-            <h3>2. Sử dụng Runnable Interface</h3>
-            <p>
-              Cách khuyến khích trong Java hiện đại là dùng <strong>Runnable interface</strong>, vì nó tách biệt logic
-              chạy với cơ chế tạo luồng.
-            </p>
+          </div>
+          <div class="code-example">
+            <h5>Triển khai Runnable Interface</h5>
             <pre><code class="language-java">class PrintTask implements Runnable {
+    private String taskName;
+    
+    public PrintTask(String name) {
+        this.taskName = name;
+    }
+    
     public void run() {
-        for (int i = 1; i &lt;= 3; i++) {
-            System.out.println(Thread.currentThread().getName() + " in số: " + i);
+        for (int i = 1; i <= 3; i++) {
+            System.out.println(taskName + " in số: " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
 
 public class RunnableExample {
     public static void main(String[] args) {
-        Thread t1 = new Thread(new PrintTask(), "Thread-1");
-        Thread t2 = new Thread(new PrintTask(), "Thread-2");
+        Thread t1 = new Thread(new PrintTask("Thread-1"));
+        Thread t2 = new Thread(new PrintTask("Thread-2"));
+        
         t1.start();
         t2.start();
+        
+        // Chờ cả hai thread hoàn thành
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Tất cả thread đã hoàn thành");
     }
 }</code></pre>
-            <p>
-              👉 Cách này giúp code dễ tái sử dụng, linh hoạt hơn, đặc biệt khi bạn dùng Executor Framework hoặc thread
-              pool.
-            </p>
+          </div>
+        </div>
 
-            <h3>3. Synchronization – Tránh xung đột dữ liệu</h3>
-            <p>
-              Khi nhiều luồng cùng truy cập và chỉnh sửa một tài nguyên (ví dụ biến dùng chung), có thể xảy ra xung đột
-              (race condition).
-              <br>
-              Java cung cấp <strong>từ khóa <code>synchronized</code></strong> để đảm bảo chỉ một luồng được truy cập
-              tài nguyên tại một thời điểm.
-            </p>
+        <div class="feature-card">
+          <h4>💡 Ưu điểm của Runnable Interface</h4>
+          <ul>
+            <li><strong>Tránh giới hạn đơn kế thừa</strong> - Java không hỗ trợ đa kế thừa</li>
+            <li><strong>Dễ dàng chia sẻ tài nguyên</strong> - Cùng Runnable object có thể dùng cho nhiều thread</li>
+            <li><strong>Linh hoạt với Executor Framework</strong> - Phù hợp với thread pools</li>
+            <li><strong>Tách biệt nhiệm vụ và cơ chế thực thi</strong> - Clean architecture</li>
+          </ul>
+        </div>
+
+        <h3>Thread Methods Quan Trọng</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Phương thức</th>
+              <th>Mô tả</th>
+              <th>Ví dụ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>start()</code></td>
+              <td>Bắt đầu thực thi thread</td>
+              <td><code>thread.start()</code></td>
+            </tr>
+            <tr>
+              <td><code>run()</code></td>
+              <td>Định nghĩa hành vi của thread</td>
+              <td><code>public void run()</code></td>
+            </tr>
+            <tr>
+              <td><code>join()</code></td>
+              <td>Chờ thread kết thúc</td>
+              <td><code>thread.join()</code></td>
+            </tr>
+            <tr>
+              <td><code>sleep()</code></td>
+              <td>Tạm dừng thread</td>
+              <td><code>Thread.sleep(1000)</code></td>
+            </tr>
+            <tr>
+              <td><code>interrupt()</code></td>
+              <td>Ngắt thread</td>
+              <td><code>thread.interrupt()</code></td>
+            </tr>
+            <tr>
+              <td><code>isAlive()</code></td>
+              <td>Kiểm tra thread còn sống</td>
+              <td><code>thread.isAlive()</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Thread Lifecycle -->
+        <h2 id="thread-lifecycle">3. Vòng Đời của Thread</h2>
+        <p>
+          Một thread trong Java trải qua nhiều trạng thái khác nhau trong suốt vòng đời của nó:
+        </p>
+
+        <div class="lifecycle-diagram">
+          <h4>📊 Vòng Đời Thread trong Java</h4>
+          <div class="technical-diagram">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.RxrNGK3TvRonbgXMDxlhaQHaCu?pid=Api&P=0&h=220" alt="Java Thread Lifecycle">
+          </div>
+          <span class="caption">Sơ đồ minh họa vòng đời của Thread trong Java</span>
+        </div>
+
+        <h3>Các trạng thái chính:</h3>
+        <ul>
+          <li><span class="state-badge state-new">NEW</span> - Thread được tạo nhưng chưa start()</li>
+          <li><span class="state-badge state-runnable">RUNNABLE</span> - Thread đang chạy hoặc sẵn sàng chạy</li>
+          <li><span class="state-badge state-running">RUNNING</span> - Thread đang được CPU xử lý</li>
+          <li><span class="state-badge state-blocked">BLOCKED</code> - Thread đang chờ monitor lock</li>
+          <li><span class="state-badge state-blocked">WAITING</span> - Thread chờ vô thời hạn</li>
+          <li><span class="state-badge state-blocked">TIMED_WAITING</span> - Thread chờ có thời gian</li>
+          <li><span class="state-badge state-terminated">TERMINATED</span> - Thread đã kết thúc</li>
+        </ul>
+
+        <pre><code class="language-java">public class ThreadStateDemo {
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(2000); // TIMED_WAITING
+                synchronized(ThreadStateDemo.class) {
+                    // BLOCKED nếu có thread khác đang giữ lock
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        
+        System.out.println("Trạng thái ban đầu: " + thread.getState()); // NEW
+        
+        thread.start();
+        System.out.println("Sau khi start: " + thread.getState()); // RUNNABLE
+        
+        Thread.sleep(1000);
+        System.out.println("Khi đang sleep: " + thread.getState()); // TIMED_WAITING
+        
+        thread.join();
+        System.out.println("Sau khi kết thúc: " + thread.getState()); // TERMINATED
+    }
+}</code></pre>
+
+        <h3>Daemon Threads</h3>
+        <p>
+          Daemon threads là các thread chạy ở background và tự động kết thúc khi tất cả non-daemon threads đã kết thúc.
+        </p>
+        <pre><code class="language-java">Thread daemonThread = new Thread(() -> {
+    while (true) {
+        System.out.println("Daemon thread đang chạy...");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            break;
+        }
+    }
+});
+
+daemonThread.setDaemon(true); // Đặt thành daemon thread
+daemonThread.start();
+
+// Chương trình sẽ kết thúc ngay cả khi daemon thread vẫn đang chạy</code></pre>
+
+        <!-- Synchronization -->
+        <h2 id="synchronization">4. Synchronization - Đồng bộ hóa</h2>
+        <p>
+          Khi nhiều thread cùng truy cập và sửa đổi shared resources (tài nguyên dùng chung), có thể xảy ra 
+          <strong>race conditions</strong> (điều kiện chạy đua) dẫn đến dữ liệu không nhất quán.
+        </p>
+
+        <div class="warning-box">
+          <h4><i class="fas fa-exclamation-triangle"></i> Vấn đề Race Condition</h4>
+          <pre><code class="language-java">class Counter {
+    private int count = 0;
+    
+    public void increment() {
+        count++; // Không an toàn với multithreading!
+    }
+}</code></pre>
+          <p>Operation <code>count++</code> thực tế gồm 3 bước: read → modify → write. 
+          Nhiều thread có thể cùng đọc giá trị cũ, dẫn đến kết quả sai.</p>
+        </div>
+
+        <h3>Các giải pháp đồng bộ hóa:</h3>
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Synchronized Method</h5>
             <pre><code class="language-java">class Counter {
     private int count = 0;
-
+    
     public synchronized void increment() {
         count++;
     }
-
-    public int getCount() {
+    
+    public synchronized int getCount() {
         return count;
     }
 }
 
-public class SyncExample {
+public class SyncDemo {
     public static void main(String[] args) throws InterruptedException {
         Counter counter = new Counter();
-
+        
         Runnable task = () -> {
-            for (int i = 0; i &lt; 1000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 counter.increment();
             }
         };
-
+        
         Thread t1 = new Thread(task);
         Thread t2 = new Thread(task);
-        t1.start(); t2.start();
-        t1.join(); t2.join();
-
-        System.out.println("Kết quả cuối cùng: " + counter.getCount());
+        
+        t1.start();
+        t2.start();
+        
+        t1.join();
+        t2.join();
+        
+        System.out.println("Kết quả: " + counter.getCount()); // Luôn là 2000
     }
 }</code></pre>
-            <p>
-              👉 Từ khóa <code>synchronized</code> giúp tránh lỗi dữ liệu không nhất quán trong môi trường đa luồng.
-            </p>
+          </div>
+          <div class="code-example">
+            <h5>Synchronized Block</h5>
+            <pre><code class="language-java">class Counter {
+    private int count = 0;
+    private final Object lock = new Object();
+    
+    public void increment() {
+        synchronized(lock) {
+            count++;
+        }
+    }
+    
+    public int getCount() {
+        synchronized(lock) {
+            return count;
+        }
+    }
+}
 
-            <h3>4. Concurrent Programming – Lập trình song song hiệu quả</h3>
-            <p>
-              Khi chương trình có nhiều tác vụ cần chạy đồng thời (ví dụ: đọc file, xử lý dữ liệu, gọi API),
-              bạn có thể dùng <strong>Executor Framework</strong> để quản lý luồng thay vì tự tạo từng Thread thủ công.
-            </p>
-            <pre><code class="language-java">import java.util.concurrent.*;
+// Hoặc synchronized trên class object
+public void staticMethod() {
+    synchronized(Counter.class) {
+        // critical section
+    }
+}</code></pre>
+          </div>
+        </div>
 
-public class ExecutorDemo {
+        <h3>ReentrantLock - Lock Linh Hoạt Hơn</h3>
+        <pre><code class="language-java">import java.util.concurrent.locks.ReentrantLock;
+
+class CounterWithLock {
+    private int count = 0;
+    private final ReentrantLock lock = new ReentrantLock();
+    
+    public void increment() {
+        lock.lock();
+        try {
+            count++;
+        } finally {
+            lock.unlock(); // Luôn unlock trong finally
+        }
+    }
+    
+    public boolean tryIncrement() {
+        if (lock.tryLock()) {
+            try {
+                count++;
+                return true;
+            } finally {
+                lock.unlock();
+            }
+        }
+        return false;
+    }
+}</code></pre>
+
+        <h3>Atomic Variables</h3>
+        <p>
+          Java cung cấp các lớp atomic trong package <code>java.util.concurrent.atomic</code> 
+          cho các operation thread-safe mà không cần synchronization.
+        </p>
+
+        <pre><code class="language-java">import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+
+class AtomicCounter {
+    private AtomicInteger count = new AtomicInteger(0);
+    private AtomicLong timestamp = new AtomicLong();
+    private AtomicReference<String> latestValue = new AtomicReference<>();
+    
+    public void increment() {
+        count.incrementAndGet(); // Thread-safe atomic operation
+    }
+    
+    public int getCount() {
+        return count.get();
+    }
+    
+    public boolean compareAndSet(int expect, int update) {
+        return count.compareAndSet(expect, update);
+    }
+}</code></pre>
+
+        <!-- Thread Pools -->
+        <h2 id="thread-pools">5. Thread Pools & Executor Framework</h2>
+        <p>
+          Thay vì tạo thread mới cho mỗi task, chúng ta nên sử dụng <strong>Thread Pools</strong> 
+          để tái sử dụng thread và quản lý tài nguyên hiệu quả.
+        </p>
+
+        <div class="technical-diagram">
+          <img src="https://tse4.mm.bing.net/th/id/OIP.fyxN9DbeUzpCpYqgn55yiQHaEZ?pid=Api&P=0&h=220" alt="Executor Framework Diagram">
+          <span class="caption">Kiến trúc Executor Framework trong Java</span>
+        </div>
+
+        <h3>Các loại Thread Pools:</h3>
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Fixed Thread Pool</h5>
+            <pre><code class="language-java">import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class FixedThreadPoolDemo {
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newFixedThreadPool(3);
+        ExecutorService executor = Executors.newFixedThreadPool(5);
 
-        for (int i = 1; i &lt;= 5; i++) {
+        for (int i = 0; i < 10; i++) {
             int taskId = i;
             executor.execute(() -> {
-                System.out.println("Đang xử lý tác vụ " + taskId + " bởi " + Thread.currentThread().getName());
+                System.out.println("Xử lý task " + taskId + 
+                                 " bởi " + Thread.currentThread().getName());
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             });
         }
 
-        executor.shutdown();
+        executor.shutdown(); // Không nhận task mới
+        // executor.shutdownNow(); // Hủy tất cả task đang chờ
     }
 }</code></pre>
-            <p>
-              👉 Executor Framework giúp tái sử dụng luồng, giảm chi phí tạo mới và tối ưu hiệu suất.
-            </p>
+          </div>
+          <div class="code-example">
+            <h5>Cached Thread Pool</h5>
+            <pre><code class="language-java">ExecutorService executor = Executors.newCachedThreadPool();
 
-            <img src="https://tse4.mm.bing.net/th/id/OIP.fyxN9DbeUzpCpYqgn55yiQHaEZ?pid=Api&P=0&h=220" alt="Java Concurrent Diagram">
-            <span class="caption">Sơ đồ minh họa Executor Framework trong Java</span>
-            <br>
-            <p>
-              Hình trên mô tả cơ chế hoạt động của Executor Framework trong Java – một công cụ mạnh mẽ giúp quản lý và
-              tối ưu việc chạy song song (concurrent programming).
-            </p>
-            <ul>
-              <li>Bên trái là nhiều <strong>Runnable tasks</strong> – các công việc độc lập cần được thực thi. Thay vì
-                tạo mới một luồng (thread) cho từng tác vụ, các công việc này được đưa vào một <strong>Runnable
-                  Queue</strong> (hàng đợi tác vụ).</li>
-              <li>Phía bên phải là <strong>Executor</strong>, nơi chứa sẵn một nhóm luồng (pool of threads). Các luồng
-                này sẽ lần lượt lấy nhiệm vụ từ hàng đợi và thực thi chúng.</li>
-            </ul>
-            <p>
-              Khi một luồng hoàn thành công việc, nó không bị hủy, mà được tái sử dụng cho tác vụ tiếp theo trong hàng
-              đợi.
-            </p>
-            <p>
-              Cách làm này giúp giảm chi phí khởi tạo luồng mới, tăng hiệu suất, và tối ưu việc xử lý đồng thời trong
-              các ứng dụng lớn.
-            </p>
-            <p>
-              Nói cách khác, Executor Framework đóng vai trò "bộ điều phối thông minh": nhận nhiệm vụ, xếp hàng chờ,
-              phân phối cho các luồng sẵn có, và đảm bảo mọi tác vụ được thực thi hiệu quả mà không gây quá tải tài
-              nguyên hệ thống.
-            </p>
+// Phù hợp cho short-lived asynchronous tasks
+for (int i = 0; i < 100; i++) {
+    executor.execute(() -> {
+        // Task ngắn, không blocking
+    });
+}
 
-            <blockquote>
-              <p>"Concurrency không chỉ là làm nhiều việc cùng lúc — mà là tối ưu cách CPU chia sẻ thời gian giữa các
-                tác vụ."</p>
-            </blockquote>
-
-            <h3>5. Một ví dụ hoàn chỉnh</h3>
-            <p>
-              Dưới đây là chương trình kết hợp nhiều kỹ thuật multithreading trong một ví dụ thực tế: xử lý danh sách
-              công việc song song.
-            </p>
-            <pre><code class="language-java">import java.util.*;
-import java.util.concurrent.*;
-
-public class TaskManager {
-    public static void main(String[] args) throws InterruptedException {
-        List&lt;String&gt; tasks = Arrays.asList("Download", "Parse Data", "Save File", "Upload");
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-
-        for (String task : tasks) {
-            executor.submit(() -> {
-                System.out.println(Thread.currentThread().getName() + " đang xử lý: " + task);
-                try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-                System.out.println(task + " ✅ hoàn tất!");
-            });
-        }
-
-        executor.shutdown();
-        executor.awaitTermination(5, TimeUnit.SECONDS);
-        System.out.println("👉 Tất cả tác vụ đã hoàn thành!");
-    }
-}</code></pre>
-
-            <h3>6. Best Practices khi lập trình đa luồng</h3>
-            <ul>
-              <li>Luôn dùng <code>ExecutorService</code> thay vì tạo Thread thủ công.</li>
-              <li>Tránh chia sẻ biến toàn cục — nếu cần, dùng <code>synchronized</code> hoặc lớp thread-safe như
-                <code>AtomicInteger</code>.</li>
-              <li>Dùng <code>join()</code> để đồng bộ kết quả khi cần chờ luồng hoàn tất.</li>
-              <li>Luôn gọi <code>shutdown()</code> sau khi dùng Executor để giải phóng tài nguyên.</li>
-              <li>Dùng thư viện <code>java.util.concurrent</code> để xử lý các tác vụ phức tạp (BlockingQueue, Future,
-                Semaphore, ...).</li>
-            </ul>
-
-            <h3>Tổng kết</h3>
-            <p>
-              <strong>Multithreading</strong> là công cụ mạnh mẽ giúp ứng dụng Java trở nên nhanh hơn, phản hồi tốt hơn
-              và tận dụng tối đa phần cứng.
-              Nắm vững các khái niệm như Thread, Runnable, Synchronization và Concurrent Framework sẽ giúp bạn xử lý các
-              bài toán thực tế hiệu quả.
-              <br><br>
-              👉 Bắt đầu bằng những ví dụ nhỏ — rồi dần xây dựng ứng dụng có nhiều tác vụ chạy đồng thời để cảm nhận sức
-              mạnh thực sự của Java Multithreading!
-            </p>
-
-            <blockquote>
-              <p>"Code tốt không chỉ chạy đúng — mà còn chạy nhanh và hiệu quả nhờ sức mạnh của đa luồng."</p>
-            </blockquote>
-
-          </article>
+executor.shutdown();</code></pre>
+          </div>
         </div>
-      </div>
+
+        <h3>Scheduled Thread Pool</h3>
+        <pre><code class="language-java">import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+public class ScheduledThreadPoolDemo {
+    public static void main(String[] args) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+
+        // Chạy sau 5 giây
+        scheduler.schedule(() -> {
+            System.out.println("Task chạy sau 5 giây");
+        }, 5, TimeUnit.SECONDS);
+
+        // Chạy mỗi 2 giây, bắt đầu sau 1 giây
+        scheduler.scheduleAtFixedRate(() -> {
+            System.out.println("Task định kỳ - " + new Date());
+        }, 1, 2, TimeUnit.SECONDS);
+
+        // Chạy với độ trễ cố định giữa các lần kết thúc
+        scheduler.scheduleWithFixedDelay(() -> {
+            System.out.println("Task với fixed delay");
+        }, 1, 3, TimeUnit.SECONDS);
+    }
+}</code></pre>
+
+        <h3>Future và Callable</h3>
+        <pre><code class="language-java">import java.util.concurrent.*;
+
+public class FutureCallableDemo {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        Callable<String> task = () -> {
+            Thread.sleep(2000);
+            return "Kết quả từ " + Thread.currentThread().getName();
+        };
+
+        Future<String> future1 = executor.submit(task);
+        Future<String> future2 = executor.submit(task);
+
+        // Có thể làm việc khác ở đây...
+        System.out.println("Đang xử lý công việc khác...");
+
+        try {
+            String result1 = future1.get(3, TimeUnit.SECONDS);
+            String result2 = future2.get(3, TimeUnit.SECONDS);
+            System.out.println("Kết quả 1: " + result1);
+            System.out.println("Kết quả 2: " + result2);
+        } catch (TimeoutException e) {
+            System.out.println("Task timeout!");
+        } catch (ExecutionException e) {
+            System.out.println("Task bị lỗi: " + e.getCause());
+        }
+
+        executor.shutdown();
+    }
+}</code></pre>
+
+        <!-- Concurrent Collections -->
+        <h2 id="concurrent-collections">6. Concurrent Collections</h2>
+        <p>
+          Các collection trong <code>java.util.concurrent</code> được thiết kế đặc biệt 
+          cho môi trường đa luồng, không cần external synchronization.
+        </p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Collection</th>
+              <th>Mục đích</th>
+              <th>Đặc điểm</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ConcurrentHashMap</code></td>
+              <td>Map thread-safe</td>
+              <td>Hiệu suất cao, lock ở mức segment</td>
+              <td>Shared caches, configuration</td>
+            </tr>
+            <tr>
+              <td><code>CopyOnWriteArrayList</code></td>
+              <td>List thread-safe</td>
+              <td>Tạo bản sao khi modify, tốt cho read-heavy</td>
+              <td>Listener lists, rarely modified</td>
+            </tr>
+            <tr>
+              <td><code>BlockingQueue</code></td>
+              <td>Hàng đợi blocking</td>
+              <td>Chờ khi queue empty/full</td>
+              <td>Producer-Consumer pattern</td>
+            </tr>
+            <tr>
+              <td><code>ConcurrentLinkedQueue</code></td>
+              <td>Hàng đợi non-blocking</td>
+              <td>Hiệu suất cao, không block</td>
+              <td>Task queues, message passing</td>
+            </tr>
+            <tr>
+              <td><code>ConcurrentSkipListMap</code></td>
+              <td>Sorted map thread-safe</td>
+              <td>Dựa trên skip list, sorted</td>
+              <td>Sorted caches, indexes</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Ví dụ sử dụng ConcurrentHashMap:</h3>
+        <pre><code class="language-java">import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+class ConcurrentCache {
+    private ConcurrentMap<String, String> cache = new ConcurrentHashMap<>();
+    
+    public String get(String key) {
+        return cache.get(key);
+    }
+    
+    public void put(String key, String value) {
+        cache.put(key, value);
+    }
+    
+    // Atomic operation - chỉ tính toán nếu key chưa tồn tại
+    public String computeIfAbsent(String key) {
+        return cache.computeIfAbsent(key, k -> {
+            // Chỉ được gọi nếu key chưa tồn tại
+            return expensiveCalculation(k);
+        });
+    }
+    
+    // Atomic operation - cập nhật nếu key tồn tại
+    public String computeIfPresent(String key) {
+        return cache.computeIfPresent(key, (k, v) -> {
+            // Chỉ được gọi nếu key đã tồn tại
+            return v + "_updated";
+        });
+    }
+    
+    // Merge values atomically
+    public void merge(String key, String value) {
+        cache.merge(key, value, (oldVal, newVal) -> oldVal + "," + newVal);
+    }
+    
+    private String expensiveCalculation(String key) {
+        // Giả lập tính toán tốn thời gian
+        try { 
+            Thread.sleep(1000); 
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return "calculated_" + key;
+    }
+}</code></pre>
+
+        <h3>BlockingQueue trong Producer-Consumer Pattern</h3>
+        <pre><code class="language-java">import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+class ProducerConsumerExample {
+    private final BlockingQueue<Integer> queue = new LinkedBlockingQueue<>(10);
+    
+    class Producer implements Runnable {
+        public void run() {
+            try {
+                for (int i = 0; i < 100; i++) {
+                    queue.put(i); // Block nếu queue full
+                    System.out.println("Produced: " + i);
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    
+    class Consumer implements Runnable {
+        public void run() {
+            try {
+                while (true) {
+                    Integer item = queue.take(); // Block nếu queue empty
+                    System.out.println("Consumed: " + item);
+                    Thread.sleep(150);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    
+    public void start() {
+        new Thread(new Producer()).start();
+        new Thread(new Consumer()).start();
+    }
+}</code></pre>
+
+        <!-- Advanced Topics -->
+        <h2 id="advanced-topics">7. Chủ Đề Nâng Cao</h2>
+
+        <h3>Volatile Keyword</h3>
+        <p>
+          Từ khóa <code>volatile</code> đảm bảo các thread luôn thấy giá trị mới nhất của biến, 
+          ngăn chặn việc cache giá trị trong register hoặc local cache của thread.
+        </p>
+
+        <pre><code class="language-java">class SharedObject {
+    private volatile boolean flag = false;
+    private volatile int counter = 0;
+    
+    public void setFlag() {
+        flag = true; // Thay đổi visible ngay lập tức
+    }
+    
+    public void doWork() {
+        while (!flag) {
+            // Luôn đọc giá trị mới nhất từ main memory
+        }
+        System.out.println("Flag đã được set!");
+    }
+    
+    // Volatile không đảm bảo atomicity cho compound operations
+    public void increment() {
+        counter++; // Vẫn cần synchronization!
+    }
+}
+
+// Sử dụng volatile đúng cách
+class Singleton {
+    private static volatile Singleton instance;
+    
+    public static Singleton getInstance() {
+        if (instance == null) { // First check (no locking)
+            synchronized (Singleton.class) {
+                if (instance == null) { // Second check (with locking)
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}</code></pre>
+
+        <h3>ThreadLocal</h3>
+        <p>
+          <code>ThreadLocal</code> cho phép mỗi thread có bản sao riêng của biến, 
+          tránh xung đột khi nhiều thread cùng truy cập.
+        </p>
+
+        <pre><code class="language-java">class UserContext {
+    private static final ThreadLocal<String> currentUser = new ThreadLocal<>();
+    private static final ThreadLocal<SimpleDateFormat> dateFormat = 
+        ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+    
+    public static void setUser(String user) {
+        currentUser.set(user);
+    }
+    
+    public static String getUser() {
+        return currentUser.get();
+    }
+    
+    public static void clear() {
+        currentUser.remove();
+        dateFormat.remove();
+    }
+    
+    public static String formatDate(Date date) {
+        return dateFormat.get().format(date);
+    }
+}
+
+// Sử dụng trong web application
+class RequestProcessor {
+    public void processRequest(HttpServletRequest request) {
+        UserContext.setUser(request.getRemoteUser());
+        try {
+            // Xử lý request - tất cả method đều có thể access user context
+            doProcess();
+        } finally {
+            UserContext.clear(); // Quan trọng: clear sau khi dùng
+        }
+    }
+    
+    private void doProcess() {
+        String user = UserContext.getUser(); // Lấy user từ thread local
+        System.out.println("Processing for user: " + user);
+    }
+}</code></pre>
+
+        <h3>CompletableFuture (Java 8+)</h3>
+        <p>
+          <code>CompletableFuture</code> cung cấp API mạnh mẽ cho asynchronous programming 
+          với khả năng kết hợp nhiều task phức tạp.
+        </p>
+
+        <pre><code class="language-java">import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+public class CompletableFutureDemo {
+    
+    public static void main(String[] args) throws Exception {
+        // Chuỗi các task bất đồng bộ
+        CompletableFuture<String> future = CompletableFuture
+            .supplyAsync(() -> {
+                // Task bất đồng bộ
+                System.out.println("Task 1 chạy trên: " + Thread.currentThread().getName());
+                return "Kết quả từ task 1";
+            })
+            .thenApply(result -> {
+                // Xử lý kết quả đồng bộ
+                System.out.println("Task 2 chạy trên: " + Thread.currentThread().getName());
+                return result + " đã được xử lý";
+            })
+            .thenApplyAsync(result -> {
+                // Xử lý bất đồng bộ tiếp theo
+                System.out.println("Task 3 chạy trên: " + Thread.currentThread().getName());
+                return result.toUpperCase();
+            })
+            .thenCombine(CompletableFuture.supplyAsync(() -> "Kết quả phụ"), 
+                        (main, secondary) -> main + " + " + secondary)
+            .exceptionally(throwable -> {
+                // Xử lý lỗi
+                System.out.println("Lỗi: " + throwable.getMessage());
+                return "Giá trị mặc định";
+            });
+        
+        System.out.println("Kết quả cuối cùng: " + future.get());
+    }
+    
+    // Kết hợp nhiều futures
+    public CompletableFuture<String> processMultipleTasks() {
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> "Task1");
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> "Task2");
+        CompletableFuture<String> future3 = CompletableFuture.supplyAsync(() -> "Task3");
+        
+        return CompletableFuture.allOf(future1, future2, future3)
+            .thenApply(v -> {
+                try {
+                    return future1.get() + ", " + future2.get() + ", " + future3.get();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+    }
+}</code></pre>
+
+        <h3>Phaser - Đồng bộ nhiều phase</h3>
+        <pre><code class="language-java">import java.util.concurrent.Phaser;
+
+class PhaserDemo {
+    public static void main(String[] args) {
+        Phaser phaser = new Phaser(3); // 3 parties cần register
+        
+        for (int i = 0; i < 3; i++) {
+            int taskId = i;
+            new Thread(() -> {
+                System.out.println("Task " + taskId + " phase 1");
+                phaser.arriveAndAwaitAdvance(); // Chờ tất cả hoàn thành phase 1
+                
+                System.out.println("Task " + taskId + " phase 2"); 
+                phaser.arriveAndAwaitAdvance(); // Chờ tất cả hoàn thành phase 2
+                
+                System.out.println("Task " + taskId + " hoàn thành");
+                phaser.arriveAndDeregister(); // Hoàn thành và deregister
+            }).start();
+        }
+    }
+}</code></pre>
+
+        <!-- Best Practices -->
+        <h2 id="best-practices">8. Best Practices</h2>
+
+        <div class="best-practices">
+          <h4>✅ Những điều NÊN làm</h4>
+          <ul>
+            <li><strong>Sử dụng Executor Framework</strong> thay vì tạo thread thủ công</li>
+            <li><strong>Ưu tiên high-level concurrent collections</strong> từ java.util.concurrent</li>
+            <li><strong>Luôn shutdown ExecutorService</strong> khi không dùng nữa</li>
+            <li><strong>Sử dụng ThreadLocal</strong> cho dữ liệu per-thread</li>
+            <li><strong>Đặt tên có ý nghĩa cho thread</strong> với setName() để dễ debug</li>
+            <li><strong>Sử dụng CompletableFuture</strong> cho complex async workflows</li>
+            <li><strong>Xử lý InterruptedException</strong> properly bằng Thread.currentThread().interrupt()</li>
+            <li><strong>Sử dụng atomic variables</strong> thay vì synchronization khi có thể</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <h4><i class="fas fa-exclamation-triangle"></i> Những điều KHÔNG NÊN làm</h4>
+          <ul>
+            <li><strong>Không sử dụng synchronized trên null objects</strong></li>
+            <li><strong>Tránh synchronized method không cần thiết</strong> - ảnh hưởng performance</li>
+            <li><strong>Không ignore InterruptedException</strong> - luôn restore interrupt status</li>
+            <li><strong>Tránh sử dụng stop(), suspend(), resume()</strong> - đã deprecated</li>
+            <li><strong>Không sử dụng Thread.sleep()</strong> trong production code không có lý do chính đáng</li>
+            <li><strong>Tránh busy waiting</strong> - sử dụng wait/notify hoặc condition variables</li>
+            <li><strong>Không giữ lock quá lâu</strong> - minimize critical sections</li>
+          </ul>
+        </div>
+
+        <h3>Common Pitfalls & Solutions</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Vấn đề</th>
+              <th>Nguyên nhân</th>
+              <th>Triệu chứng</th>
+              <th>Giải pháp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Deadlock</strong></td>
+              <td>Hai thread chờ nhau giải phóng lock</td>
+              <td>Ứng dụng treo, không CPU usage</td>
+              <td>Sử dụng tryLock(), timeout, lock ordering</td>
+            </tr>
+            <tr>
+              <td><strong>Livelock</strong></td>
+              <td>Threads liên tục thay đổi trạng thái nhưng không tiến triển</td>
+              <td>High CPU, no progress</td>
+              <td>Thêm randomness, backoff strategy</td>
+            </tr>
+            <tr>
+              <td><strong>Starvation</strong></td>
+              <td>Thread không thể access shared resource</td>
+              <td>Thread không bao giờ chạy</td>
+              <td>Sử dụng fair locks, priority scheduling</td>
+            </tr>
+            <tr>
+              <td><strong>Race Condition</strong></td>
+              <td>Không đồng bộ access shared data</td>
+              <td>Kết quả không nhất quán</td>
+              <td>Sử dụng synchronization, atomic variables</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Consistency</strong></td>
+              <td>Thread thấy giá trị cũ của shared variable</td>
+              <td>Dữ liệu không đồng bộ</td>
+              <td>Sử dụng volatile hoặc proper synchronization</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Performance Considerations</h3>
+        <div class="feature-card">
+          <h4>🎯 Tối ưu hiệu suất Multithreading</h4>
+          <ul>
+            <li><strong>Chọn đúng số lượng thread</strong> - Thường bằng số CPU cores</li>
+            <li><strong>Giảm contention</strong> - Sử dụng concurrent collections, minimize locking</li>
+            <li><strong>Avoid false sharing</strong> - Padding cho các biến frequently written</li>
+            <li><strong>Sử dụng thread pools</strong> - Tránh chi phí tạo thread mới</li>
+            <li><strong>Batch operations</strong> - Nhóm các small operations thành batch</li>
+            <li><strong>Non-blocking algorithms</strong> - Sử dụng khi có thể</li>
+          </ul>
+        </div>
+
+        <!-- Conclusion -->
+        <h2 id="conclusion">9. Tổng Kết</h2>
+
+        <div class="feature-card">
+          <h4>🎯 Key Takeaways</h4>
+          <ul>
+            <li><strong>Hiểu rõ vòng đời thread</strong> và các trạng thái NEW, RUNNABLE, BLOCKED, WAITING, TERMINATED</li>
+            <li><strong>Sử dụng Executor Framework</strong> thay vì quản lý thread thủ công</li>
+            <li><strong>Áp dụng proper synchronization</strong> để tránh race conditions và deadlocks</li>
+            <li><strong>Ưu tiên concurrent collections</strong> từ java.util.concurrent cho thread safety</li>
+            <li><strong>Nắm vững CompletableFuture</strong> cho complex asynchronous programming</li>
+            <li><strong>Tuân thủ best practices</strong> để tránh common pitfalls và tối ưu performance</li>
+            <li><strong>Sử dụng đúng công cụ</strong> - Mỗi concurrent utility có use case riêng</li>
+          </ul>
+        </div>
+
+        <p>
+          <strong>Java Multithreading</strong> là công cụ mạnh mẽ giúp ứng dụng Java trở nên nhanh hơn, phản hồi tốt hơn
+          và tận dụng tối đa phần cứng. Từ những khái niệm cơ bản về Thread và Runnable, đến các kỹ thuật synchronization 
+          phức tạp và high-level concurrent utilities, Java cung cấp một hệ sinh thái toàn diện cho lập trình đa luồng.
+        </p>
+
+        <p>
+          Việc nắm vững các nguyên tắc cơ bản như thread safety, memory visibility, và proper synchronization là nền tảng 
+          để xây dựng các ứng dụng concurrent robust và hiệu quả. Các high-level constructs như Executor Framework, 
+          Concurrent Collections, và CompletableFuture giúp đơn giản hóa việc phát triển các ứng dụng phức tạp.
+        </p>
+
+        <blockquote>
+          <p>"Code tốt không chỉ chạy đúng — mà còn chạy nhanh và hiệu quả nhờ sức mạnh của đa luồng. 
+          Hiểu và áp dụng đúng các nguyên tắc concurrent programming là chìa khóa để xây dựng các hệ thống scalable và responsive."</p>
+        </blockquote>
+
+        <div class="technical-diagram">
+          <h4>🚀 Hướng dẫn tiếp theo</h4>
+          <p>
+            Sau khi nắm vững Java Multithreading, bạn có thể tìm hiểu thêm về:
+          </p>
+          <ul>
+            <li><strong>Java Memory Model</strong> - Hiểu sâu về cách Java quản lý bộ nhớ trong môi trường đa luồng</li>
+            <li><strong>Reactive Programming</strong> - Với Project Reactor và RxJava</li>
+            <li><strong>Parallel Streams</strong> - Xử lý song song collections với Stream API</li>
+            <li><strong>Akka Framework</strong> - Actor model cho distributed systems</li>
+            <li><strong>Java Virtual Threads</strong> (Project Loom) - Lightweight threads cho high-throughput applications</li>
+          </ul>
+        </div>
+
+        <p>
+          👉 Bắt đầu bằng những ví dụ nhỏ — rồi dần xây dựng ứng dụng có nhiều tác vụ chạy đồng thời để cảm nhận sức
+          mạnh thực sự của Java Multithreading! Luôn nhớ test kỹ lưỡng trong môi trường đa luồng và sử dụng tools 
+          như VisualVM, JConsole để monitor và debug.
+        </p>
+
+      </article>
     </div>
   </section>
 
-
-
+  <!-- Footer -->
   <section class="footer">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 mx-auto">
+      <div class="footer-content">
+        <div class="footer-about">
+          <a href="index.html" class="footer-brand">DevBlog</a>
+          <p class="footer-description">
+            Chia sẻ kiến thức về lập trình, công nghệ và phát triển phần mềm. 
+            Nơi kết nối cộng đồng developer Việt Nam.
+          </p>
           <div class="sociale-icon">
             <ul>
               <li>
-                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank" aria-label="GitHub">
+                  <i class="fab fa-github"></i>
+                </a>
               </li>
               <li>
-                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
               </li>
               <li>
-                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
               </li>
               <li>
-                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-              </li>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" aria-label="YouTube">
+                  <i class="fab fa-youtube"></i>
+                </a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="copy-right">
-            <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Dat</p>
-          </div>
+        
+        <div class="footer-links">
+          <h4>Liên kết</h4>
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="about.html">Giới thiệu</a></li>
+            <li><a href="articles.html">Bài viết</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+          </ul>
         </div>
+        
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <ul>
+            <li><i class="fas fa-envelope"></i> contact@devblog.com</li>
+            <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+            <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copy-right">
+        <p>© Copyright <span id="copyrightYear"></span> DevBlog. All Rights Reserved.</p>
       </div>
     </div>
   </section>
 
-  <!-- Vendor JS -->
-  <script src="vendor/jQuery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/bootstrap.min.js"></script>
-  <script src="vendor/slick/slick.min.js"></script>
-  <!-- Main JS -->
-  <script src="js/script.js"></script>
-
   <script>
-    // Set copyright year
+    // Set current year in footer
     document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 100) {
+        document.querySelector('.main-nav').classList.add('scrolled');
+      } else {
+        document.querySelector('.main-nav').classList.remove('scrolled');
+      }
+    });
+
+    // Toggle navbar on mobile
+    document.getElementById('navbarToggle').addEventListener('click', function() {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = this;
+      
+      navList.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = document.getElementById('navbarToggle');
+      const isClickInsideNav = navList.contains(event.target);
+      const isClickOnToggle = toggleButton.contains(event.target);
+      
+      if (window.innerWidth <= 768 && !isClickInsideNav && !isClickOnToggle) {
+        navList.classList.remove('active');
+        toggleButton.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for table of contents
+    document.querySelectorAll('.toc a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
   </script>
 </body>
 

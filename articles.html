@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THANHDAT | Tech Blog - JavaScript & Java Programming</title>
+    <title>THANH HIẾU | Tech Blog - JavaScript & Java Programming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -845,7 +845,7 @@
         <div class="container">
             <div class="nav-container">
                 <a href="index.html" class="logo">
-                    DevFolio
+                    Portfolio
                 </a>
 
                 <ul class="nav-links">
@@ -857,12 +857,12 @@
                 </ul>
 
                 <ul class="nav-social">
-                    <li><a href="https://github.com/trthinh-dev" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <li><a href="https://github.com/hiu123-ui" aria-label="GitHub"><i class="fab fa-github"></i></a>
                     </li>
-                    <li><a href="https://linkedin.com/in/trthinh-dev" aria-label="LinkedIn"><i
+                    <li><a href="https://linkedin.com/in/thanh-hieu" aria-label="LinkedIn"><i
                                 class="fab fa-linkedin"></i></a></li>
-                    <li><a href="https://twitter.com/trthinh_dev" aria-label="Twitter"><i
-                                class="fab fa-twitter"></i></a></li>
+                    <li><a href="https://facebook.com/thanh.hieu" aria-label="Facebook"><i
+                                class="fab fa-facebook"></i></a></li>
                 </ul>
 
                 <button class="mobile-toggle">
@@ -903,28 +903,7 @@
                 </div>
             </div>
 
-            <!-- Stats Section -->
-            <div class="stats">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h3>50+</h3>
-                        <p>Bài Viết Chất Lượng</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>15K+</h3>
-                        <p>Độc Giả Theo Dõi</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>3</h3>
-                        <p>Chuyên Mục Chính</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>100+</h3>
-                        <p>Dự Án Thực Tế</p>
-                    </div>
-                </div>
-            </div>
-
+            
             <!-- Search Bar -->
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Tìm kiếm bài viết...">
@@ -964,6 +943,81 @@
 
             <!-- Articles Grid -->
             <div class="blog-grid" id="articles-container">
+
+                 <!-- Java Articles -->
+                 <article class="featured-card" data-category="java">
+                    <div class="card-badge">Java</div>
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Java Exception Handling">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> 25 phút đọc</span>
+                            <span><i class="far fa-calendar"></i> 05/12/2024</span>
+                        </div>
+                        <h3><a href="J-Exception-Handling.html">Java Exception Handling</a></h3>
+                        <p class="card-excerpt">Hiểu sâu về xử lý ngoại lệ trong Java: try-catch-finally, custom
+                            exceptions và best practices cho ứng dụng ổn định.</p>
+                        <div class="card-tags">
+                            <span class="tag">Exception</span>
+                            <span class="tag">Error Handling</span>
+                            <span class="tag">Best Practices</span>
+                        </div>
+                        <a href="J-Exception-Handling.html" class="read-more">
+                            Đọc tiếp <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="featured-card" data-category="java">
+                    <div class="card-badge">Java</div>
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Java OOP Programming Concepts">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> 30 phút đọc</span>
+                            <span><i class="far fa-calendar"></i> 10/2024</span>
+                        </div>
+                        <h3><a href="J Object-Oriented Programming.html">Java Object-Oriented Programming</a></h3>
+                        <p class="card-excerpt">Làm chủ 4 trụ cột OOP trong Java: Inheritance, Polymorphism,
+                            Encapsulation và Abstraction. Ví dụ thực tế và ứng dụng trong dự án thực tế.</p>
+                        <div class="card-tags">
+                            <span class="tag">OOP</span>
+                            <span class="tag">Java Cơ bản</span>
+                            <span class="tag">Lập trình</span>
+                        </div>
+                        <a href="J Object-Oriented Programming.html" class="read-more">
+                            Đọc tiếp <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                <article class="featured-card" data-category="advanced">
+                    <div class="card-badge">Nâng Cao</div>
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Java Multithreading">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> 22 phút đọc</span>
+                            <span><i class="far fa-calendar"></i> 03/12/2024</span>
+                        </div>
+                        <h3><a href="J-Multithreading.html">Java Multithreading</a></h3>
+                        <p class="card-excerpt">Làm chủ lập trình đa luồng trong Java: Thread, Runnable, synchronized,
+                            và concurrent collections cho hiệu suất tối ưu.</p>
+                        <div class="card-tags">
+                            <span class="tag">Multithreading</span>
+                            <span class="tag">Concurrency</span>
+                            <span class="tag">Performance</span>
+                        </div>
+                        <a href="J-Multithreading.html" class="read-more">
+                            Đọc tiếp <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
                 <!-- JavaScript Articles -->
                 <article class="featured-card" data-category="javascript">
                     <div class="card-badge">JavaScript</div>
@@ -1065,82 +1119,10 @@
                     </div>
                 </article>
 
-                <!-- Java Articles -->
-                <article class="featured-card" data-category="java">
-                    <div class="card-badge">Java</div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Java Exception Handling">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> 25 phút đọc</span>
-                            <span><i class="far fa-calendar"></i> 05/12/2024</span>
-                        </div>
-                        <h3><a href="J-Exception-Handling.html">Java Exception Handling</a></h3>
-                        <p class="card-excerpt">Hiểu sâu về xử lý ngoại lệ trong Java: try-catch-finally, custom
-                            exceptions và best practices cho ứng dụng ổn định.</p>
-                        <div class="card-tags">
-                            <span class="tag">Exception</span>
-                            <span class="tag">Error Handling</span>
-                            <span class="tag">Best Practices</span>
-                        </div>
-                        <a href="J-Exception-Handling.html" class="read-more">
-                            Đọc tiếp <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="featured-card" data-category="java">
-                    <div class="card-badge">Java</div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Java OOP Programming Concepts">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> 30 phút đọc</span>
-                            <span><i class="far fa-calendar"></i> 10/2024</span>
-                        </div>
-                        <h3><a href="J Object-Oriented Programming.html">Java Object-Oriented Programming</a></h3>
-                        <p class="card-excerpt">Làm chủ 4 trụ cột OOP trong Java: Inheritance, Polymorphism,
-                            Encapsulation và Abstraction. Ví dụ thực tế và ứng dụng trong dự án thực tế.</p>
-                        <div class="card-tags">
-                            <span class="tag">OOP</span>
-                            <span class="tag">Java Cơ bản</span>
-                            <span class="tag">Lập trình</span>
-                        </div>
-                        <a href="J Object-Oriented Programming.html" class="read-more">
-                            Đọc tiếp <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
+               
 
                 <!-- Advanced Topics -->
-                <article class="featured-card" data-category="advanced">
-                    <div class="card-badge">Nâng Cao</div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Java Multithreading">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> 22 phút đọc</span>
-                            <span><i class="far fa-calendar"></i> 03/12/2024</span>
-                        </div>
-                        <h3><a href="J-Multithreading.html">Java Multithreading</a></h3>
-                        <p class="card-excerpt">Làm chủ lập trình đa luồng trong Java: Thread, Runnable, synchronized,
-                            và concurrent collections cho hiệu suất tối ưu.</p>
-                        <div class="card-tags">
-                            <span class="tag">Multithreading</span>
-                            <span class="tag">Concurrency</span>
-                            <span class="tag">Performance</span>
-                        </div>
-                        <a href="J-Multithreading.html" class="read-more">
-                            Đọc tiếp <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
+                
 
                 <article class="featured-card" data-category="advanced">
                     <div class="card-badge">Nâng Cao</div>
@@ -1193,30 +1175,7 @@
                     </div>
                 </article>
 
-                <article class="featured-card" data-category="javascript">
-                    <div class="card-badge">JavaScript</div>
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="JavaScript Mastery">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> 40 phút đọc</span>
-                            <span><i class="far fa-calendar"></i> 25/11/2024</span>
-                        </div>
-                        <h3><a href="js-Mastery Essentials.html">JavaScript Mastery Essentials</a></h3>
-                        <p class="card-excerpt">Chinh phục JavaScript với các kỹ thuật nâng cao, design patterns và best
-                            practices cho phát triển ứng dụng chuyên nghiệp.</p>
-                        <div class="card-tags">
-                            <span class="tag">Advanced</span>
-                            <span class="tag">Design Patterns</span>
-                            <span class="tag">Best Practices</span>
-                        </div>
-                        <a href="js-Mastery Essentials.html" class="read-more">
-                            Đọc tiếp <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
+               
             </div>
 
             <!-- Newsletter Section -->
@@ -1236,16 +1195,16 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">DevFolio</div>
+                    <div class="footer-logo">Portfolio</div>
                     <p>Chia sẻ kiến thức chuyên sâu về lập trình JavaScript, Java và các công nghệ web hiện đại. Cùng
                         nhau học tập và phát triển trong thế giới công nghệ đầy thú vị.</p>
                     <div class="footer-social">
-                        <a href="https://github.com/trthinh-dev" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/trthinh-dev" aria-label="LinkedIn"><i
+                        <a href="https://github.com/hiu123-ui" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/thanh-hieu" aria-label="LinkedIn"><i
                                 class="fab fa-linkedin-in"></i></a>
-                        <a href="https://twitter.com/trthinh_dev" aria-label="Twitter"><i
-                                class="fab fa-twitter"></i></a>
-                        <a href="https://youtube.com/@trthinh-dev" aria-label="YouTube"><i
+                        <a href="https://facebook.com/thanh.hieu" aria-label="Facebook"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="https://youtube.com/@thanh-hieu" aria-label="YouTube"><i
                                 class="fab fa-youtube"></i></a>
                     </div>
                 </div>
@@ -1274,7 +1233,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> THANHDAT Tech Blog. All rights reserved. | Made with <i
+                <p>&copy; <span id="currentYear"></span> THANH HIẾU Tech Blog. All rights reserved. | Made with <i
                         class="fas fa-heart" style="color: var(--accent);"></i> for developers</p>
             </div>
         </div>

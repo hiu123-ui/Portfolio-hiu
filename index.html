@@ -53,8 +53,6 @@
                 <a href="#about" class="nav-item nav-link">About</a>
                 <a href="#skill" class="nav-item nav-link">Kỹ năng</a>
                 <a href="articles.html" class="nav-item nav-link">Bài viết</a>
-            </div>
-            <div class="navbar-nav me-auto py-0">
                 <a href="#project" class="nav-item nav-link">Dự án</a>
                 <a href="#contact" class="nav-item nav-link">Liên hệ</a>
             </div>
@@ -1010,6 +1008,37 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new PortfolioInteractions();
+        });
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Active link highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', function () {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 

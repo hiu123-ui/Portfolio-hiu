@@ -24,6 +24,19 @@
 
   <style>
     /* Reset và base styles */
+    :root {
+      --primary-color: #0b3d91;
+      --secondary-color: #0077b5;
+      --accent-color: #005b8c;
+      --light-bg: #f8f9fa;
+      --dark-text: #222;
+      --light-text: #666;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --gradient-primary: linear-gradient(135deg, #0b3d91 0%, #0077b5 100%);
+      --gradient-secondary: linear-gradient(135deg, #0077b5 0%, #005b8c 100%);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -34,14 +47,14 @@
       font-family: 'Be Vietnam Pro', sans-serif;
       line-height: 1.8;
       letter-spacing: 0.25px;
-      color: #222;
+      color: var(--dark-text);
       font-weight: 400;
       background-color: #f9f9f9;
     }
 
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
-      color: #0b3d91;
+      color: var(--primary-color);
       letter-spacing: 0.5px;
       margin-bottom: 1rem;
     }
@@ -51,13 +64,14 @@
     }
 
     a {
-      color: #0077b5;
+      color: var(--secondary-color);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
 
     a:hover {
-      color: #005b8c;
+      color: var(--accent-color);
       text-decoration: underline;
     }
 
@@ -79,14 +93,70 @@
       padding: 0 15px;
     }
 
+    /* Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 1001;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    }
+
     /* Navbar */
     .main-nav {
       background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 15px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 1rem 0;
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .main-nav.scrolled {
+      padding: 0.5rem 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     }
 
     .navbar {
@@ -98,109 +168,200 @@
     .navbar-brand {
       font-size: 24px;
       font-weight: 700;
-      color: #0b3d91;
+      color: var(--primary-color);
       text-decoration: none;
+      display: flex;
+      align-items: center;
     }
 
     .nav-list {
       display: flex;
       align-items: center;
+      gap: 20px;
     }
 
     .navbar-nav {
       display: flex;
       list-style: none;
-      margin-right: 20px;
+      margin: 0;
+      padding: 0;
+      gap: 15px;
     }
 
     .nav-item {
-      margin: 0 10px;
+      position: relative;
     }
 
     .nav-link {
       font-weight: 500;
       color: #333;
+      padding: 8px 15px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
     }
 
     .nav-link:hover {
-      color: #0077b5;
+      color: var(--secondary-color);
+      background-color: #f8f9fa;
+      transform: translateY(-1px);
+    }
+
+    .nav-link.active {
+      color: var(--secondary-color);
+      background-color: #e3f2fd;
     }
 
     .main-nav-social {
       display: flex;
       list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 12px;
+      align-items: center;
     }
 
     .main-nav-social li {
-      margin: 0 8px;
+      margin: 0;
     }
 
     .main-nav-social a {
       color: #555;
-      font-size: 16px;
+      font-size: 18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      background-color: #f8f9fa;
     }
 
     .main-nav-social a:hover {
-      color: #0077b5;
+      color: #fff;
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 119, 181, 0.3);
     }
 
+    /* Toggle button for mobile */
     .navbar-toggler {
       display: none;
       background: none;
       border: none;
       cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+      padding: 5px;
+    }
+
+    .icon-bar {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+      transition: all 0.3s ease;
     }
 
     /* Blog Single */
     .blog-single {
-      padding: 60px 0;
+      padding: 4rem 0;
     }
 
     .single-blog {
       background: #fff;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      position: relative;
     }
 
     .single-blog .title {
-      font-size: 32px;
-      font-weight: 700;
-      color: #0b3d91;
-      margin-bottom: 15px;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .single-blog .meta {
       display: flex;
       list-style: none;
-      margin-bottom: 30px;
-      color: #666;
-      font-size: 14px;
+      margin-bottom: 2rem;
+      color: var(--light-text);
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
     .single-blog .meta li {
-      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--light-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
     }
 
     .single-blog .meta i {
-      margin-right: 5px;
+      color: var(--secondary-color);
     }
 
     .single-blog img {
       max-width: 100%;
       height: auto;
-      border-radius: 6px;
-      margin: 20px 0;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: 2rem 0;
+      transition: transform 0.3s ease;
+    }
+
+    .single-blog img:hover {
+      transform: translateY(-5px);
     }
 
     .single-blog h3 {
       font-size: 24px;
-      margin-top: 30px;
-      margin-bottom: 15px;
-      color: #0b3d91;
-      border-bottom: 2px solid #f0f0f0;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
       padding-bottom: 8px;
+      position: relative;
+      padding-left: 3rem;
     }
+
+    .single-blog h3:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    h3:nth-child(1):before { content: "\f1c0"; }
+    h3:nth-child(2):before { content: "\f1da"; }
+    h3:nth-child(3):before { content: "\f0e8"; }
+    h3:nth-child(4):before { content: "\f085"; }
+    h3:nth-child(5):before { content: "\f135"; }
+    h3:nth-child(6):before { content: "\f108"; }
+    h3:nth-child(7):before { content: "\f1fe"; }
+    h3:nth-child(8):before { content: "\f058"; }
 
     .single-blog p, .single-blog li {
       font-size: 18px;
@@ -208,34 +369,75 @@
     }
 
     .single-blog ul {
-      margin-left: 20px;
-      margin-bottom: 20px;
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .single-blog li {
-      margin-bottom: 10px;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .single-blog li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
     }
 
     .single-blog pre {
-      background-color: #f4f4f9;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 16px;
+      background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
       overflow-x: auto;
-      margin: 20px 0;
+      margin: 1.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--secondary-color);
+      position: relative;
+    }
+
+    .single-blog pre:before {
+      content: "JavaScript";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
     }
 
     .single-blog pre code {
       font-size: 16px;
       font-family: 'Courier New', monospace;
+      color: #e2e8f0;
     }
 
     blockquote {
-      background: #f3f6fa;
-      border-left: 4px solid #0077b5;
-      padding: 20px;
-      margin: 25px 0;
-      border-radius: 6px;
+      position: relative;
+      margin: 2rem 0;
+      padding: 2rem 2rem 2rem 3.5rem;
+      background: linear-gradient(135deg, #f3f6fa 0%, #e8eff8 100%);
+      border-left: 4px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    blockquote:before {
+      content: "\f10d";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 1rem;
+      top: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--secondary-color);
     }
 
     blockquote p {
@@ -247,11 +449,17 @@
 
     /* Diagram container styling */
     .diagram-container {
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      padding: 25px;
-      margin: 30px 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      margin: 2.5rem 0;
       text-align: center;
+      box-shadow: var(--box-shadow);
+    }
+
+    .diagram-container h3, .diagram-container h4 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
     }
 
     .diagram {
@@ -261,60 +469,132 @@
       display: block;
     }
 
-    /* Code block styling */
-    .code-block {
-      background-color: #2d2d2d;
-      color: #f8f8f2;
-      border-radius: 8px;
-      padding: 20px;
-      overflow-x: auto;
-      margin: 20px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    /* Instagram Section */
-    .instagram {
-      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-      padding: 40px 0;
+    .caption {
+      font-style: italic;
+      color: #555;
+      font-size: 0.9rem;
       text-align: center;
-      color: #fff;
-    }
-
-    .instagram a {
-      color: #fff;
-      font-weight: 600;
-      font-size: 18px;
-      margin-bottom: 20px;
+      margin-top: 1rem;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
       display: inline-block;
     }
 
-    .instagram-item {
+    /* Code block styling */
+    .code-block {
+      background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
+      color: #f8f8f2;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      line-height: 1.5;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--secondary-color);
+      position: relative;
+    }
+
+    .code-block:before {
+      content: "JavaScript";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
+    }
+
+    /* Table of Contents */
+    .toc {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .toc h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 20px;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .instagram-item-thum {
-      width: 16.666%;
-      padding: 5px;
+    .toc h4:before {
+      content: "\f0c9";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
     }
 
-    .instagram-item-thum img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 5px;
+    .toc ul {
+      padding-left: 1.5rem;
+      margin: 0;
+    }
+
+    .toc li {
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .toc li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+    }
+
+    .toc a {
+      color: var(--secondary-color);
+      transition: all 0.3s ease;
+      display: block;
+      padding: 0.25rem 0;
+    }
+
+    .toc a:hover {
+      color: var(--accent-color);
+      padding-left: 0.5rem;
+      text-decoration: none;
+    }
+
+    /* Concept Box */
+    .concept-box {
+      background: linear-gradient(135deg, #f5f7ff 0%, #e1e9ff 100%);
+      border-left: 4px solid var(--primary-color);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin: 2rem 0;
+      box-shadow: var(--box-shadow);
+    }
+
+    .concept-box h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     /* Footer */
     .footer {
-      background: #222;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0b3d91 100%);
       color: #fff;
-      padding: 50px 0 20px;
+      padding: 3rem 0 1rem;
       text-align: center;
+      margin-top: 4rem;
     }
 
     .footer-logo img {
@@ -338,7 +618,7 @@
     }
 
     .footer-nav a:hover {
-      color: #0077b5;
+      color: #a8d8ff;
     }
 
     .sociale-icon ul {
@@ -353,50 +633,85 @@
     }
 
     .sociale-icon a {
-      color: #fff;
-      font-size: 18px;
+      color: white;
+      font-size: 1.2rem;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
 
     .sociale-icon a:hover {
-      color: #0077b5;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      text-decoration: none;
     }
 
     .copy-right {
-      border-top: 1px solid #444;
-      padding-top: 20px;
-      color: #aaa;
-      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     .copy-right a {
       color: #fff;
     }
 
+    /* Animation for page load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .single-blog > * {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .single-blog > *:nth-child(1) { animation-delay: 0.1s; }
+    .single-blog > *:nth-child(2) { animation-delay: 0.2s; }
+    .single-blog > *:nth-child(3) { animation-delay: 0.3s; }
+    .single-blog > *:nth-child(4) { animation-delay: 0.4s; }
+    .single-blog > *:nth-child(5) { animation-delay: 0.5s; }
+    .single-blog > *:nth-child(6) { animation-delay: 0.6s; }
+    .single-blog > *:nth-child(7) { animation-delay: 0.7s; }
+    .single-blog > *:nth-child(8) { animation-delay: 0.8s; }
+    .single-blog > *:nth-child(9) { animation-delay: 0.9s; }
+    .single-blog > *:nth-child(10) { animation-delay: 1.0s; }
+
     /* Responsive */
     @media (max-width: 992px) {
-      .instagram-item-thum {
-        width: 33.333%;
-      }
-      
       .single-blog {
-        padding: 30px;
+        padding: 2rem;
       }
     }
 
     @media (max-width: 768px) {
       .navbar-toggler {
-        display: block;
+        display: flex;
       }
       
       .nav-list {
         flex-direction: column;
         position: absolute;
-        top: 70px;
+        top: 100%;
         left: 0;
         right: 0;
         background: #fff;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         display: none;
+        padding: 20px;
+        gap: 10px;
       }
       
       .nav-list.active {
@@ -406,268 +721,120 @@
       .navbar-nav {
         flex-direction: column;
         width: 100%;
-        margin-right: 0;
+        gap: 5px;
       }
       
       .nav-item {
-        margin: 0;
         width: 100%;
-        text-align: center;
-        border-bottom: 1px solid #f0f0f0;
       }
       
       .nav-link {
-        display: block;
-        padding: 15px;
+        padding: 12px 15px;
+        border-radius: 6px;
+        text-align: center;
       }
       
       .main-nav-social {
         justify-content: center;
-        padding: 15px 0;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        margin-top: 15px;
       }
       
-      .instagram-item-thum {
-        width: 50%;
+      /* Toggle button animation */
+      .navbar-toggler.active .icon-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
       }
       
-      .footer-nav ul {
-        flex-direction: column;
+      .navbar-toggler.active .icon-bar:nth-child(2) {
+        opacity: 0;
       }
       
-      .footer-nav li {
-        margin: 5px 0;
+      .navbar-toggler.active .icon-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      .single-blog .title {
+        font-size: 32px;
+      }
+
+      .single-blog h3 {
+        padding-left: 2.5rem;
+      }
+
+      .single-blog h3:before {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+      }
+
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
       }
     }
 
     @media (max-width: 576px) {
       .single-blog {
-        padding: 20px;
+        padding: 1.5rem;
       }
       
       .single-blog .title {
         font-size: 26px;
       }
       
-      .instagram-item-thum {
-        width: 100%;
+      .single-blog .meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .single-blog .meta li {
+        width: fit-content;
       }
     }
 
-    /* Navbar styles */
-
-    .main-nav navbar {
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.main-nav {
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar-brand {
-  font-size: 24px;
-  font-weight: 700;
-  color: #0b3d91;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.nav-list {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.navbar-nav {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 15px;
-}
-
-.nav-item {
-  position: relative;
-}
-
-.nav-link {
-  font-weight: 500;
-  color: #333;
-  padding: 8px 15px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: block;
-}
-
-.nav-link:hover {
-  color: #0077b5;
-  background-color: #f8f9fa;
-  transform: translateY(-1px);
-}
-
-.nav-link.active {
-  color: #0077b5;
-  background-color: #e3f2fd;
-}
-
-.main-nav-social {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 12px;
-  align-items: center;
-}
-
-.main-nav-social li {
-  margin: 0;
-}
-
-.main-nav-social a {
-  color: #555;
-  font-size: 18px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  background-color: #f8f9fa;
-}
-
-.main-nav-social a:hover {
-  color: #fff;
-  background-color: #0077b5;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 119, 181, 0.3);
-}
-
-/* Toggle button for mobile */
-.navbar-toggler {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  flex-direction: column;
-  gap: 4px;
-  padding: 5px;
-}
-
-.icon-bar {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .navbar-toggler {
-    display: flex;
-  }
-  
-  .nav-list {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    display: none;
-    padding: 20px;
-    gap: 10px;
-  }
-  
-  .nav-list.active {
-    display: flex;
-  }
-  
-  .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-    gap: 5px;
-  }
-  
-  .nav-item {
-    width: 100%;
-  }
-  
-  .nav-link {
-    padding: 12px 15px;
-    border-radius: 6px;
-    text-align: center;
-  }
-  
-  .main-nav-social {
-    justify-content: center;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-    margin-top: 15px;
-  }
-  
-  /* Toggle button animation */
-  .navbar-toggler.active .icon-bar:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-  }
-  
-  .navbar-toggler.active .icon-bar:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .navbar-toggler.active .icon-bar:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
-}
-
-/* Desktop enhancements */
-@media (min-width: 769px) {
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #0077b5;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  .nav-link:hover::after {
-    width: 80%;
-  }
-  
-  .nav-link.active::after {
-    width: 80%;
-  }
-}
+    /* Desktop enhancements */
+    @media (min-width: 769px) {
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+      
+      .nav-link:hover::after {
+        width: 80%;
+      }
+      
+      .nav-link.active::after {
+        width: 80%;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+<!-- Progress Bar -->
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- Back to Top Button -->
+<div class="back-to-top" id="backToTop">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
 <!-- Navbar Start -->
-<nav class="main-nav navbar">
+<nav class="main-nav navbar" id="mainNav">
   <div class="container">
     <!-- Logo -->
     <a class="navbar-brand" href="index.html">
@@ -679,7 +846,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <div class="nav-list" id="mainNav">
+    <div class="nav-list" id="navList">
       <!-- Navigation Links -->
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -723,14 +890,33 @@
     <div class="row">
       <div class="col-lg-10 mx-auto">
         <article class="single-blog">
-          <p class="title">JavaScript API Integration</p>
+          <p class="title">JavaScript API Integration - Hướng dẫn toàn diện</p>
           <ul class="meta">
-            <li>By <a href="about.html">Thanh Dat</a></li>
+            <li><i class="far fa-user"></i> By <a href="about.html">Thanh Hieu</a></li>
             <li>
               <i class="far fa-clock"></i>
               October 19, 2025
             </li>
+            <li>
+              <i class="far fa-folder"></i>
+              JavaScript, Web Development
+            </li>
           </ul>
+
+          <div class="toc">
+            <h4>Nội dung bài viết</h4>
+            <ul>
+              <li><a href="#intro">Giới thiệu</a></li>
+              <li><a href="#rest-api">REST API là gì?</a></li>
+              <li><a href="#fetch-api">Làm quen với Fetch API</a></li>
+              <li><a href="#json">Xử lý JSON trong JavaScript</a></li>
+              <li><a href="#async">Async / Await – Code gọn gàng hơn</a></li>
+              <li><a href="#post">Gửi dữ liệu (POST Request)</a></li>
+              <li><a href="#error">Xử lý lỗi và Loading UI</a></li>
+              <li><a href="#ui">Kết hợp API với giao diện</a></li>
+              <li><a href="#conclusion">Tổng kết</a></li>
+            </ul>
+          </div>
 
           <div class="diagram-container">
             <h3>JavaScript API Integration</h3>
@@ -773,7 +959,7 @@
             <p class="caption">Mô hình tích hợp API trong JavaScript: Client ↔ Server</p>
           </div>
 
-          <h3>Giới thiệu</h3>
+          <h3 id="intro">Giới thiệu</h3>
           <p>
             Trong thế giới web hiện đại, hầu hết các ứng dụng đều cần trao đổi dữ liệu với máy chủ hoặc dịch vụ khác thông qua API.  
             <strong>JavaScript API Integration</strong> chính là kỹ năng giúp bạn "nối cầu" giữa giao diện người dùng và dữ liệu thật.  
@@ -782,7 +968,17 @@
             hiển thị dữ liệu thời gian thực, tạo tương tác mượt mà và cá nhân hóa trải nghiệm người dùng.
           </p>
 
-          <h3>1. REST API là gì?</h3>
+          <div class="concept-box">
+            <h4>📌 Tại sao cần tích hợp API?</h4>
+            <ul>
+              <li>Hiển thị dữ liệu động từ server</li>
+              <li>Tương tác với các dịch vụ bên thứ ba</li>
+              <li>Tạo ứng dụng real-time</li>
+              <li>Xây dựng ứng dụng web hiện đại</li>
+            </ul>
+          </div>
+
+          <h3 id="rest-api">REST API là gì?</h3>
           <p>
             REST (Representational State Transfer) là tiêu chuẩn phổ biến nhất để thiết kế API.  
             Nó hoạt động dựa trên các phương thức HTTP quen thuộc:
@@ -846,7 +1042,7 @@
             <p>"API là cầu nối giúp JavaScript trò chuyện với thế giới — từ thời tiết, tin tức đến mạng xã hội."</p>
           </blockquote>
 
-          <h3>2. Làm quen với Fetch API</h3>
+          <h3 id="fetch-api">Làm quen với Fetch API</h3>
           <p>
             <strong>Fetch API</strong> là công cụ tích hợp sẵn trong trình duyệt giúp bạn gửi yêu cầu HTTP và nhận phản hồi một cách đơn giản.
             Nó trả về <code>Promise</code>, nên rất tiện khi kết hợp với <code>async / await</code>.
@@ -867,7 +1063,7 @@
             Nếu có lỗi (mất mạng, sai URL, lỗi server) thì khối <code>catch</code> sẽ xử lý.
           </p>
 
-          <h3>3. Xử lý JSON trong JavaScript</h3>
+          <h3 id="json">Xử lý JSON trong JavaScript</h3>
           <p>
             Dữ liệu API thường ở định dạng <strong>JSON (JavaScript Object Notation)</strong> – dễ đọc và dễ thao tác.  
             Bạn có thể chuyển đổi qua lại giữa JSON và Object bằng:
@@ -888,7 +1084,7 @@
             👉 Khi làm việc với API, hãy nhớ: <code>response.json()</code> cũng là một Promise — bạn cần <code>await</code> hoặc <code>then()</code> để lấy dữ liệu.
           </p>
 
-          <h3>4. Async / Await – Code gọn gàng hơn</h3>
+          <h3 id="async">Async / Await – Code gọn gàng hơn</h3>
           <p>
             Sử dụng <code>async / await</code> giúp bạn viết code xử lý API dễ đọc hơn nhiều so với callback lồng nhau.
           </p>
@@ -912,7 +1108,7 @@
             👉 Đây là phong cách hiện đại trong hầu hết framework (React, Vue, Node.js) vì dễ debug và dễ mở rộng.
           </p>
 
-          <h3>5. Gửi dữ liệu (POST Request)</h3>
+          <h3 id="post">Gửi dữ liệu (POST Request)</h3>
           <p>
             Ngoài việc đọc dữ liệu, bạn còn có thể gửi thông tin đến server — ví dụ, thêm người dùng mới:
           </p>
@@ -943,7 +1139,7 @@
             👉 Luôn nhớ thiết lập header <code>Content-Type: application/json</code> khi gửi dữ liệu dạng JSON.
           </p>
 
-          <h3>6. Xử lý lỗi và Loading UI</h3>
+          <h3 id="error">Xử lý lỗi và Loading UI</h3>
           <p>
             API có thể phản hồi chậm hoặc lỗi, vì vậy bạn nên thêm trạng thái loading và kiểm tra mã phản hồi HTTP:
           </p>
@@ -972,7 +1168,7 @@
             <p>"Trải nghiệm người dùng tốt bắt đầu từ việc xử lý lỗi và trạng thái tải thông minh."</p>
           </blockquote>
 
-          <h3>7. Kết hợp API với giao diện</h3>
+          <h3 id="ui">Kết hợp API với giao diện</h3>
           <p>
             Dữ liệu JSON có thể dễ dàng hiển thị lên HTML bằng cách thao tác DOM.  
             Ví dụ: hiển thị danh sách bài viết lấy từ API:
@@ -1031,7 +1227,7 @@
             Cuối cùng, <code>.catch(error => {...})</code> được dùng để bắt và xử lý các lỗi xảy ra trong quá trình gửi yêu cầu hoặc nhận phản hồi.
           </p>
 
-          <h3>8. Tổng kết</h3>
+          <h3 id="conclusion">Tổng kết</h3>
           <p>
             <strong>Tích hợp API</strong> là kỹ năng cốt lõi của lập trình web hiện đại.  
             Khi bạn hiểu rõ cách dùng <code>fetch</code>, xử lý JSON, và kết hợp async/await,  
@@ -1040,6 +1236,17 @@
             👉 Hãy thực hành bằng cách gọi thử các API công khai (như JSONPlaceholder hoặc OpenWeatherMap)  
             và hiển thị dữ liệu ngay trên giao diện của bạn.
           </p>
+
+          <div class="concept-box">
+            <h4>📌 Các API miễn phí để thực hành</h4>
+            <ul>
+              <li><strong>JSONPlaceholder</strong> - API giả lập cho testing</li>
+              <li><strong>OpenWeatherMap</strong> - API thời tiết</li>
+              <li><strong>GitHub API</strong> - Thông tin repositories và users</li>
+              <li><strong>REST Countries</strong> - Thông tin quốc gia</li>
+              <li><strong>Dog CEO</strong> - API hình ảnh chó ngẫu nhiên</li>
+            </ul>
+          </div>
 
           <blockquote>
             <p>"API không chỉ là dữ liệu — nó là cánh cửa để JavaScript của bạn kết nối với cả thế giới."</p>
@@ -1050,8 +1257,6 @@
     </div>
   </div>
 </section>
-
-
 
 <section class="footer">
   <div class="container-fluid">
@@ -1081,7 +1286,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="copy-right">
-          <p>© Copyright <span id="copyrightYear">2025</span> - All Rights Reserved by Thanh Dat</p>
+          <p>© Copyright <span id="copyrightYear">2025</span> - All Rights Reserved by Thanh Hieu</p>
         </div>
       </div>
     </div>
@@ -1091,11 +1296,68 @@
 <script>
   // Toggle navbar on mobile
   document.getElementById('navbarToggle').addEventListener('click', function() {
-    document.getElementById('mainNav').classList.toggle('active');
+    document.getElementById('navList').classList.toggle('active');
+    this.classList.toggle('active');
   });
 
   // Set current year in copyright
   document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+  // Scroll progress bar
+  window.addEventListener('scroll', function() {
+    const winHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+    document.getElementById('progressBar').style.width = scrollPercent + '%';
+  });
+
+  // Back to top button
+  const backToTopButton = document.getElementById('backToTop');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      backToTopButton.classList.add('show');
+    } else {
+      backToTopButton.classList.remove('show');
+    }
+  });
+
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('mainNav');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
 </script>
 
 </body>

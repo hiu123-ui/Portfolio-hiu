@@ -433,6 +433,103 @@
       }
     }
 
+    /* Additional styles for new content */
+    .code-comparison {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 25px 0;
+    }
+    
+    .code-example {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .code-example h5 {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px;
+      margin: 0;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .code-example pre {
+      margin: 0;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+    
+    .practice-exercise {
+      background-color: #f0f8ff;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid #4caf50;
+    }
+    
+    .practice-exercise h4 {
+      color: #2e7d32;
+      margin-top: 0;
+    }
+    
+    .quiz-container {
+      background-color: #fff3e0;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 25px 0;
+    }
+    
+    .quiz-question {
+      margin-bottom: 15px;
+    }
+    
+    .quiz-options {
+      margin-left: 20px;
+    }
+    
+    .quiz-options label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    
+    .quiz-answer {
+      background-color: #e8f5e9;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      margin-top: 10px;
+      display: none;
+    }
+    
+    .show-answer {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .show-answer:hover {
+      background-color: var(--accent-color);
+    }
+    
+    .resources-list {
+      background-color: #f9f9f9;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 25px 0;
+    }
+    
+    .resources-list ul {
+      padding-left: 20px;
+    }
+    
+    .resources-list li {
+      margin-bottom: 10px;
+    }
+
   </style>
 </head>
 
@@ -443,7 +540,7 @@
   <div class="container">
     <!-- Logo -->
     <a class="navbar-brand" href="index.html">
-      <h2 class="logo-text">DevFolio</h2>
+      <h2 class="logo-text">Portfolio</h2>
     </a>
     <!-- Toogle Button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -495,7 +592,7 @@
         <article class="single-blog">
           <p class="title">Java Object-Oriented Programming</p>
           <ul class="meta">
-            <li>By <a href="about.html">Thanh Dat</a></li>
+            <li>By <a href="about.html">Thanh Hieu</a></li>
             <li>
               <i class="far fa-clock"></i>
               October 19, 2024
@@ -514,7 +611,11 @@
               <li><a href="#inheritance">Inheritance</a></li>
               <li><a href="#polymorphism">Polymorphism</a></li>
               <li><a href="#encapsulation">Encapsulation</a></li>
+              <li><a href="#abstraction">Abstraction</a></li>
+              <li><a href="#advanced-concepts">Khái niệm nâng cao</a></li>
               <li><a href="#best-practices">Thực hành tốt</a></li>
+              <li><a href="#exercises">Bài tập thực hành</a></li>
+              <li><a href="#resources">Tài nguyên học tập</a></li>
               <li><a href="#conclusion">Kết luận</a></li>
             </ul>
           </div>
@@ -546,6 +647,10 @@
             <div class="pillar-card">
               <h4>Encapsulation</h4>
               <p>Đóng gói và bảo vệ</p>
+            </div>
+            <div class="pillar-card">
+              <h4>Abstraction</h4>
+              <p>Trừu tượng hóa</p>
             </div>
           </div>
 
@@ -583,6 +688,44 @@ System.out.println(p.getName());</code></pre>
             Ở ví dụ này, <code>Person</code> là class, còn <code>p</code> là object cụ thể.  
             Mỗi object có dữ liệu riêng biệt và các hành vi được định nghĩa sẵn trong class.
           </p>
+
+          <h4>Constructor và Method Overloading</h4>
+          <p>
+            Constructor là phương thức đặc biệt được gọi khi tạo đối tượng. Java hỗ trợ <strong>constructor overloading</strong> - 
+            tạo nhiều constructor với tham số khác nhau.
+          </p>
+
+          <div class="code-comparison">
+            <div class="code-example">
+              <h5>Constructor Overloading</h5>
+              <pre><code class="language-java">public class Student {
+  private String name;
+  private int age;
+  private String major;
+  
+  // Constructor mặc định
+  public Student() {
+    this.name = "Unknown";
+    this.age = 0;
+    this.major = "Undeclared";
+  }
+  
+  // Constructor với tham số
+  public Student(String name, int age) {
+    this.name = name;
+    this.age = age;
+    this.major = "Undeclared";
+  }
+  
+  // Constructor với đầy đủ tham số
+  public Student(String name, int age, String major) {
+    this.name = name;
+    this.age = age;
+    this.major = major;
+  }
+}</code></pre>
+            </div>
+          </div>
 
           <h3 id="inheritance">2. Inheritance — Kế thừa để tái sử dụng và mở rộng</h3>
           <p>
@@ -624,6 +767,37 @@ a.speak(); // Output: Woof!</code></pre>
             Nhờ kế thừa, bạn có thể tái sử dụng logic sẵn có và thêm đặc tính mới mà không phải viết lại toàn bộ mã.
           </p>
 
+          <h4>Các loại kế thừa trong Java</h4>
+          <p>Java hỗ trợ các loại kế thừa sau:</p>
+          <ul>
+            <li><strong>Single Inheritance</strong>: Một lớp con kế thừa từ một lớp cha</li>
+            <li><strong>Multilevel Inheritance</strong>: Một lớp con kế thừa từ lớp cha, và lớp cha này lại kế thừa từ một lớp khác</li>
+            <li><strong>Hierarchical Inheritance</strong>: Nhiều lớp con kế thừa từ cùng một lớp cha</li>
+          </ul>
+
+          <div class="code-comparison">
+            <div class="code-example">
+              <h5>Multilevel Inheritance</h5>
+              <pre><code class="language-java">class Vehicle {
+  void start() { System.out.println("Vehicle started"); }
+}
+
+class Car extends Vehicle {
+  void drive() { System.out.println("Car is driving"); }
+}
+
+class ElectricCar extends Car {
+  void charge() { System.out.println("Electric car charging"); }
+}
+
+// Sử dụng
+ElectricCar tesla = new ElectricCar();
+tesla.start();  // Kế thừa từ Vehicle
+tesla.drive();  // Kế thừa từ Car
+tesla.charge(); // Phương thức riêng</code></pre>
+            </div>
+          </div>
+
           <h3 id="polymorphism">3. Polymorphism — Một hành vi, nhiều cách thể hiện</h3>
           <p>
             <strong>Polymorphism (Đa hình)</strong> cho phép cùng một phương thức có thể hoạt động khác nhau tùy theo đối tượng cụ thể.  
@@ -649,6 +823,7 @@ a.speak(); // Output: Woof!</code></pre>
           <pre><code class="language-java">public class MathUtil {
   public int sum(int a, int b) { return a + b; }
   public double sum(double a, double b) { return a + b; }
+  public int sum(int a, int b, int c) { return a + b + c; }
 }</code></pre>
 
           <p><em>Ví dụ Overriding:</em></p>
@@ -704,6 +879,64 @@ System.out.println(acc.getBalance()); // 150</code></pre>
             Nhờ đóng gói, các đối tượng được "bảo vệ" khỏi việc sửa đổi không mong muốn, giúp hệ thống ổn định và an toàn hơn.
           </p>
 
+          <h3 id="abstraction">5. Abstraction — Trừu tượng hóa chi tiết phức tạp</h3>
+          <p>
+            <strong>Abstraction</strong> là quá trình ẩn đi các chi tiết triển khai phức tạp và chỉ hiển thị các tính năng thiết yếu cho người dùng. 
+            Trong Java, abstraction được thực hiện thông qua <strong>abstract classes</strong> và <strong>interfaces</strong>.
+          </p>
+
+          <div class="code-comparison">
+            <div class="code-example">
+              <h5>Abstract Class</h5>
+              <pre><code class="language-java">abstract class Shape {
+  protected String color;
+  
+  public Shape(String color) {
+    this.color = color;
+  }
+  
+  // Abstract method - không có triển khai
+  abstract double area();
+  
+  // Concrete method - có triển khai
+  public String getColor() {
+    return color;
+  }
+}
+
+class Circle extends Shape {
+  private double radius;
+  
+  public Circle(String color, double radius) {
+    super(color);
+    this.radius = radius;
+  }
+  
+  @Override
+  double area() {
+    return Math.PI * radius * radius;
+  }
+}</code></pre>
+            </div>
+            
+            <div class="code-example">
+              <h5>Interface</h5>
+              <pre><code class="language-java">interface Drawable {
+  void draw(); // Mặc định là abstract và public
+  default void setColor(String color) {
+    System.out.println("Setting color to " + color);
+  }
+}
+
+class Rectangle implements Drawable {
+  @Override
+  public void draw() {
+    System.out.println("Drawing a rectangle");
+  }
+}</code></pre>
+            </div>
+          </div>
+
           <div class="concept-box">
             <h4>📌 Tóm tắt 4 trụ cột OOP</h4>
             <ul>
@@ -714,18 +947,100 @@ System.out.println(acc.getBalance()); // 150</code></pre>
             </ul>
           </div>
 
-          <h3 id="best-practices">5. Thực hành tốt khi áp dụng OOP trong Java</h3>
+          <h3 id="advanced-concepts">6. Khái niệm nâng cao trong OOP</h3>
+          
+          <h4>Composition vs Inheritance</h4>
+          <p>
+            Trong khi inheritance thể hiện mối quan hệ "is-a", composition thể hiện mối quan hệ "has-a". 
+            Composition thường được ưu tiên hơn inheritance vì nó linh hoạt hơn và tránh được vấn đề lớp cơ sở dễ vỡ (fragile base class).
+          </p>
+
+          <div class="code-comparison">
+            <div class="code-example">
+              <h5>Inheritance (IS-A)</h5>
+              <pre><code class="language-java">class Car extends Vehicle {
+  // Car IS-A Vehicle
+}</code></pre>
+            </div>
+            
+            <div class="code-example">
+              <h5>Composition (HAS-A)</h5>
+              <pre><code class="language-java">class Car {
+  private Engine engine; // Car HAS-A Engine
+  private Wheel[] wheels; // Car HAS-A Wheels
+  
+  public Car() {
+    this.engine = new Engine();
+    this.wheels = new Wheel[4];
+  }
+}</code></pre>
+            </div>
+          </div>
+
+          <h4>Static và Final Keywords</h4>
+          <p>
+            <strong>Static</strong> được sử dụng để tạo các thành phần thuộc về lớp thay vì đối tượng. 
+            <strong>Final</strong> được sử dụng để tạo hằng số hoặc ngăn chặn kế thừa/ghi đè.
+          </p>
+
+          <pre><code class="language-java">public class MathConstants {
+  // Static final - hằng số
+  public static final double PI = 3.14159;
+  
+  // Static method - gọi mà không cần tạo đối tượng
+  public static int max(int a, int b) {
+    return a > b ? a : b;
+  }
+}
+
+// Sử dụng
+double circleArea = MathConstants.PI * radius * radius;
+int larger = MathConstants.max(5, 10);</code></pre>
+
+          <h3 id="best-practices">7. Thực hành tốt khi áp dụng OOP trong Java</h3>
           <ul>
             <li><strong>Tuân thủ nguyên tắc SRP</strong> – mỗi class chỉ nên có một trách nhiệm duy nhất.</li>
             <li><strong>Ưu tiên Composition hơn Inheritance</strong> – khi có thể, sử dụng "has-a" thay vì "is-a".</li>
             <li><strong>Giữ dữ liệu ở mức private</strong>, chỉ cung cấp getter/setter khi thực sự cần.</li>
             <li><strong>Dùng interface</strong> để tách biệt phần định nghĩa hành vi khỏi phần triển khai cụ thể.</li>
             <li><strong>Refactor thường xuyên</strong> để code luôn rõ ràng và có thể mở rộng.</li>
+            <li><strong>Áp dụng SOLID principles</strong> để thiết kế hệ thống linh hoạt và dễ bảo trì.</li>
+            <li><strong>Sử dụng dependency injection</strong> để giảm sự phụ thuộc giữa các lớp.</li>
           </ul>
 
           <blockquote>
             <p>"Viết code hướng đối tượng không chỉ là kỹ thuật — đó là nghệ thuật tổ chức tư duy logic thành cấu trúc dễ hiểu."</p>
           </blockquote>
+
+          
+
+          
+
+          <h3 id="resources">8. Tài nguyên học tập</h3>
+          
+          <div class="resources-list">
+            <h4>Sách và tài liệu tham khảo</h4>
+            <ul>
+              <li><strong>Effective Java</strong> - Joshua Bloch</li>
+              <li><strong>Head First Design Patterns</strong> - Eric Freeman & Elisabeth Robson</li>
+              <li><strong>Clean Code</strong> - Robert C. Martin</li>
+              <li><strong>Java: The Complete Reference</strong> - Herbert Schildt</li>
+            </ul>
+            
+            <h4>Khóa học trực tuyến</h4>
+            <ul>
+              <li>Java Programming Masterclass (Udemy)</li>
+              <li>Object Oriented Programming in Java (Coursera)</li>
+              <li>Java Fundamentals (Pluralsight)</li>
+            </ul>
+            
+            <h4>Công cụ và IDE</h4>
+            <ul>
+              <li>IntelliJ IDEA - IDE mạnh mẽ với nhiều tính năng hỗ trợ OOP</li>
+              <li>Eclipse - IDE phổ biến trong cộng đồng Java</li>
+              <li>Visual Studio Code với extension Java</li>
+            </ul>
+          </div>
 
           <h3 id="conclusion">Kết luận & Hướng phát triển</h3>
           <p>
@@ -738,6 +1053,16 @@ System.out.println(acc.getBalance()); // 150</code></pre>
             Mỗi lần bạn cải tiến class, tách interface, hoặc tái sử dụng code – bạn đang tiến gần hơn đến tư duy lập trình chuyên nghiệp.
           </p>
 
+          <p>
+            Tiếp theo, bạn có thể tìm hiểu về:
+          </p>
+          <ul>
+            <li><strong>Design Patterns</strong> - Các mẫu thiết kế phổ biến trong OOP</li>
+            <li><strong>SOLID Principles</strong> - Nguyên lý thiết kế hướng đối tượng</li>
+            <li><strong>Java Collections Framework</strong> - Cấu trúc dữ liệu trong Java</li>
+            <li><strong>Exception Handling</strong> - Xử lý lỗi trong Java</li>
+          </ul>
+
           <div class="article-footer mt-5 pt-4 border-top">
             <div class="row">
               <div class="col-md-6">
@@ -747,6 +1072,7 @@ System.out.println(acc.getBalance()); // 150</code></pre>
                   <span class="badge bg-secondary">OOP</span>
                   <span class="badge bg-success">Programming</span>
                   <span class="badge bg-info">Software Design</span>
+                  <span class="badge bg-warning">Best Practices</span>
                 </div>
               </div>
               <div class="col-md-6 text-md-end">
@@ -772,7 +1098,7 @@ System.out.println(acc.getBalance()); // 150</code></pre>
     <div class="row">
       <div class="col-lg-6 mx-auto text-center">
         <div class="footer-logo">
-          <h3>DevFolio</h3>
+          <h3>Portfolio</h3>
         </div>
       </div>
     </div>
@@ -819,7 +1145,7 @@ System.out.println(acc.getBalance()); // 150</code></pre>
     <div class="row">
       <div class="col-lg-12">
         <div class="copy-right">
-          <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Dat</p>
+          <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Hieu</p>
         </div>
       </div>
     </div>
@@ -832,6 +1158,16 @@ System.out.println(acc.getBalance()); // 150</code></pre>
 <script>
   // Set current year in copyright
   document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+  
+  // Toggle quiz answers
+  function toggleAnswer(answerId) {
+    const answer = document.getElementById(answerId);
+    if (answer.style.display === 'block') {
+      answer.style.display = 'none';
+    } else {
+      answer.style.display = 'block';
+    }
+  }
 </script>
 </body>
 </html>

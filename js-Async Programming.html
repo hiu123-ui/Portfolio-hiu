@@ -31,8 +31,10 @@
       --light-bg: #f8f9fa;
       --dark-text: #222;
       --light-text: #666;
-      --border-radius: 8px;
-      --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --border-radius: 12px;
+      --box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --gradient-primary: linear-gradient(135deg, #0b3d91 0%, #0077b5 100%);
+      --gradient-secondary: linear-gradient(135deg, #0077b5 0%, #005b8c 100%);
     }
 
     /* Font mặc định cho toàn bộ trang */
@@ -57,22 +59,91 @@
       color: #111;
     }
 
+    /* Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 1001;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    }
+
     /* Trích dẫn */
+    blockquote {
+      position: relative;
+      margin: 2rem 0;
+      padding: 2rem 2rem 2rem 3.5rem;
+      background: linear-gradient(135deg, #f3f6fa 0%, #e8eff8 100%);
+      border-left: 4px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    blockquote:before {
+      content: "\f10d";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 1rem;
+      top: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+    }
+
     blockquote p {
       font-style: italic;
       color: #333;
       font-weight: 500;
-      background: #f3f6fa;
-      border-left: 4px solid var(--secondary-color);
-      padding: 12px 18px;
-      border-radius: var(--border-radius);
+      margin: 0;
     }
 
     /* Liên kết */
     a {
       color: var(--secondary-color);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
     a:hover {
       color: var(--accent-color);
@@ -85,80 +156,146 @@
       line-height: 1.7;
     }
     .single-blog pre {
-      background-color: #f4f4f9;
-      border: 1px solid #ddd;
+      background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
       border-radius: var(--border-radius);
-      padding: 16px;
+      padding: 1.5rem;
       overflow-x: auto;
-      margin: 20px 0;
+      margin: 1.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--secondary-color);
+      position: relative;
+    }
+    .single-blog pre:before {
+      content: "JavaScript";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
     }
     .single-blog pre code {
       font-size: 16px;
       font-family: 'Courier New', monospace;
+      color: #e2e8f0;
     }
     .single-blog img {
       max-width: 100%;
       height: auto;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      margin: 20px 0;
+      margin: 2rem 0;
+      transition: transform 0.3s ease;
+    }
+    .single-blog img:hover {
+      transform: translateY(-5px);
     }
     .single-blog .title {
-      font-size: 36px;
-      font-weight: 700;
+      font-size: 42px;
+      font-weight: 800;
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .single-blog .meta {
       list-style: none;
       padding: 0;
       display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
       color: var(--light-text);
+      flex-wrap: wrap;
+    }
+    .single-blog .meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--light-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
     }
     .single-blog .meta i {
-      margin-right: 5px;
+      color: var(--secondary-color);
     }
     
     /* Navigation styles */
     .main-nav {
       background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 15px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
-    .main-nav .logo-main {
-      height: 40px;
+    .main-nav.scrolled {
+      padding: 0.5rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .main-nav .logo-text {
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
     }
     .main-nav .nav-link {
       color: #333;
       font-weight: 500;
-      padding: 10px 15px;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
     .main-nav .nav-link:hover {
       color: var(--secondary-color);
+      background-color: rgba(0, 119, 181, 0.1);
+      text-decoration: none;
     }
     .main-nav-social li {
       display: inline-block;
-      margin-left: 15px;
+      margin-left: 0.5rem;
     }
     .main-nav-social a {
       color: #333;
-      font-size: 18px;
+      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
     }
     .main-nav-social a:hover {
-      color: var(--secondary-color);
+      color: white;
+      background: var(--gradient-secondary);
+      text-decoration: none;
+      transform: translateY(-2px);
     }
     
     /* Footer styles */
     .footer {
-      background-color: var(--light-bg);
-      padding: 50px 0 20px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0b3d91 100%);
+      padding: 3rem 0 1rem;
       text-align: center;
+      color: white;
+      margin-top: 4rem;
     }
-    .footer-logo img {
-      height: 40px;
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
       margin-bottom: 20px;
+      color: white;
     }
     .footer-nav .navbar-nav {
       flex-direction: row;
@@ -173,131 +310,176 @@
       padding: 0;
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
     .sociale-icon li {
-      margin: 0 10px;
+      margin: 0 0.5rem;
     }
     .sociale-icon a {
-      color: #333;
-      font-size: 18px;
+      color: white;
+      font-size: 1.2rem;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .sociale-icon a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      text-decoration: none;
     }
     .copy-right {
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-      color: var(--light-text);
-    }
-    
-    /* Instagram section */
-    .instagram {
-      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-      padding: 30px 0;
-      text-align: center;
-      color: white;
-    }
-    .instagram a {
-      display: inline-flex;
-      align-items: center;
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-    .instagram-item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-    .instagram-item-thum {
-      width: calc(16.66% - 10px);
-    }
-    .instagram-item-thum img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
     }
     
     /* Blog section styling */
     .blog-single {
-      padding: 60px 0;
+      padding: 4rem 0;
       background-color: #fff;
     }
     
     /* Code highlighting */
     .language-javascript {
-      color: #d63384;
+      color: #fbb6ce;
     }
     
     /* Responsive adjustments */
     @media (max-width: 768px) {
-      .instagram-item-thum {
-        width: calc(33.33% - 10px);
-      }
       .single-blog .title {
-        font-size: 28px;
+        font-size: 32px;
       }
       .single-blog p, .single-blog li {
         font-size: 16px;
       }
       .single-blog .meta {
         flex-direction: column;
-        gap: 10px;
+        gap: 0.5rem;
+      }
+      .single-blog .meta li {
+        width: fit-content;
+      }
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
       }
     }
     
     /* Table of Contents */
     .toc {
-      background-color: var(--light-bg);
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius);
-      padding: 20px;
-      margin: 30px 0;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--primary-color);
     }
     .toc h4 {
       margin-top: 0;
       color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toc h4:before {
+      content: "\f0c9";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
     }
     .toc ul {
-      padding-left: 20px;
+      padding-left: 1.5rem;
+      margin: 0;
     }
     .toc li {
-      margin-bottom: 8px;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .toc li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
     }
     .toc a {
       color: var(--secondary-color);
+      transition: all 0.3s ease;
+      display: block;
+      padding: 0.25rem 0;
+    }
+    .toc a:hover {
+      color: var(--accent-color);
+      padding-left: 0.5rem;
+      text-decoration: none;
     }
     
     /* Special styling for async concepts */
     .concept-box {
       background: linear-gradient(135deg, #f5f7ff 0%, #e1e9ff 100%);
       border-left: 4px solid var(--primary-color);
-      padding: 20px;
+      padding: 2rem;
       border-radius: var(--border-radius);
-      margin: 25px 0;
+      margin: 2rem 0;
+      box-shadow: var(--box-shadow);
+    }
+    .concept-box h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
     .flow-diagram {
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius);
-      padding: 25px;
-      margin: 30px 0;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
       text-align: center;
+      box-shadow: var(--box-shadow);
+    }
+    .flow-diagram h4 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
     }
     
     .caption {
       font-style: italic;
       color: #555;
-      font-size: 15px;
+      font-size: 0.9rem;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 1rem;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
     }
     
     /* Diagram container styling */
     .diagram-container {
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius);
-      padding: 25px;
-      margin: 30px 0;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
       text-align: center;
+      box-shadow: var(--box-shadow);
+    }
+    .diagram-container h3, .diagram-container h4 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
     }
     
     .diagram {
@@ -309,62 +491,210 @@
     
     /* Code block styling */
     .code-block {
-      background-color: #2d2d2d;
+      background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
       color: #f8f8f2;
       border-radius: var(--border-radius);
-      padding: 20px;
+      padding: 1.5rem;
       overflow-x: auto;
-      margin: 20px 0;
+      margin: 1.5rem 0;
       font-family: 'Courier New', monospace;
       font-size: 16px;
       line-height: 1.5;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--secondary-color);
+      position: relative;
+    }
+    .code-block:before {
+      content: "JavaScript";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
     }
     
     /* Badge styling */
     .badge {
-      margin-right: 5px;
-      margin-bottom: 5px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      border-radius: 50px;
+      font-weight: 500;
     }
     
     /* Share buttons */
     .share-buttons .btn {
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .share-buttons .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Section Headers with Icons */
+    h3 {
+      position: relative;
+      padding-left: 3rem;
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--gradient-primary);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    h3#intro:before { content: "\f1c0"; }
+    h3#async-basics:before { content: "\f0e8"; }
+    h3#callbacks:before { content: "\f0a1"; }
+    h3#promises:before { content: "\f0a1"; }
+    h3#async-await:before { content: "\f0a1"; }
+    h3#promise-methods:before { content: "\f0a1"; }
+    h3#async-flow:before { content: "\f0a1"; }
+    h3#conclusion:before { content: "\f058"; }
+
+    /* Sub-headers */
+    h4 {
+      color: var(--secondary-color);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    h4:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: var(--secondary-color);
+      border-radius: 4px;
+    }
+
+    /* List styling */
+    .single-blog ul {
+      padding-left: 1.5rem;
+    }
+
+    .single-blog li {
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .single-blog li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+    }
+
+    /* Animation for page load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .single-blog > * {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .single-blog > *:nth-child(1) { animation-delay: 0.1s; }
+    .single-blog > *:nth-child(2) { animation-delay: 0.2s; }
+    .single-blog > *:nth-child(3) { animation-delay: 0.3s; }
+    .single-blog > *:nth-child(4) { animation-delay: 0.4s; }
+    .single-blog > *:nth-child(5) { animation-delay: 0.5s; }
+    .single-blog > *:nth-child(6) { animation-delay: 0.6s; }
+    .single-blog > *:nth-child(7) { animation-delay: 0.7s; }
+    .single-blog > *:nth-child(8) { animation-delay: 0.8s; }
+    .single-blog > *:nth-child(9) { animation-delay: 0.9s; }
+    .single-blog > *:nth-child(10) { animation-delay: 1.0s; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h3 {
+        padding-left: 2.5rem;
+      }
+
+      h3:before {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
 
 <body>
 
+<!-- Progress Bar -->
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- Back to Top Button -->
+<div class="back-to-top" id="backToTop">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
 <!-- Navbar Start -->
-<nav class="main-nav navbar navbar-expand-lg">
+<nav class="main-nav navbar navbar-expand-lg" id="mainNav">
   <div class="container">
     <!-- Logo -->
     <a class="navbar-brand" href="index.html">
-      <h1 class="sitename">DevFolio</h1>
+      <h2 class="logo-text">DevFolio</h2>
     </a>
     <!-- Toogle Button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavContent">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse nav-list" id="mainNav">
+    <div class="collapse navbar-collapse nav-list" id="mainNavContent">
       <!-- Navigation Links -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" href="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">About</a>
+          <a class="nav-link" href="about.html">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">Articles</a>
+          <a class="nav-link" href="articles.html">Articles</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">Contact</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </li>
       </ul>
       <!-- Social Link -->
@@ -383,7 +713,7 @@
         </li>
         <li class="list-inline-item">
           <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
-        </li>                
+        </li>
       </ul>
     </div>
   </div>
@@ -395,16 +725,16 @@
     <div class="row">
       <div class="col-lg-10 mx-auto">
         <article class="single-blog">
-          <p class="title">JavaScript Async Programming</p>
+          <p class="title">JavaScript Async Programming - Hướng dẫn toàn diện</p>
           <ul class="meta">
-            <li>By <a href="about.html">Thanh Dat</a></li>
+            <li><i class="far fa-user"></i> By <a href="about.html">Thanh Hieu</a></li>
             <li>
               <i class="far fa-clock"></i>
               October 19, 2024
             </li>
             <li>
               <i class="far fa-folder"></i>
-              JavaScript
+              JavaScript, Web Development
             </li>
           </ul>
 
@@ -439,7 +769,7 @@
             <p>Nếu JavaScript chỉ chạy đồng bộ, mọi tác vụ tốn thời gian (gọi API, đọc file, xử lý ảnh) sẽ chặn luồng chính, làm giao diện người dùng bị đơ cho đến khi hoàn tất.</p>
           </div>
 
-          <h3 id="async-basics">1. Bất đồng bộ là gì?</h3>
+          <h3 id="async-basics">Bất đồng bộ là gì?</h3>
           <p>
             Trong JavaScript, các tác vụ tốn thời gian như đọc file, truy cập API, hay chờ người dùng nhập liệu,  
             thường được thực hiện theo cách bất đồng bộ – nghĩa là chương trình <strong>không chờ</strong> chúng hoàn tất mà tiếp tục thực thi phần còn lại.
@@ -509,7 +839,7 @@
             <p>"JavaScript không làm mọi thứ cùng lúc – nó biết khi nào nên tạm dừng và khi nào nên tiếp tục."</p>
           </blockquote>
 
-          <h3 id="callbacks">2. Callbacks – Cách tiếp cận ban đầu</h3>
+          <h3 id="callbacks">Callbacks – Cách tiếp cận ban đầu</h3>
           <p>
             <strong>Callback</strong> là hàm được truyền như đối số cho hàm khác, được gọi lại khi tác vụ hoàn tất.  
             Đây là cách phổ biến để xử lý bất đồng bộ trong JavaScript trước khi <code>Promises</code> và <code>async/await</code> xuất hiện.
@@ -566,7 +896,7 @@
             Cơ chế này giúp lập trình viên dễ dàng thực hiện các thao tác nối tiếp nhau, tuy nhiên khi có nhiều callback lồng vào nhau — ví dụ khi cần tải nhiều dữ liệu hoặc xử lý theo chuỗi — mã sẽ trở nên khó đọc, khó bảo trì, và dễ sinh lỗi.
           </p>
 
-          <h3 id="promises">3. Promises – Giải pháp thay thế hiện đại</h3>
+          <h3 id="promises">Promises – Giải pháp thay thế hiện đại</h3>
           <p>
             <strong>Promise</strong> ra đời để xử lý bất đồng bộ một cách mạch lạc hơn.  
             Một Promise biểu diễn một giá trị có thể có ngay bây giờ, trong tương lai hoặc không bao giờ có.
@@ -599,7 +929,7 @@
             </ul>
           </div>
 
-          <h3 id="async-await">4. Async / Await – Cú pháp gọn gàng hơn</h3>
+          <h3 id="async-await">Async / Await – Cú pháp gọn gàng hơn</h3>
           <p>
             Cú pháp <strong>async/await</strong> (từ ES8) cho phép bạn viết code bất đồng bộ trông như đồng bộ.  
             Từ khóa <code>await</code> tạm dừng hàm cho đến khi Promise hoàn tất, giúp mã dễ đọc hơn.
@@ -624,7 +954,7 @@
             Như vậy, bạn có thể dùng <code>async/await</code> kết hợp <code>try...catch</code> để quản lý lỗi tự nhiên như khi viết mã đồng bộ.
           </p>
 
-          <h3 id="promise-methods">5. Promise.all & Promise.race</h3>
+          <h3 id="promise-methods">Promise.all & Promise.race</h3>
           <p>
             Khi bạn cần xử lý nhiều Promise cùng lúc (ví dụ tải nhiều API),  
             các phương thức như <code>Promise.all()</code> và <code>Promise.race()</code> giúp quản lý hiệu quả hơn.
@@ -649,7 +979,7 @@
             <p><strong>Promise.race</strong>: Trả về kết quả của Promise đầu tiên hoàn thành (thành công hoặc thất bại).</p>
           </div>
 
-          <h3 id="async-flow">6. Tổng quan chu trình bất đồng bộ</h3>
+          <h3 id="async-flow">Tổng quan chu trình bất đồng bộ</h3>
           <p>
             Một vòng đời của tác vụ bất đồng bộ trong JS có thể mô tả như sau:
           </p>
@@ -724,7 +1054,7 @@
             <p>"Async programming biến JavaScript từ ngôn ngữ chậm rãi thành công cụ mạnh mẽ cho web hiện đại."</p>
           </blockquote>
 
-          <h3 id="conclusion">7. Tổng kết</h3>
+          <h3 id="conclusion">Tổng kết</h3>
           <p>
             Hiểu rõ <strong>Callbacks</strong>, <strong>Promises</strong> và <strong>Async/Await</strong> giúp bạn viết mã dễ đọc, hiệu quả và tránh lỗi phổ biến trong xử lý bất đồng bộ.  
             <br><br>
@@ -773,8 +1103,6 @@
   </div>
 </section>
 
-
-
 <section class="footer">
   <div class="container">
     <div class="row">
@@ -795,7 +1123,7 @@
             </li>
             <li class="list-inline-item">
               <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
-            </li>            
+            </li>
           </ul>
         </div>
       </div>
@@ -803,7 +1131,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="copy-right">
-          <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by <a href="https://staticmania.com/" target="_blank">StaticMania</a></p>
+          <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Hieu</p>
         </div>
       </div>
     </div>
@@ -816,6 +1144,62 @@
 <script>
   // Set current year in copyright
   document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+  // Scroll progress bar
+  window.addEventListener('scroll', function() {
+    const winHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+    document.getElementById('progressBar').style.width = scrollPercent + '%';
+  });
+
+  // Back to top button
+  const backToTopButton = document.getElementById('backToTop');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      backToTopButton.classList.add('show');
+    } else {
+      backToTopButton.classList.remove('show');
+    }
+  });
+
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('mainNav');
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
 </script>
 </body>
 </html>

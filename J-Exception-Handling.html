@@ -661,6 +661,211 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
+
+    /* ===== NEW STYLES FOR ADDED CONTENT ===== */
+    .table-of-contents {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .table-of-contents h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .table-of-contents ul {
+      columns: 2;
+      gap: 2rem;
+    }
+
+    .table-of-contents li {
+      margin-bottom: 0.75rem;
+      break-inside: avoid;
+    }
+
+    .table-of-contents a {
+      color: var(--dark);
+      text-decoration: none;
+      transition: var(--transition);
+      display: block;
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .table-of-contents a:hover {
+      background: white;
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .practice-exercise {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .practice-exercise h4 {
+      color: #1e40af;
+      margin-top: 0;
+    }
+
+    .quiz-container {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-question {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quiz-question:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .quiz-options {
+      margin: 1rem 0;
+    }
+
+    .quiz-options label {
+      display: block;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .quiz-options label:hover {
+      background: #f8fafc;
+    }
+
+    .quiz-answer {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .show-answer {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .show-answer:hover {
+      background: var(--primary-dark);
+    }
+
+    .resources-list {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .resources-list h4 {
+      color: var(--primary);
+      margin-top: 0;
+    }
+
+    .resources-list ul {
+      columns: 2;
+      gap: 2rem;
+    }
+
+    .code-comparison {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .code-example {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .code-example h5 {
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      margin: 0;
+      border-radius: var(--radius) var(--radius) 0 0;
+      font-size: 1rem;
+    }
+
+    .code-example pre {
+      margin: 0;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    @media (max-width: 768px) {
+      .table-of-contents ul,
+      .resources-list ul {
+        columns: 1;
+      }
+      
+      .code-comparison {
+        flex-direction: column;
+      }
+      
+      .comparison-table {
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 
@@ -736,7 +941,7 @@
         <ul class="meta">
           <li>
             <i class="fas fa-user"></i>
-            Tác giả: Thanh Dat
+            Tác giả: Thanh Hieu
           </li>
           <li>
             <i class="fas fa-calendar"></i>
@@ -748,10 +953,31 @@
           </li>
         </ul>
 
+        <!-- Table of Contents -->
+        <div class="table-of-contents">
+          <h3>📑 Mục Lục</h3>
+          <ul>
+            <li><a href="#introduction">Giới thiệu về Exception Handling</a></li>
+            <li><a href="#exception-types">Phân loại Exception</a></li>
+            <li><a href="#try-catch-finally">Try-Catch-Finally</a></li>
+            <li><a href="#custom-exceptions">Custom Exceptions</a></li>
+            <li><a href="#multi-catch">Multi-Catch & Nested Try</a></li>
+            <li><a href="#throw-throws">Throw vs Throws</a></li>
+            <li><a href="#try-with-resources">Try-with-Resources</a></li>
+            <li><a href="#exception-propagation">Exception Propagation</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#common-exceptions">Common Exceptions & Solutions</a></li>
+            <li><a href="#advanced-topics">Chủ đề nâng cao</a></li>
+            <li><a href="#exercises">Bài tập thực hành</a></li>
+            <li><a href="#resources">Tài nguyên học tập</a></li>
+            <li><a href="#conclusion">Tổng kết</a></li>
+          </ul>
+        </div>
 
         <!-- Introduction -->
+        <h2 id="introduction">1. Giới thiệu về Exception Handling</h2>
         <div class="feature-card">
-          <h3>📖 Giới Thiệu</h3>
+          <h3>📖 Tại sao cần Exception Handling?</h3>
           <p>
             Trong quá trình lập trình Java, lỗi (error) và ngoại lệ (exception) là điều không thể tránh khỏi.  
             <strong>Java Exception Handling</strong> giúp bạn kiểm soát luồng chương trình khi có sự cố xảy ra — 
@@ -762,18 +988,20 @@
           </p>
         </div>
 
-        <!-- What is Exception -->
-        <h2>1. Khái niệm cơ bản về Exception</h2>
-        <p>
-          Một <strong>Exception</strong> là một sự kiện bất thường xảy ra trong quá trình thực thi chương trình, 
-          làm gián đoạn luồng thực thi bình thường.
-          <br><br>
-          Java chia exceptions thành 2 loại chính:
-        </p>
+        <h3>Lợi ích của Exception Handling</h3>
         <ul>
-          <li><strong>Checked Exceptions</strong> – được kiểm tra tại thời điểm biên dịch (ví dụ: <code>IOException</code>, <code>SQLException</code>).</li>
-          <li><strong>Unchecked Exceptions</strong> – xảy ra tại runtime, thường do lỗi logic (ví dụ: <code>NullPointerException</code>, <code>ArithmeticException</code>).</li>
+          <li><strong>Tách biệt code xử lý lỗi</strong> khỏi code logic chính</li>
+          <li><strong>Ngăn chặn crash</strong> ứng dụng không mong muốn</li>
+          <li><strong>Cung cấp thông tin lỗi</strong> hữu ích cho debug</li>
+          <li><strong>Bảo vệ tài nguyên</strong> khỏi bị leak</li>
+          <li><strong>Tăng tính ổn định</strong> và độ tin cậy của ứng dụng</li>
         </ul>
+
+        <!-- Exception Types -->
+        <h2 id="exception-types">2. Phân loại Exception trong Java</h2>
+        <p>
+          Java chia exceptions thành 3 loại chính dựa trên phân cấp kế thừa:
+        </p>
 
         <div class="diagram-container">
           <h4>Cấu trúc phân cấp Exception trong Java</h4>
@@ -821,29 +1049,81 @@
           <p class="caption">Phân cấp Exception trong Java - Màu đỏ: Error, Xanh lá: Checked Exception, Xanh nhạt: Unchecked Exception</p>
         </div>
 
+        <h3>So sánh Checked vs Unchecked Exceptions</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>Checked Exceptions</th>
+              <th>Unchecked Exceptions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Thời điểm kiểm tra</strong></td>
+              <td>Compile-time</td>
+              <td>Runtime</td>
+            </tr>
+            <tr>
+              <td><strong>Bắt buộc xử lý</strong></td>
+              <td>Có (phải catch hoặc declare)</td>
+              <td>Không (tùy chọn)</td>
+            </tr>
+            <tr>
+              <td><strong>Kế thừa từ</strong></td>
+              <td>Exception (không phải RuntimeException)</td>
+              <td>RuntimeException</td>
+            </tr>
+            <tr>
+              <td><strong>Ví dụ</strong></td>
+              <td>IOException, SQLException</td>
+              <td>NullPointerException, ArrayIndexOutOfBoundsException</td>
+            </tr>
+            <tr>
+              <td><strong>Mục đích</strong></td>
+              <td>Lỗi có thể phục hồi</td>
+              <td>Lỗi lập trình</td>
+            </tr>
+          </tbody>
+        </table>
+
         <blockquote>
           <p>"Hiểu rõ phân cấp của Exception là bước đầu để kiểm soát lỗi một cách thông minh."</p>
         </blockquote>
 
         <!-- Try-Catch-Finally -->
-        <h2>2. Cấu trúc try–catch–finally</h2>
+        <h2 id="try-catch-finally">3. Cấu trúc try–catch–finally</h2>
         <p>
           Java cung cấp khối <code>try–catch</code> để bắt và xử lý ngoại lệ.  
           Ngoài ra, khối <code>finally</code> luôn được thực thi — kể cả khi có lỗi hay không — 
           giúp bạn giải phóng tài nguyên như kết nối file, database, hoặc stream.
         </p>
-        <pre><code>public class TryCatchExample {
-    public static void main(String[] args) {
-        try {
-            int result = 10 / 0; // Lỗi chia cho 0
-            System.out.println("Kết quả: " + result);
-        } catch (ArithmeticException e) {
-            System.out.println("Lỗi: Không thể chia cho 0!");
-        } finally {
-            System.out.println("Khối finally luôn được thực thi.");
-        }
-    }
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Cơ bản</h5>
+            <pre><code>try {
+    // Code có thể gây exception
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    // Xử lý exception
+    System.out.println("Lỗi: " + e.getMessage());
 }</code></pre>
+          </div>
+          <div class="code-example">
+            <h5>Với Finally</h5>
+            <pre><code>try {
+    // Code có thể gây exception
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Lỗi: " + e.getMessage());
+} finally {
+    // Luôn được thực thi
+    System.out.println("Khối finally");
+}</code></pre>
+          </div>
+        </div>
+
         <div class="feature-card">
           <h4>💡 Lời Khuyên Thực Tế</h4>
           <p>
@@ -852,165 +1132,374 @@
         </div>
 
         <!-- Custom Exception -->
-        <h2>3. Tạo Custom Exception</h2>
+        <h2 id="custom-exceptions">4. Tạo Custom Exception</h2>
         <p>
           Đôi khi, bạn cần định nghĩa lỗi riêng phù hợp với logic nghiệp vụ của mình.  
           Khi đó, có thể tạo <strong>Custom Exception</strong> bằng cách kế thừa lớp <code>Exception</code> hoặc <code>RuntimeException</code>.
         </p>
-        <pre><code>class InvalidAgeException extends Exception {
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Checked Custom Exception</h5>
+            <pre><code>class InvalidAgeException extends Exception {
     public InvalidAgeException(String message) {
         super(message);
     }
-}
-
-public class CustomExceptionDemo {
-    static void checkAge(int age) throws InvalidAgeException {
-        if (age < 18) {
-            throw new InvalidAgeException("Tuổi phải lớn hơn hoặc bằng 18!");
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            checkAge(16);
-        } catch (InvalidAgeException e) {
-            System.out.println("Lỗi: " + e.getMessage());
-        }
+    
+    public InvalidAgeException(String message, Throwable cause) {
+        super(message, cause);
     }
 }</code></pre>
-        <p>
-          👉 Custom Exception giúp chương trình diễn giải lỗi rõ ràng hơn, thay vì chỉ hiển thị lỗi hệ thống.
-        </p>
+          </div>
+          <div class="code-example">
+            <h5>Unchecked Custom Exception</h5>
+            <pre><code>class BusinessRuleException extends RuntimeException {
+    private String errorCode;
+    
+    public BusinessRuleException(String message, String errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+    
+    public String getErrorCode() {
+        return errorCode;
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <h3>Khi nào nên tạo Custom Exception?</h3>
+        <ul>
+          <li>Khi bạn cần <strong>nhóm nhiều lỗi liên quan</strong> thành một loại</li>
+          <li>Khi cần <strong>thêm thông tin bổ sung</strong> (error code, timestamp)</li>
+          <li>Khi muốn <strong>ẩn chi tiết triển khai</strong> từ người dùng API</li>
+          <li>Khi cần <strong>phân loại lỗi nghiệp vụ</strong> cụ thể</li>
+        </ul>
 
         <!-- Multi-Catch -->
-        <h2>4. Multi-Catch & Nested Try</h2>
+        <h2 id="multi-catch">5. Multi-Catch & Nested Try</h2>
         <p>
           Khi có nhiều loại lỗi có thể xảy ra, bạn có thể dùng <strong>multi-catch</strong> hoặc <strong>nested try</strong> để xử lý chi tiết từng trường hợp.
         </p>
-        <pre><code>public class MultiCatchExample {
-    public static void main(String[] args) {
-        try {
-            String text = null;
-            System.out.println(text.length()); // NullPointerException
-        } catch (ArithmeticException | NullPointerException e) {
-            System.out.println("Đã xảy ra lỗi: " + e);
-        }
-    }
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Multi-Catch (Java 7+)</h5>
+            <pre><code>try {
+    // Code có thể gây nhiều exceptions
+    String text = null;
+    System.out.println(text.length());
+    int result = 10 / 0;
+} catch (ArithmeticException | NullPointerException e) {
+    System.out.println("Lỗi: " + e.getClass().getSimpleName());
 }</code></pre>
-        <p>
-          👉 Multi-catch giúp code gọn hơn khi các lỗi có cùng cách xử lý.
-        </p>
+          </div>
+          <div class="code-example">
+            <h5>Nested Try-Catch</h5>
+            <pre><code>try {
+    // Outer try
+    try {
+        // Inner try - xử lý chi tiết
+        int[] arr = new int[5];
+        arr[10] = 100; // ArrayIndexOutOfBounds
+    } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Lỗi index: " + e.getMessage());
+    }
+} catch (Exception e) {
+    System.out.println("Lỗi tổng quát: " + e.getMessage());
+}</code></pre>
+          </div>
+        </div>
 
         <!-- Throw vs Throws -->
-        <h2>5. Throw vs Throws</h2>
-        <ul>
-          <li><strong>throw</strong>: dùng để ném một exception cụ thể trong code.</li>
-          <li><strong>throws</strong>: khai báo rằng phương thức có thể ném exception để người gọi xử lý.</li>
-        </ul>
-        <pre><code>public class ThrowExample {
-    static void validate(int age) throws ArithmeticException {
-        if (age < 18)
-            throw new ArithmeticException("Không đủ tuổi đăng ký!");
-        else
-            System.out.println("Đăng ký thành công!");
+        <h2 id="throw-throws">6. Throw vs Throws</h2>
+        
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Throw - Ném exception</h5>
+            <pre><code>public void validateAge(int age) {
+    if (age < 0) {
+        throw new IllegalArgumentException(
+            "Tuổi không thể âm: " + age
+        );
     }
-
-    public static void main(String args[]) {
-        validate(15);
-        System.out.println("Hoàn tất!");
+    if (age < 18) {
+        throw new ArithmeticException(
+            "Chưa đủ tuổi: " + age
+        );
     }
 }</code></pre>
+          </div>
+          <div class="code-example">
+            <h5>Throws - Khai báo exception</h5>
+            <pre><code>public void readFile(String filename) 
+    throws FileNotFoundException, IOException {
+    
+    BufferedReader reader = new BufferedReader(
+        new FileReader(filename)
+    );
+    // Đọc file...
+    reader.close();
+}</code></pre>
+          </div>
+        </div>
+
+        <h3>Quy tắc sử dụng Throw và Throws</h3>
+        <ul>
+          <li><strong>Throw</strong>: Dùng trong thân phương thức để ném exception cụ thể</li>
+          <li><strong>Throws</strong>: Dùng trong khai báo phương thức để chỉ ra các exceptions có thể được ném</li>
+          <li>Một phương thức có thể có cả <strong>throw</strong> và <strong>throws</strong></li>
+          <li>Với unchecked exceptions, <strong>throws</strong> là tùy chọn</li>
+        </ul>
 
         <blockquote>
           <p>"Sử dụng throw và throws hợp lý giúp bạn quản lý lỗi có kiểm soát và rõ ràng."</p>
         </blockquote>
 
+        <!-- Try-with-resources -->
+        <h2 id="try-with-resources">7. Try-with-resources (Java 7+)</h2>
+        <p>
+          <code>try-with-resources</code> tự động đóng các tài nguyên implement <code>AutoCloseable</code>, 
+          giúp code gọn hơn và tránh rò rỉ bộ nhớ.
+        </p>
+
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Try-with-resources</h5>
+            <pre><code>try (BufferedReader reader = new BufferedReader(
+        new FileReader("data.txt"))) {
+    
+    String line;
+    while ((line = reader.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    System.out.println("Lỗi đọc file: " + e.getMessage());
+}</code></pre>
+          </div>
+          <div class="code-example">
+            <h5>Nhiều resources</h5>
+            <pre><code>try (FileInputStream input = new FileInputStream("in.txt");
+     FileOutputStream output = new FileOutputStream("out.txt")) {
+    
+    byte[] buffer = new byte[1024];
+    int bytesRead;
+    while ((bytesRead = input.read(buffer)) != -1) {
+        output.write(buffer, 0, bytesRead);
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Exception Propagation -->
+        <h2 id="exception-propagation">8. Exception Propagation</h2>
+        <p>
+          Khi một exception không được bắt trong phương thức, nó sẽ được <strong>propagate</strong> (lan truyền) 
+          lên phương thức gọi nó, và tiếp tục cho đến khi được bắt hoặc chương trình kết thúc.
+        </p>
+
+        <pre><code>public class PropagationExample {
+    void methodA() {
+        methodB();  // Exception từ methodB được propagate lên đây
+    }
+    
+    void methodB() {
+        methodC();  // Exception từ methodC được propagate lên đây
+    }
+    
+    void methodC() {
+        throw new RuntimeException("Lỗi từ methodC");
+    }
+    
+    public static void main(String[] args) {
+        try {
+            new PropagationExample().methodA();
+        } catch (RuntimeException e) {
+            System.out.println("Bắt được exception: " + e.getMessage());
+        }
+    }
+}</code></pre>
+
+        <h3>Call Stack Trace</h3>
+        <p>
+          Khi exception xảy ra, JVM tạo một <strong>stack trace</strong> cho thấy đường đi của exception 
+          qua các phương thức. Đây là công cụ debug cực kỳ hữu ích.
+        </p>
+
         <!-- Best Practices -->
-        <h2>6. Best Practices khi xử lý Exception</h2>
+        <h2 id="best-practices">9. Best Practices khi xử lý Exception</h2>
+        
         <div class="feature-card">
           <h4>🚫 Chỉ bắt những exception mà bạn có thể xử lý hợp lý</h4>
           <p>Không nên bắt tất cả exceptions mà không có xử lý phù hợp.</p>
+          <pre><code>// KHÔNG NÊN
+try {
+    // code
+} catch (Exception e) {
+    // Bắt mọi exception mà không xử lý
+}
+
+// NÊN
+try {
+    // code
+} catch (FileNotFoundException e) {
+    // Xử lý cụ thể: tạo file mới
+    createNewFile();
+} catch (IOException e) {
+    // Xử lý cụ thể: log và thông báo
+    logger.error("Lỗi IO", e);
+    showErrorToUser("Không thể đọc file");
+}</code></pre>
         </div>
 
         <div class="feature-card">
           <h4>📝 Luôn ghi log chi tiết</h4>
           <p>Sử dụng logging framework để ghi lại thông tin lỗi đầy đủ.</p>
+          <pre><code>try {
+    // business logic
+} catch (BusinessException e) {
+    logger.error("Lỗi nghiệp vụ - Mã lỗi: {}, Ngữ cảnh: {}", 
+        e.getErrorCode(), context, e);
+    throw new UserFriendlyException("Có lỗi xảy ra, vui lòng thử lại");
+}</code></pre>
         </div>
 
         <div class="feature-card">
-          <h4>🧹 Dọn dẹp tài nguyên</h4>
+          <h4>🧹 Dọn dẹp tài nguyên với try-with-resources</h4>
           <p>Luôn sử dụng finally hoặc try-with-resources để đảm bảo tài nguyên được giải phóng.</p>
         </div>
 
-        <!-- Try-with-resources -->
-        <h2>7. Ví dụ hoàn chỉnh: try-with-resources</h2>
-        <p>
-          Dưới đây là ví dụ về cách dùng <code>try-with-resources</code> để đọc file mà không cần đóng thủ công.
-        </p>
-        <pre><code>import java.io.*;
+        <div class="feature-card">
+          <h4>🎯 Cung cấp thông tin lỗi hữu ích</h4>
+          <p>Exception messages nên rõ ràng, giải thích được nguyên nhân và gợi ý giải pháp.</p>
+          <pre><code>// Thông tin kém
+throw new Exception("Lỗi");
 
-public class ReadFileExample {
-    public static void main(String[] args) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.out.println("Lỗi đọc file: " + e.getMessage());
+// Thông tin tốt
+throw new IllegalArgumentException(
+    "Giá trị không hợp lệ: " + value + 
+    ". Phải nằm trong khoảng " + min + "-" + max
+);</code></pre>
+        </div>
+
+        <!-- Common Exceptions -->
+        <h2 id="common-exceptions">10. Common Exceptions & Solutions</h2>
+        
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Exception</th>
+              <th>Nguyên nhân</th>
+              <th>Giải pháp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>NullPointerException</code></td>
+              <td>Truy cập phương thức/trường của object null</td>
+              <td>Kiểm tra null trước khi sử dụng, sử dụng Optional</td>
+            </tr>
+            <tr>
+              <td><code>ArrayIndexOutOfBoundsException</code></td>
+              <td>Truy cập index ngoài phạm vi mảng</td>
+              <td>Kiểm tra index trước khi truy cập, sử dụng for-each loop</td>
+            </tr>
+            <tr>
+              <td><code>ClassCastException</code></td>
+              <td>Ép kiểu không hợp lệ</td>
+              <td>Kiểm tra kiểu với instanceof trước khi cast</td>
+            </tr>
+            <tr>
+              <td><code>IllegalArgumentException</code></td>
+              <td>Tham số phương thức không hợp lệ</td>
+              <td>Validate input parameters đầu phương thức</td>
+            </tr>
+            <tr>
+              <td><code>IOException</code></td>
+              <td>Lỗi input/output operations</td>
+              <td>Xử lý đóng tài nguyên, check file existence</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Advanced Topics -->
+        <h2 id="advanced-topics">11. Chủ đề nâng cao</h2>
+
+        <h3>Exception Translation</h3>
+        <p>
+          Chuyển đổi low-level exceptions thành high-level exceptions phù hợp với abstraction level.
+        </p>
+        <pre><code>public class UserService {
+    public User findUserById(String id) throws UserNotFoundException {
+        try {
+            return userRepository.findById(id);
+        } catch (SQLException e) {
+            // Chuyển SQLException thành UserNotFoundException
+            throw new UserNotFoundException("Không tìm thấy user: " + id, e);
         }
     }
 }</code></pre>
-        <p>
-          👉 <code>try-with-resources</code> giúp tự động đóng tài nguyên, tránh rò rỉ bộ nhớ và code gọn hơn.
-        </p>
 
-        <div class="diagram-container">
-          <h4>Luồng xử lý try-catch-finally</h4>
-          <div class="diagram">
-            <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-              <!-- Flow Diagram -->
-              <rect x="350" y="50" width="100" height="40" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
-              <text x="400" y="75" text-anchor="middle" fill="white" font-weight="bold">Bắt đầu</text>
-              
-              <rect x="350" y="120" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
-              <text x="400" y="145" text-anchor="middle" fill="white" font-weight="bold">Khối try</text>
-              
-              <rect x="200" y="190" width="100" height="40" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
-              <text x="250" y="215" text-anchor="middle" fill="white">Exception xảy ra?</text>
-              
-              <rect x="500" y="190" width="100" height="40" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
-              <text x="550" y="215" text-anchor="middle" fill="white">Không có lỗi</text>
-              
-              <rect x="200" y="260" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
-              <text x="250" y="285" text-anchor="middle" fill="white">Khối catch</text>
-              
-              <rect x="500" y="260" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
-              <text x="550" y="285" text-anchor="middle" fill="white">Tiếp tục</text>
-              
-              <rect x="350" y="330" width="100" height="40" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
-              <text x="400" y="355" text-anchor="middle" fill="white" font-weight="bold">Khối finally</text>
-              
-              <!-- Lines and arrows -->
-              <path d="M400 90 L400 120" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              <path d="M400 160 L400 190" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              <path d="M250 230 L250 260" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              <path d="M550 230 L550 260" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              <path d="M250 300 L325 300 L325 330" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              <path d="M550 300 L475 300 L475 330" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-              
-              <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                  <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
-                </marker>
-              </defs>
-            </svg>
-          </div>
-          <p class="caption">Luồng xử lý của try-catch-finally trong Java</p>
+        <h3>Exception Chaining</h3>
+        <p>
+          Giữ nguyên nguyên nhân gốc (cause) khi throw exception mới.
+        </p>
+        <pre><code>try {
+    // code có thể gây IOException
+} catch (IOException e) {
+    throw new BusinessException("Lỗi xử lý dữ liệu", e);
+}</code></pre>
+
+        <h3>Custom Exception với Additional Data</h3>
+        <pre><code>public class ValidationException extends RuntimeException {
+    private String fieldName;
+    private Object invalidValue;
+    private String validationRule;
+    
+    public ValidationException(String fieldName, Object invalidValue, 
+                              String validationRule, String message) {
+        super(message);
+        this.fieldName = fieldName;
+        this.invalidValue = invalidValue;
+        this.validationRule = validationRule;
+    }
+    
+    // Getters
+    public String getFieldName() { return fieldName; }
+    public Object getInvalidValue() { return invalidValue; }
+    public String getValidationRule() { return validationRule; }
+}</code></pre>
+
+        <!-- Exercises -->
+        
+        <!-- Resources -->
+        <h2 id="resources">12. Tài nguyên học tập</h2>
+        
+        <div class="resources-list">
+          <h4>📚 Sách hay về Java Exception Handling</h4>
+          <ul>
+            <li><strong>"Effective Java"</strong> - Joshua Bloch (Item 69-73)</li>
+            <li><strong>"Java: The Complete Reference"</strong> - Herbert Schildt</li>
+            <li><strong>"Clean Code"</strong> - Robert C. Martin (Chapter 7)</li>
+          </ul>
+          
+          <h4>🎓 Khóa học trực tuyến</h4>
+          <ul>
+            <li>Java Programming Masterclass (Udemy)</li>
+            <li>Advanced Java Programming (Coursera)</li>
+            <li>Java Exception Handling (Pluralsight)</li>
+          </ul>
+          
+          <h4>🔧 Công cụ hữu ích</h4>
+          <ul>
+            <li>IntelliJ IDEA - Debugger với stack trace visualization</li>
+            <li>VisualVM - Memory và performance analysis</li>
+            <li>Logback/SLF4J - Logging framework</li>
+          </ul>
         </div>
 
         <!-- Conclusion -->
-        <h2>8. Tổng kết</h2>
+        <h2 id="conclusion">13. Tổng kết</h2>
         <p>
           Exception Handling là kỹ năng quan trọng giúp bạn viết ứng dụng Java an toàn và đáng tin cậy hơn.  
           Biết cách sử dụng <code>try-catch</code>, <code>throw</code>, <code>throws</code> và custom exception đúng lúc sẽ giúp bạn kiểm soát luồng lỗi linh hoạt.  
@@ -1018,6 +1507,16 @@ public class ReadFileExample {
           👉 Hãy luyện tập bằng cách cố tình tạo lỗi trong chương trình nhỏ, sau đó xử lý chúng theo nhiều cách khác nhau — 
           bạn sẽ nhanh chóng hiểu sâu hơn về cơ chế Exception trong Java.
         </p>
+
+        <h3>Key Takeaways</h3>
+        <ul>
+          <li>Hiểu rõ phân cấp Exception và sự khác biệt giữa Checked/Unchecked exceptions</li>
+          <li>Sử dụng try-catch-finally và try-with-resources hợp lý</li>
+          <li>Tạo custom exceptions cho các tình huống nghiệp vụ cụ thể</li>
+          <li>Áp dụng exception translation và chaining để cải thiện abstraction</li>
+          <li>Luôn log exceptions đầy đủ và cung cấp thông tin lỗi hữu ích</li>
+          <li>Tuân thủ best practices để code trở nên robust và maintainable</li>
+        </ul>
 
         <blockquote>
           <p>"Xử lý ngoại lệ tốt không chỉ làm chương trình chạy ổn định — mà còn giúp người dùng tin tưởng sản phẩm của bạn."</p>
@@ -1038,8 +1537,6 @@ public class ReadFileExample {
       </div>
     </div>
   </section>
-
-
 
   <!-- Footer -->
   <section class="footer">
@@ -1125,6 +1622,32 @@ public class ReadFileExample {
         navList.classList.remove('active');
         toggleButton.classList.remove('active');
       }
+    });
+
+    // Toggle quiz answers
+    function toggleAnswer(answerId) {
+      const answer = document.getElementById(answerId);
+      if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+      } else {
+        answer.style.display = 'block';
+      }
+    }
+
+    // Smooth scrolling for table of contents
+    document.querySelectorAll('.table-of-contents a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     });
   </script>
 </body>

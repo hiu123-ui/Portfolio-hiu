@@ -33,8 +33,10 @@
       --light-bg: #f8f9fa;
       --dark-text: #222;
       --light-text: #666;
-      --border-radius: 8px;
-      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+      --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --gradient-primary: linear-gradient(135deg, #0b3d91 0%, #0077b5 100%);
+      --gradient-secondary: linear-gradient(135deg, #0077b5 0%, #005b8c 100%);
     }
 
     /* Font mặc định cho toàn bộ trang */
@@ -73,21 +75,40 @@
     }
 
     /* Trích dẫn */
+    blockquote {
+      position: relative;
+      margin: 2rem 0;
+      padding: 2rem 2rem 2rem 3.5rem;
+      background: linear-gradient(135deg, #f3f6fa 0%, #e8eff8 100%);
+      border-left: 4px solid var(--secondary-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    blockquote:before {
+      content: "\f10d";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 1rem;
+      top: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+    }
+
     blockquote p {
       font-style: italic;
       color: #333;
       font-weight: 500;
-      background: #f3f6fa;
-      border-left: 4px solid var(--secondary-color);
-      padding: 12px 18px;
-      border-radius: var(--border-radius);
+      margin: 0;
     }
 
     /* Liên kết */
     a {
       color: var(--secondary-color);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
 
     a:hover {
@@ -103,17 +124,19 @@
     }
 
     .single-blog pre {
-      background-color: #f4f4f9;
-      border: 1px solid #ddd;
+      background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
       border-radius: var(--border-radius);
-      padding: 16px;
+      padding: 1.5rem;
       overflow-x: auto;
-      margin: 20px 0;
+      margin: 1.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--secondary-color);
     }
 
     .single-blog pre code {
       font-size: 16px;
       font-family: 'Courier New', monospace;
+      color: #e2e8f0;
     }
 
     .single-blog img {
@@ -121,76 +144,128 @@
       height: auto;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      margin: 20px 0;
+      margin: 2rem 0;
+      transition: transform 0.3s ease;
+    }
+
+    .single-blog img:hover {
+      transform: translateY(-5px);
     }
 
     .single-blog .title {
-      font-size: 36px;
-      font-weight: 700;
+      font-size: 42px;
+      font-weight: 800;
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .single-blog .meta {
       list-style: none;
       padding: 0;
       display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
       color: var(--light-text);
+      flex-wrap: wrap;
+    }
+
+    .single-blog .meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--light-bg);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
     }
 
     .single-blog .meta i {
-      margin-right: 5px;
+      color: var(--secondary-color);
     }
 
     /* Navigation styles */
     .main-nav {
       background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 15px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    .main-nav .logo-main {
-      height: 40px;
+    .main-nav.scrolled {
+      padding: 0.5rem 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .main-nav .logo-text {
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
     }
 
     .main-nav .nav-link {
       color: #333;
       font-weight: 500;
-      padding: 10px 15px;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
 
     .main-nav .nav-link:hover {
       color: var(--secondary-color);
+      background-color: rgba(0, 119, 181, 0.1);
+      text-decoration: none;
     }
 
     .main-nav-social li {
       display: inline-block;
-      margin-left: 15px;
+      margin-left: 0.5rem;
     }
 
     .main-nav-social a {
       color: #333;
-      font-size: 18px;
+      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
     }
 
     .main-nav-social a:hover {
-      color: var(--secondary-color);
+      color: white;
+      background: var(--gradient-secondary);
+      text-decoration: none;
+      transform: translateY(-2px);
     }
 
     /* Footer styles */
     .footer {
-      background-color: var(--light-bg);
-      padding: 50px 0 20px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0b3d91 100%);
+      padding: 3rem 0 1rem;
       text-align: center;
+      color: white;
+      margin-top: 4rem;
     }
 
     .footer-logo {
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 20px;
-      color: var(--primary-color);
+      color: white;
     }
 
     .footer-nav .navbar-nav {
@@ -208,76 +283,53 @@
       padding: 0;
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
 
     .sociale-icon li {
-      margin: 0 10px;
+      margin: 0 0.5rem;
     }
 
     .sociale-icon a {
-      color: #333;
-      font-size: 18px;
+      color: white;
+      font-size: 1.2rem;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .sociale-icon a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      text-decoration: none;
     }
 
     .copy-right {
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-      color: var(--light-text);
-    }
-
-    /* Instagram section */
-    .instagram {
-      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-      padding: 30px 0;
-      text-align: center;
-      color: white;
-    }
-
-    .instagram a {
-      display: inline-flex;
-      align-items: center;
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-
-    .instagram-item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .instagram-item-thum {
-      width: calc(16.66% - 10px);
-    }
-
-    .instagram-item-thum img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     /* Blog section styling */
     .blog-single {
-      padding: 60px 0;
+      padding: 4rem 0;
       background-color: #fff;
     }
 
     /* Code highlighting */
     .language-java {
-      color: #d63384;
+      color: #fbb6ce;
     }
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-      .instagram-item-thum {
-        width: calc(33.33% - 10px);
-      }
-
       .single-blog .title {
-        font-size: 28px;
+        font-size: 32px;
       }
 
       .single-blog p,
@@ -287,90 +339,171 @@
 
       .single-blog .meta {
         flex-direction: column;
-        gap: 10px;
+        gap: 0.5rem;
+      }
+
+      .single-blog .meta li {
+        width: fit-content;
       }
     }
 
     /* Table of Contents */
     .toc {
-      background-color: var(--light-bg);
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius);
-      padding: 20px;
-      margin: 30px 0;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--primary-color);
     }
 
     .toc h4 {
       margin-top: 0;
       color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toc h4:before {
+      content: "\f0c9";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
     }
 
     .toc ul {
-      padding-left: 20px;
+      padding-left: 1.5rem;
+      margin: 0;
     }
 
     .toc li {
-      margin-bottom: 8px;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .toc li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
     }
 
     .toc a {
       color: var(--secondary-color);
+      transition: all 0.3s ease;
+      display: block;
+      padding: 0.25rem 0;
+    }
+
+    .toc a:hover {
+      color: var(--accent-color);
+      padding-left: 0.5rem;
+      text-decoration: none;
     }
 
     /* Special styling for Spring concepts */
     .concept-box {
       background: linear-gradient(135deg, #f5f7ff 0%, #e1e9ff 100%);
       border-left: 4px solid var(--primary-color);
-      padding: 20px;
+      padding: 2rem;
       border-radius: var(--border-radius);
-      margin: 25px 0;
+      margin: 2rem 0;
+      box-shadow: var(--box-shadow);
+    }
+
+    .concept-box h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .flow-diagram {
-      background-color: #f8f9fa;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: var(--border-radius);
-      padding: 25px;
-      margin: 30px 0;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
       text-align: center;
+      box-shadow: var(--box-shadow);
+    }
+
+    .flow-diagram h4 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
     }
 
     .caption {
       font-style: italic;
       color: #555;
-      font-size: 15px;
+      font-size: 0.9rem;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 1rem;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
     }
 
     /* Spring modules grid */
     .modules-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 30px 0;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
     }
 
     .module-card {
       background: white;
       border-radius: var(--border-radius);
-      padding: 20px;
+      padding: 2rem;
       box-shadow: var(--box-shadow);
       border-top: 4px solid var(--secondary-color);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
 
     .module-card h4 {
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
     }
 
     /* Enhanced Image Styles for Better Display */
-    .single-blog img {
-      width: 95%;
-      max-width: 900px;
+    .single-blog .featured-image {
+      position: relative;
+      margin: 3rem 0;
+    }
+
+    .single-blog .featured-image img {
+      width: 100%;
+      max-width: 100%;
       height: auto;
       border-radius: 16px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-      margin: 40px auto;
-      display: block;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      margin: 0;
       transition: all 0.4s ease;
       border: 3px solid #ffffff;
       background: #ffffff;
@@ -378,248 +511,279 @@
       object-fit: cover;
     }
 
-    /* Featured Image - Larger and More Prominent */
-    .single-blog .featured-image img {
-      width: 98%;
-      max-width: 1000px;
-      border-radius: 20px;
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
-      margin: 50px auto;
-      border: 4px solid #ffffff;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      padding: 10px;
-    }
-
-    /* Flow Diagram Images */
-    .single-blog .flow-diagram img {
-      width: 92%;
-      max-width: 950px;
-      border: 3px solid #f8f9fa;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 18px;
-    }
-
-    /* Code-related Images */
-    .single-blog pre+img {
-      width: 88%;
-      max-width: 880px;
-      border: 2px solid #e9ecef;
-      background: #fdfdfd;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-      margin-top: 30px;
-    }
-
-    /* Image with Caption Container */
-    .image-container {
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      border-radius: 18px;
-      padding: 25px;
-      margin: 40px 0;
-      border: 1px solid #e9ecef;
-      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
-    }
-
-    .image-container img {
+    .single-blog .featured-image:after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 5%;
       width: 90%;
-      max-width: 850px;
-      margin: 0 auto 15px auto;
-      border: 2px solid #e9ecef;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+      height: 20px;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      filter: blur(10px);
+      z-index: -1;
     }
 
-    /* Hover Effects */
-    .single-blog img:hover {
-      transform: scale(1.02) translateY(-5px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-      filter: brightness(1.08) contrast(1.15);
-      border-color: var(--secondary-color);
+    /* Article Footer */
+    .article-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e9ecef;
     }
 
-    .single-blog .featured-image img:hover {
-      transform: scale(1.01) translateY(-3px);
-      box-shadow: 0 20px 65px rgba(0, 0, 0, 0.3);
+    .article-footer h5 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
     }
 
-    /* Image Caption Styling */
-    .caption {
-      font-style: italic;
-      color: #666;
-      font-size: 16px;
-      text-align: center;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      display: inline-block;
-      border-left: 4px solid var(--secondary-color);
+    .tags .badge {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      border-radius: 50px;
+      font-weight: 500;
     }
 
-    /* Image Quality Optimization */
-    .single-blog img {
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-      -webkit-font-smoothing: antialiased;
-      backface-visibility: hidden;
-      transform: translateZ(0);
+    .share-buttons .btn {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
     }
 
-    /* Loading State for Images */
-    .single-blog img {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
+    .share-buttons .btn:hover {
+      transform: translateY(-2px);
     }
 
-    @keyframes loading {
-      0% {
-        background-position: 200% 0;
-      }
-
-      100% {
-        background-position: -200% 0;
-      }
+    /* Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 1001;
     }
 
-    .single-blog img:not([src]),
-    .single-blog img[src=""] {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      min-height: 300px;
+    .progress-bar {
+      height: 4px;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Section Headers with Icons */
+    h3 {
+      position: relative;
+      padding-left: 3rem;
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    h3#intro:before { content: "\f1c0"; }
+    h3#history:before { content: "\f1da"; }
+    h3#di:before { content: "\f0e8"; }
+    h3#ioc:before { content: "\f085"; }
+    h3#spring-boot:before { content: "\f135"; }
+    h3#spring-mvc:before { content: "\f108"; }
+    h3#rest-api:before { content: "\f1fe"; }
+    h3#spring-data:before { content: "\f1c0"; }
+    h3#spring-security:before { content: "\f023"; }
+    h3#spring-cloud:before { content: "\f0c2"; }
+    h3#best-practices:before { content: "\f0a1"; }
+    h3#advantages:before { content: "\f164"; }
+    h3#conclusion:before { content: "\f058"; }
+
+    /* Sub-headers */
+    h4 {
+      color: var(--secondary-color);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    h4:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      background: var(--secondary-color);
+      border-radius: 4px;
+    }
+
+    /* List styling */
+    .single-blog ul {
+      padding-left: 1.5rem;
+    }
+
+    .single-blog li {
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .single-blog li:before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.8rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+    }
+
+    /* Code block headers */
+    .single-blog pre {
+      position: relative;
+    }
+
+    .single-blog pre:before {
+      content: attr(data-language);
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      border-bottom-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
     }
 
     /* Responsive Design */
-    @media (max-width: 1200px) {
-      .single-blog img {
-        width: 92%;
-        max-width: 800px;
-      }
-
-      .single-blog .featured-image img {
-        width: 95%;
-        max-width: 900px;
-      }
-    }
-
     @media (max-width: 768px) {
-      .single-blog img {
-        width: 100%;
-        max-width: 100%;
-        margin: 30px 0;
-        border-width: 2px;
-        border-radius: 12px;
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
       }
 
-      .single-blog .featured-image img {
-        width: 100%;
-        margin: 35px 0;
-        border-radius: 16px;
+      h3 {
+        padding-left: 2.5rem;
       }
 
-      .single-blog .flow-diagram img {
-        width: 100%;
-        padding: 15px;
-      }
-
-      .image-container {
-        padding: 20px;
-        margin: 30px 0;
-      }
-
-      .single-blog img:hover {
-        transform: scale(1.01);
+      h3:before {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
       }
     }
 
-    @media (max-width: 480px) {
-      .single-blog img {
-        border-radius: 10px;
-        margin: 25px 0;
+    /* Animation for page load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
-
-      .single-blog .featured-image img {
-        border-radius: 14px;
-        margin: 30px 0;
-      }
-
-      .caption {
-        font-size: 14px;
-        padding: 8px 15px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    /* Dark Mode Support */
-    @media (prefers-color-scheme: dark) {
-      .single-blog img {
-        border-color: #374151;
-        background: #374151;
-        filter: brightness(1.1) contrast(1.05);
-      }
-
-      .single-blog .flow-diagram img {
-        background: #4b5563;
-        border-color: #4b5563;
-      }
-
-      .image-container {
-        background: #374151;
-        border-color: #4b5563;
-      }
-
-      .caption {
-        background: #4b5563;
-        color: #d1d5db;
-      }
-    }
-
-    /* Print Styles */
-    @media print {
-      .single-blog img {
-        box-shadow: none;
-        border: 2px solid #000;
-        max-width: 100%;
-        margin: 20px 0;
-      }
-
-      .single-blog img:hover {
-        transform: none;
-      }
-    }
-
-    /* Accessibility */
-    .single-blog img:focus {
-      outline: 3px solid var(--secondary-color);
-      outline-offset: 3px;
-    }
-
-    /* Lazy Loading Enhancement */
-    .single-blog img[loading="lazy"] {
+    .single-blog > * {
+      animation: fadeInUp 0.5s ease forwards;
       opacity: 0;
-      transition: opacity 0.3s ease;
     }
 
-    .single-blog img[loading="lazy"].loaded {
-      opacity: 1;
-    }
+    .single-blog > *:nth-child(1) { animation-delay: 0.1s; }
+    .single-blog > *:nth-child(2) { animation-delay: 0.2s; }
+    .single-blog > *:nth-child(3) { animation-delay: 0.3s; }
+    .single-blog > *:nth-child(4) { animation-delay: 0.4s; }
+    .single-blog > *:nth-child(5) { animation-delay: 0.5s; }
+    .single-blog > *:nth-child(6) { animation-delay: 0.6s; }
+    .single-blog > *:nth-child(7) { animation-delay: 0.7s; }
+    .single-blog > *:nth-child(8) { animation-delay: 0.8s; }
+    .single-blog > *:nth-child(9) { animation-delay: 0.9s; }
+    .single-blog > *:nth-child(10) { animation-delay: 1.0s; }
   </style>
 </head>
 
 <body>
 
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
   <!-- Navbar Start -->
-  <nav class="main-nav navbar navbar-expand-lg">
+  <nav class="main-nav navbar navbar-expand-lg" id="mainNav">
     <div class="container">
       <!-- Logo -->
       <a class="navbar-brand" href="index.html">
         <h2 class="logo-text">DevFolio</h2>
       </a>
       <!-- Toogle Button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavContent">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse nav-list" id="mainNav">
+      <div class="collapse navbar-collapse nav-list" id="mainNavContent">
         <!-- Navigation Links -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -663,9 +827,9 @@
       <div class="row">
         <div class="col-lg-10 mx-auto">
           <article class="single-blog">
-            <p class="title">Java Spring Framework</p>
+            <p class="title">Java Spring Framework - Hướng dẫn toàn diện cho người mới bắt đầu</p>
             <ul class="meta">
-              <li>By <a href="about.html">Thanh Dat</a></li>
+              <li><i class="far fa-user"></i> By <a href="about.html">Thanh Hieu</a></li>
               <li>
                 <i class="far fa-clock"></i>
                 October 19, 2024
@@ -685,11 +849,16 @@
               <h4>Nội dung bài viết</h4>
               <ul>
                 <li><a href="#intro">Giới thiệu Spring Framework</a></li>
+                <li><a href="#history">Lịch sử và sự phát triển</a></li>
                 <li><a href="#di">Dependency Injection (DI)</a></li>
                 <li><a href="#ioc">Inversion of Control (IoC)</a></li>
                 <li><a href="#spring-boot">Spring Boot</a></li>
+                <li><a href="#spring-mvc">Spring MVC</a></li>
                 <li><a href="#rest-api">RESTful Web Services</a></li>
                 <li><a href="#spring-data">Spring Data JPA</a></li>
+                <li><a href="#spring-security">Spring Security</a></li>
+                <li><a href="#spring-cloud">Spring Cloud & Microservices</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
                 <li><a href="#advantages">Ưu điểm của Spring</a></li>
                 <li><a href="#conclusion">Tổng kết</a></li>
               </ul>
@@ -709,6 +878,25 @@
               Bài viết này sẽ hướng dẫn bạn hiểu các khái niệm cốt lõi của Spring, cách Spring Boot đơn giản hóa phát
               triển ứng dụng, và cách xây dựng RESTful API nhanh chóng chỉ trong vài dòng code.
             </p>
+
+            <h3 id="history">Lịch sử và sự phát triển của Spring</h3>
+            <p>
+              Spring Framework được <strong>Rod Johnson</strong> giới thiệu lần đầu vào năm 2003 trong cuốn sách 
+              "Expert One-on-One J2EE Design and Development". Ban đầu, Spring được tạo ra để giải quyết những 
+              phức tạp của Enterprise JavaBeans (EJB) và cung cấp một cách tiếp cận nhẹ nhàng hơn để phát triển 
+              ứng dụng doanh nghiệp.
+            </p>
+
+            <p>
+              Qua nhiều năm, Spring đã phát triển thành một hệ sinh thái toàn diện với nhiều dự án con:
+            </p>
+            <ul>
+              <li><strong>Spring Framework Core</strong> - Nền tảng chính với DI và IoC</li>
+              <li><strong>Spring Boot</strong> - Giúp tạo ứng dụng Spring độc lập một cách nhanh chóng</li>
+              <li><strong>Spring Data</strong> - Đơn giản hóa truy cập dữ liệu từ các nguồn khác nhau</li>
+              <li><strong>Spring Security</strong> - Framework bảo mật mạnh mẽ</li>
+              <li><strong>Spring Cloud</strong> - Công cụ cho kiến trúc microservices</li>
+            </ul>
 
             <div class="flow-diagram">
               <h4>Spring Framework Architecture</h4>
@@ -741,19 +929,19 @@
                 hòa."</p>
             </blockquote>
 
-            <h3 id="di">2. Dependency Injection (DI) – Trái tim của Spring</h3>
+            <h3 id="di">Dependency Injection (DI) – Trái tim của Spring</h3>
             <p>
               <strong>Dependency Injection</strong> là cơ chế cho phép Spring tự động cung cấp (inject) các đối tượng
               phụ thuộc vào class khác, giúp giảm sự gắn kết (coupling) giữa các module.
             </p>
 
             <p>Thay vì:</p>
-            <pre><code class="language-java">public class UserService {
+            <pre data-language="Java"><code class="language-java">public class UserService {
   private UserRepository userRepository = new UserRepository();
 }</code></pre>
 
             <p>Bạn có thể viết:</p>
-            <pre><code class="language-java">@Service
+            <pre data-language="Java"><code class="language-java">@Service
 public class UserService {
   private final UserRepository userRepository;
 
@@ -769,7 +957,15 @@ public class UserService {
               Điều này giúp việc test, bảo trì và thay đổi code dễ dàng hơn rất nhiều.
             </p>
 
-            <h3 id="ioc">3. Inversion of Control (IoC)</h3>
+            <h4>Các cách triển khai Dependency Injection</h4>
+            <p>Spring hỗ trợ ba cách chính để thực hiện Dependency Injection:</p>
+            <ul>
+              <li><strong>Constructor Injection</strong> - Khuyến nghị sử dụng</li>
+              <li><strong>Setter Injection</strong> - Thông qua phương thức setter</li>
+              <li><strong>Field Injection</strong> - Trực tiếp vào trường với @Autowired</li>
+            </ul>
+
+            <h3 id="ioc">Inversion of Control (IoC)</h3>
             <p>
               IoC là nguyên lý cốt lõi của Spring, nơi mà việc <strong>quản lý vòng đời của các đối tượng</strong>
               (bean) được chuyển giao cho framework.
@@ -781,14 +977,21 @@ public class UserService {
               hình XML.
             </p>
 
-            <h3 id="spring-boot">4. Spring Boot – Cách nhanh nhất để bắt đầu</h3>
+            <h4>Spring IoC Container</h4>
+            <p>Spring có hai loại container chính:</p>
+            <ul>
+              <li><strong>BeanFactory</strong> - Container cơ bản, cung cấp cấu hình cơ bản</li>
+              <li><strong>ApplicationContext</strong> - Container nâng cao, thêm các tính năng doanh nghiệp</li>
+            </ul>
+
+            <h3 id="spring-boot">Spring Boot – Cách nhanh nhất để bắt đầu</h3>
             <p>
               <strong>Spring Boot</strong> ra đời để đơn giản hóa việc khởi tạo và cấu hình ứng dụng Spring truyền
               thống.
               Không cần cấu hình XML phức tạp — chỉ cần vài annotation, bạn có thể chạy ứng dụng backend trong vài giây.
             </p>
 
-            <pre><code class="language-java">@SpringBootApplication
+            <pre data-language="Java"><code class="language-java">@SpringBootApplication
 public class DemoApplication {
   public static void main(String[] args) {
     SpringApplication.run(DemoApplication.class, args);
@@ -803,19 +1006,62 @@ public class DemoApplication {
               <li>Hỗ trợ build REST API, JPA, Security chỉ với một vài dependency</li>
             </ul>
 
+            <h4>Spring Boot Starters</h4>
+            <p>Spring Boot cung cấp các "starter" để đơn giản hóa việc thêm dependencies:</p>
+            <ul>
+              <li><code>spring-boot-starter-web</code> - Cho ứng dụng web</li>
+              <li><code>spring-boot-starter-data-jpa</code> - Cho Spring Data JPA</li>
+              <li><code>spring-boot-starter-security</code> - Cho Spring Security</li>
+              <li><code>spring-boot-starter-test</code> - Cho testing</li>
+            </ul>
+
             <div class="concept-box">
               <h4>🚀 Spring Boot Auto-Configuration</h4>
               <p>Spring Boot tự động cấu hình dựa trên các dependency trong classpath. Thêm spring-boot-starter-web sẽ
                 tự động cấu hình Tomcat và Spring MVC.</p>
             </div>
 
-            <h3 id="rest-api">5. Xây dựng RESTful Web Services với Spring Boot</h3>
+            <h3 id="spring-mvc">Spring MVC Framework</h3>
+            <p>
+              <strong>Spring MVC</strong> (Model-View-Controller) là framework web mạnh mẽ của Spring, 
+              cung cấp kiến trúc rõ ràng để phát triển ứng dụng web.
+            </p>
+
+            <h4>Các thành phần chính của Spring MVC:</h4>
+            <ul>
+              <li><strong>DispatcherServlet</strong> - Front controller, điều phối tất cả request</li>
+              <li><strong>Controller</strong> - Xử lý request và trả về response</li>
+              <li><strong>View Resolver</strong> - Xác định view để hiển thị</li>
+              <li><strong>Model</strong> - Chứa dữ liệu để truyền đến view</li>
+            </ul>
+
+            <pre data-language="Java"><code class="language-java">@Controller
+@RequestMapping("/products")
+public class ProductController {
+  
+  @Autowired
+  private ProductService productService;
+  
+  @GetMapping
+  public String listProducts(Model model) {
+    model.addAttribute("products", productService.findAll());
+    return "products/list";
+  }
+  
+  @GetMapping("/{id}")
+  public String getProduct(@PathVariable Long id, Model model) {
+    model.addAttribute("product", productService.findById(id));
+    return "products/detail";
+  }
+}</code></pre>
+
+            <h3 id="rest-api">Xây dựng RESTful Web Services với Spring Boot</h3>
             <p>
               Một trong những tính năng mạnh mẽ nhất của Spring Boot là xây dựng <strong>REST API</strong> cực nhanh.
               Dưới đây là ví dụ đơn giản:
             </p>
 
-            <pre><code class="language-java">@RestController
+            <pre data-language="Java"><code class="language-java">@RestController
 @RequestMapping("/api")
 public class HelloController {
 
@@ -830,25 +1076,78 @@ public class HelloController {
               mà không cần thêm bất kỳ cấu hình server nào.
             </p>
 
+            <h4>Ví dụ REST API hoàn chỉnh với CRUD</h4>
+            <pre data-language="Java"><code class="language-java">@RestController
+@RequestMapping("/api/users")
+public class UserController {
+  
+  @Autowired
+  private UserService userService;
+  
+  @GetMapping
+  public List<User> getAllUsers() {
+    return userService.findAll();
+  }
+  
+  @GetMapping("/{id}")
+  public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    User user = userService.findById(id);
+    return ResponseEntity.ok(user);
+  }
+  
+  @PostMapping
+  public ResponseEntity<User> createUser(@RequestBody User user) {
+    User savedUser = userService.save(user);
+    return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+  }
+  
+  @PutMapping("/{id}")
+  public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    User updatedUser = userService.update(id, user);
+    return ResponseEntity.ok(updatedUser);
+  }
+  
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    userService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+}</code></pre>
+
             <blockquote>
               <p>"Spring Boot biến việc viết API trở nên đơn giản như viết một dòng println()."</p>
             </blockquote>
 
-            <h3 id="spring-data">6. Spring và tầng dữ liệu (Spring Data JPA)</h3>
+            <h3 id="spring-data">Spring và tầng dữ liệu (Spring Data JPA)</h3>
             <p>
               Với module <strong>Spring Data JPA</strong>, bạn có thể tương tác với cơ sở dữ liệu mà không cần viết câu
               SQL dài dòng.
               Chỉ cần định nghĩa interface:
             </p>
 
-            <pre><code class="language-java">public interface UserRepository extends JpaRepository<User, Long> {
+            <pre data-language="Java"><code class="language-java">public interface UserRepository extends JpaRepository<User, Long> {
   List<User> findByName(String name);
+  List<User> findByEmailContaining(String email);
+  Optional<User> findByUsername(String username);
+  List<User> findByAgeGreaterThan(int age);
 }</code></pre>
 
             <p>
               Spring Boot sẽ tự động tạo các truy vấn tương ứng nhờ vào tên phương thức — cực kỳ tiện lợi và tiết kiệm
               thời gian.
             </p>
+
+            <h4>Custom Query với @Query</h4>
+            <p>Khi cần truy vấn phức tạp hơn, bạn có thể sử dụng annotation @Query:</p>
+            <pre data-language="Java"><code class="language-java">public interface UserRepository extends JpaRepository<User, Long> {
+  
+  @Query("SELECT u FROM User u WHERE u.status = :status AND u.createdDate > :date")
+  List<User> findActiveUsersAfterDate(@Param("status") String status, 
+                                      @Param("date") LocalDateTime date);
+  
+  @Query(value = "SELECT * FROM users WHERE email LIKE %:domain", nativeQuery = true)
+  List<User> findUsersByEmailDomain(@Param("domain") String domain);
+}</code></pre>
 
             <div class="flow-diagram">
               <h4>Spring Data JPA Architecture</h4>
@@ -857,13 +1156,152 @@ public class HelloController {
               <p class="caption">Luồng hoạt động của Spring Data JPA</p>
             </div>
 
-            <h3 id="advantages">7. Ưu điểm của Spring Framework</h3>
+            <h3 id="spring-security">Spring Security - Bảo mật ứng dụng</h3>
+            <p>
+              <strong>Spring Security</strong> là framework bảo mật mạnh mẽ cung cấp xác thực (authentication) 
+              và ủy quyền (authorization) cho ứng dụng Spring.
+            </p>
+
+            <h4>Cấu hình Spring Security cơ bản</h4>
+            <pre data-language="Java"><code class="language-java">@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+  
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+      .authorizeHttpRequests(authz -> authz
+        .requestMatchers("/public/**").permitAll()
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+      )
+      .formLogin(form -> form
+        .loginPage("/login")
+        .permitAll()
+      )
+      .logout(logout -> logout
+        .permitAll()
+      );
+    
+    return http.build();
+  }
+  
+  @Bean
+  public UserDetailsService userDetailsService() {
+    UserDetails user = User.withDefaultPasswordEncoder()
+      .username("user")
+      .password("password")
+      .roles("USER")
+      .build();
+    
+    UserDetails admin = User.withDefaultPasswordEncoder()
+      .username("admin")
+      .password("admin")
+      .roles("ADMIN")
+      .build();
+    
+    return new InMemoryUserDetailsManager(user, admin);
+  }
+}</code></pre>
+
+            <h3 id="spring-cloud">Spring Cloud & Microservices</h3>
+            <p>
+              <strong>Spring Cloud</strong> cung cấp các công cụ để xây dựng các mẫu phổ biến trong hệ thống phân tán 
+              và microservices.
+            </p>
+
+            <h4>Các thành phần chính của Spring Cloud:</h4>
+            <ul>
+              <li><strong>Spring Cloud Config</strong> - Quản lý cấu hình tập trung</li>
+              <li><strong>Spring Cloud Netflix Eureka</strong> - Service discovery</li>
+              <li><strong>Spring Cloud Gateway</strong> - API Gateway</li>
+              <li><strong>Spring Cloud Circuit Breaker</strong> - Xử lý lỗi và khả năng chịu lỗi</li>
+              <li><strong>Spring Cloud Sleuth</strong> - Distributed tracing</li>
+            </ul>
+
+            <h3 id="best-practices">Best Practices khi phát triển với Spring</h3>
+            <p>Để phát triển ứng dụng Spring hiệu quả, hãy tuân thủ các best practices sau:</p>
+
+            <h4>1. Sử dụng Constructor Injection</h4>
+            <pre data-language="Java"><code class="language-java">@Service
+public class UserService {
+  private final UserRepository userRepository;
+  private final EmailService emailService;
+  
+  public UserService(UserRepository userRepository, EmailService emailService) {
+    this.userRepository = userRepository;
+    this.emailService = emailService;
+  }
+}</code></pre>
+
+            <h4>2. Sử dụng @ConfigurationProperties cho cấu hình</h4>
+            <pre data-language="Java"><code class="language-java">@Configuration
+@ConfigurationProperties(prefix = "app")
+public class AppConfig {
+  private String name;
+  private String version;
+  private Database database;
+  
+  // getters and setters
+  
+  public static class Database {
+    private String url;
+    private String username;
+    private String password;
+    
+    // getters and setters
+  }
+}</code></pre>
+
+            <h4>3. Xử lý Exception với @ControllerAdvice</h4>
+            <pre data-language="Java"><code class="language-java">@ControllerAdvice
+public class GlobalExceptionHandler {
+  
+  @ExceptionHandler(UserNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
+    ErrorResponse error = new ErrorResponse("USER_NOT_FOUND", ex.getMessage());
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+  }
+  
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+    ErrorResponse error = new ErrorResponse("INTERNAL_ERROR", "Đã xảy ra lỗi hệ thống");
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+}</code></pre>
+
+            <h4>4. Sử dụng DTO pattern</h4>
+            <pre data-language="Java"><code class="language-java">public class UserDTO {
+  private Long id;
+  private String name;
+  private String email;
+  
+  // constructors, getters, setters
+}
+
+@RestController
+public class UserController {
+  
+  @GetMapping("/users/{id}")
+  public UserDTO getUser(@PathVariable Long id) {
+    User user = userService.findById(id);
+    return convertToDTO(user);
+  }
+  
+  private UserDTO convertToDTO(User user) {
+    // conversion logic
+  }
+}</code></pre>
+
+            <h3 id="advantages">Ưu điểm của Spring Framework</h3>
             <ul>
               <li>Giảm sự phụ thuộc giữa các module nhờ DI</li>
               <li>Dễ mở rộng, dễ test, dễ bảo trì</li>
               <li>Tích hợp mạnh mẽ với Hibernate, JPA, Security, Kafka, v.v.</li>
               <li>Spring Boot giúp khởi chạy ứng dụng chỉ trong vài giây</li>
               <li>Cộng đồng lớn, tài liệu phong phú, cập nhật liên tục</li>
+              <li>Hỗ trợ reactive programming với Spring WebFlux</li>
+              <li>Ecosystem phong phú với nhiều dự án con</li>
             </ul>
 
             <div class="concept-box">
@@ -874,15 +1312,24 @@ public class HelloController {
                 <li><strong>Spring Security:</strong> Authentication & Authorization</li>
                 <li><strong>Spring Data:</strong> Unified data access</li>
                 <li><strong>Spring Cloud:</strong> Microservices architecture</li>
+                <li><strong>Spring Batch:</strong> Xử lý batch processing</li>
+                <li><strong>Spring Integration:</strong> Enterprise integration patterns</li>
+                <li><strong>Spring WebFlux:</strong> Reactive web applications</li>
               </ul>
             </div>
 
-            <h3 id="conclusion">8. Tổng kết</h3>
+            <h3 id="conclusion">Tổng kết</h3>
             <p>
               Spring Framework là lựa chọn hàng đầu cho các lập trình viên Java khi xây dựng ứng dụng web, microservice
               hoặc hệ thống doanh nghiệp.
               Việc hiểu và áp dụng <strong>Dependency Injection</strong>, <strong>IoC Container</strong> và
               <strong>Spring Boot</strong> sẽ giúp bạn tiết kiệm hàng chục giờ cấu hình và phát triển.
+            </p>
+
+            <p>
+              Spring không chỉ là một framework mà là một hệ sinh thái toàn diện giúp giải quyết hầu hết các vấn đề 
+              trong phát triển ứng dụng doanh nghiệp. Từ ứng dụng web đơn giản đến hệ thống microservices phức tạp, 
+              Spring đều cung cấp các công cụ phù hợp.
             </p>
 
             <p>
@@ -903,6 +1350,8 @@ public class HelloController {
                     <span class="badge bg-secondary">Java</span>
                     <span class="badge bg-success">Backend</span>
                     <span class="badge bg-info">Spring Boot</span>
+                    <span class="badge bg-warning">Microservices</span>
+                    <span class="badge bg-danger">REST API</span>
                   </div>
                 </div>
                 <div class="col-md-6 text-md-end">
@@ -921,8 +1370,6 @@ public class HelloController {
       </div>
     </div>
   </section>
-
-
 
   <section class="footer">
     <div class="container">
@@ -952,7 +1399,7 @@ public class HelloController {
       <div class="row">
         <div class="col-lg-12">
           <div class="copy-right">
-            <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Dat</p>
+            <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Hieu</p>
           </div>
         </div>
       </div>
@@ -965,6 +1412,62 @@ public class HelloController {
   <script>
     // Set current year in copyright
     document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+    // Scroll progress bar
+    window.addEventListener('scroll', function() {
+      const winHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+      document.getElementById('progressBar').style.width = scrollPercent + '%';
+    });
+
+    // Back to top button
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('mainNav');
+    
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   </script>
 </body>
 

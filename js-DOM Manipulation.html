@@ -24,14 +24,26 @@
     :root {
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #7e22ce;
       --accent: #f59e0b;
-      --dark: #1e293b;
+      --accent-dark: #d97706;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
       --light: #f8fafc;
       --gray: #64748b;
+      --gray-light: #cbd5e1;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
       --border: #e2e8f0;
-      --radius: 8px;
+      --radius: 12px;
+      --radius-lg: 16px;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease;
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
     /* ===== GLOBAL STYLES ===== */
@@ -43,9 +55,10 @@
 
     body {
       font-family: 'Be Vietnam Pro', sans-serif;
-      line-height: 1.8;
+      line-height: 1.7;
       color: var(--dark);
       background: var(--light);
+      overflow-x: hidden;
     }
 
     .container {
@@ -55,43 +68,69 @@
     }
 
     /* ===== NAVBAR ===== */
-    .navbar {
+    .main-nav {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 0;
+      transition: var(--transition);
       position: fixed;
       top: 0;
-      width: 100%;
+      left: 0;
+      right: 0;
       z-index: 1000;
     }
 
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .main-nav.scrolled {
+      box-shadow: var(--shadow-lg);
+      padding: 0.75rem 0;
     }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      font-size: 1.75rem;
+      font-weight: 800;
       color: var(--primary);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .nav-links {
+    .navbar-brand::before {
+      content: "🚀";
+      font-size: 1.5rem;
+    }
+
+    .nav-list {
       display: flex;
+      align-items: center;
       gap: 2rem;
+    }
+
+    .navbar-nav {
+      display: flex;
       list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-item {
+      position: relative;
     }
 
     .nav-link {
-      color: var(--dark);
-      text-decoration: none;
       font-weight: 500;
+      color: var(--dark);
       padding: 0.5rem 1rem;
-      border-radius: var(--radius);
       transition: var(--transition);
+      position: relative;
+      text-decoration: none;
+      border-radius: var(--radius);
     }
 
     .nav-link:hover,
@@ -100,96 +139,303 @@
       background: rgba(37, 99, 235, 0.1);
     }
 
+    .main-nav-social {
+      display: flex;
+      list-style: none;
+      gap: 0.75rem;
+    }
+
+    .main-nav-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--light);
+      border-radius: 50%;
+      color: var(--dark);
+      transition: var(--transition);
+      text-decoration: none;
+      border: 1px solid var(--border);
+    }
+
+    .main-nav-social a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .navbar-toggler {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+      padding: 5px;
+    }
+
+    .icon-bar {
+      width: 25px;
+      height: 3px;
+      background-color: var(--dark);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ===== HERO SECTION ===== */
+    .blog-hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><polygon points="1000,100 1000,0 0,100"/></svg>');
+      background-size: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .blog-hero .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .meta i {
+      font-size: 1rem;
+    }
+
     /* ===== BLOG CONTENT ===== */
     .blog-single {
-      padding: 120px 0 80px;
+      padding: 80px 0;
+      background: var(--light);
     }
 
     .single-blog {
       background: white;
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       padding: 3rem;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-lg);
       border: 1px solid var(--border);
-      max-width: 900px;
-      margin: 0 auto;
+      position: relative;
     }
 
-    .blog-title {
-      font-size: 2.5rem;
-      font-weight: 800;
+    .single-blog::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .single-blog h2,
+    .single-blog h3 {
       color: var(--dark);
-      margin-bottom: 1rem;
+      margin: 2.5rem 0 1.5rem;
+      font-weight: 700;
       line-height: 1.3;
     }
 
-    .blog-meta {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-
-    .blog-image {
-      width: 100%;
-      border-radius: var(--radius);
-      margin: 2rem 0;
-      box-shadow: var(--shadow);
-    }
-
-    .blog-section {
-      margin: 2.5rem 0;
-    }
-
-    .blog-section h2 {
-      font-size: 1.8rem;
-      color: var(--dark);
-      margin-bottom: 1.5rem;
+    .single-blog h2 {
+      font-size: 2rem;
       border-left: 4px solid var(--accent);
       padding-left: 1rem;
     }
 
-    .blog-section h3 {
-      font-size: 1.4rem;
+    .single-blog h3 {
+      font-size: 1.5rem;
       color: var(--primary);
-      margin: 1.5rem 0 1rem;
     }
 
-    .blog-section p {
+    .single-blog p {
       font-size: 1.1rem;
       line-height: 1.8;
       margin-bottom: 1.5rem;
-      color: var(--dark);
+      color: var(--dark-light);
     }
 
-    .blog-section ul,
-    .blog-section ol {
-      margin: 1rem 0 1.5rem 2rem;
+    .single-blog strong {
+      color: var(--primary);
+      font-weight: 600;
     }
 
-    .blog-section li {
+    .single-blog ul,
+    .single-blog ol {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+
+    .single-blog li {
+      font-size: 1.1rem;
+      line-height: 1.8;
       margin-bottom: 0.5rem;
-      line-height: 1.6;
+      color: var(--dark-light);
+    }
+
+    /* ===== TABLE OF CONTENTS ===== */
+    .toc {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toc::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient);
+    }
+
+    .toc h3 {
+      margin-top: 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toc h3::before {
+      content: "📑";
+      font-size: 1.5rem;
+    }
+
+    .toc ul {
+      columns: 2;
+      gap: 2rem;
+      margin: 1.5rem 0 0;
+    }
+
+    .toc li {
+      margin-bottom: 0.75rem;
+      break-inside: avoid;
+    }
+
+    .toc a {
+      color: var(--dark);
+      transition: var(--transition);
+      display: block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .toc a:hover {
+      background: white;
+      color: var(--primary);
+      transform: translateX(8px);
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .feature-card h4 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     /* ===== CODE BLOCKS ===== */
-    .code-block {
-      background: #1e293b;
+    .single-blog pre {
+      background: var(--dark);
       border-radius: var(--radius);
       padding: 1.5rem;
       margin: 2rem 0;
       overflow-x: auto;
       border-left: 4px solid var(--accent);
+      position: relative;
     }
 
-    .code-block code {
+    .single-blog code {
       font-family: 'Courier New', monospace;
       font-size: 0.95rem;
       color: #e2e8f0;
-      line-height: 1.5;
+    }
+
+    .single-blog pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .single-blog p code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
     }
 
     .code-comment {
@@ -197,94 +443,383 @@
       font-style: italic;
     }
 
-    /* ===== FEATURE CARDS ===== */
-    .feature-card {
+    /* ===== CODE COMPARISON ===== */
+    .code-comparison {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .code-example {
+      flex: 1;
+      min-width: 300px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .code-example h5 {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .code-example pre {
+      margin: 0;
+      border-radius: 0;
+      border-left: none;
+    }
+
+    /* ===== BLOCKQUOTE ===== */
+    .single-blog blockquote {
       background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    .single-blog blockquote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.3;
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      font-family: serif;
+    }
+
+    .single-blog blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--dark);
+      margin: 0;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== DIAGRAM CONTAINER ===== */
+    .technical-diagram {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+    }
+
+    .technical-diagram::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .diagram {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* ===== WARNING BOX ===== */
+    .warning-box {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
       border-radius: var(--radius);
       padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-left: 4px solid var(--primary);
+      margin: 2.5rem 0;
+      position: relative;
     }
 
-    .feature-card h3 {
-      color: var(--primary);
-      margin-bottom: 1rem;
+    .warning-box h4 {
+      color: #92400e;
+      margin-top: 0;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 10px;
     }
 
-    .tip-card {
+    .warning-box h4 i {
+      color: #f59e0b;
+    }
+
+    /* ===== BEST PRACTICES ===== */
+    .best-practices {
       background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border-left: 4px solid var(--success);
     }
 
-    .tip-card h3 {
-      color: var(--accent);
+    /* ===== COMPARISON TABLE ===== */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2.5rem 0;
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table tr:hover {
+      background: #f8fafc;
+    }
+
+    /* ===== IMAGE STYLING ===== */
+    .blog-single img {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      margin: 3rem auto;
+      display: block;
+      transition: var(--transition);
+      border: 3px solid white;
+    }
+
+    .blog-single img:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-xl), 0 0 0 3px var(--primary-light);
     }
 
     /* ===== FOOTER ===== */
     .footer {
       background: var(--dark);
       color: white;
-      padding: 3rem 0 2rem;
-      text-align: center;
+      padding: 4rem 0 2rem;
     }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin: 2rem 0;
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-description {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links h4,
+    .footer-contact h4 {
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul,
+    .footer-contact ul {
       list-style: none;
     }
 
-    .footer-link {
-      color: white;
+    .footer-links li,
+    .footer-contact li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a,
+    .footer-contact a {
+      color: #94a3b8;
       text-decoration: none;
       transition: var(--transition);
     }
 
-    .footer-link:hover {
-      color: var(--accent);
+    .footer-links a:hover,
+    .footer-contact a:hover {
+      color: white;
     }
 
-    .copyright {
-      color: #94a3b8;
+    .sociale-icon {
       margin-top: 2rem;
+    }
+
+    .sociale-icon ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .sociale-icon a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #374151;
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .sociale-icon a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copy-right {
+      text-align: center;
       padding-top: 2rem;
       border-top: 1px solid #374151;
+      color: #94a3b8;
+      font-size: 0.9rem;
     }
 
     /* ===== RESPONSIVE DESIGN ===== */
     @media (max-width: 768px) {
-      .single-blog {
-        padding: 2rem;
-        margin: 0 1rem;
+      .navbar-toggler {
+        display: flex;
+      }
+      
+      .nav-list {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: var(--shadow-lg);
+        display: none;
+        padding: 20px;
+        gap: 10px;
+      }
+      
+      .nav-list.active {
+        display: flex;
+      }
+      
+      .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+      }
+      
+      .nav-item {
+        width: 100%;
+      }
+      
+      .nav-link {
+        padding: 12px 15px;
+        border-radius: 6px;
+        text-align: center;
+      }
+      
+      .main-nav-social {
+        justify-content: center;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        margin-top: 15px;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
       }
 
-      .blog-title {
+      .blog-hero .title {
+        font-size: 2.5rem;
+      }
+
+      .single-blog {
+        padding: 2rem;
+      }
+
+      .toc ul {
+        columns: 1;
+      }
+
+      .code-comparison {
+        flex-direction: column;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-hero .title {
         font-size: 2rem;
       }
 
-      .blog-meta {
-        flex-direction: column;
-        gap: 1rem;
+      .single-blog {
+        padding: 1.5rem;
       }
 
-      .nav-links {
-        display: none;
+      .single-blog h2 {
+        font-size: 1.5rem;
       }
 
-      .blog-single {
-        padding: 100px 0 60px;
+      .single-blog h3 {
+        font-size: 1.25rem;
       }
 
-      .footer-links {
-        flex-direction: column;
-        gap: 1rem;
+      .single-blog pre {
+        padding: 1rem;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -292,63 +827,127 @@
 
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
+  <!-- Navbar Start -->
+  <nav class="main-nav navbar">
     <div class="container">
-      <div class="nav-container">
-        <a href="index.html" class="logo">DevFolio</a>
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">Trang Chủ</a></li>
-          <li><a href="index.html#about.html" class="nav-link">Giới Thiệu</a></li>
-          <li><a href="index.html#articles.html" class="nav-link active">Bài Viết</a></li>
-          <li><a href="index.html#contact.html" class="nav-link">Liên Hệ</a></li>
+      <!-- Logo -->
+      <a class="navbar-brand" href="index.html">
+        DevBlog
+      </a>
+      <!-- Toggle Button -->
+      <button class="navbar-toggler" type="button" id="navbarToggle">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="nav-list" id="mainNav">
+        <!-- Navigation Links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="articles.html">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+        <!-- Social Links -->
+        <ul class="main-nav-social">
+          <li>
+            <a href="#" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+  <!-- Navbar End -->
+
+  <!-- Hero Section -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="title">JavaScript DOM Manipulation</h1>
+        <p class="hero-description">
+          Khám phá sức mạnh của DOM Manipulation - từ những khái niệm cơ bản đến các kỹ thuật nâng cao
+        </p>
+        <ul class="meta">
+          <li>
+            <i class="fas fa-user"></i>
+            Tác giả: Thanh Hieu
+          </li>
+          <li>
+            <i class="fas fa-calendar"></i>
+            Ngày đăng: 19 tháng 10, 2024
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            Thời gian đọc: 20 phút
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- Blog Content -->
   <section class="blog-single">
     <div class="container">
       <article class="single-blog">
-        <h1 class="blog-title">Làm Chủ JavaScript DOM Manipulation: Hướng Dẫn Toàn Diện</h1>
-
-        <div class="blog-meta">
-          <span><i class="fas fa-calendar"></i> 19 tháng 10, 2024</span>
-          <span><i class="fas fa-clock"></i> 20 phút đọc</span>
-          <span><i class="fas fa-tags"></i> JavaScript, DOM, Frontend</span>
+        
+        <!-- Table of Contents -->
+        <div class="toc">
+          <h3>Mục Lục</h3>
+          <ul>
+            <li><a href="#introduction">Giới thiệu về DOM</a></li>
+            <li><a href="#dom-access">Truy Cập Phần Tử DOM</a></li>
+            <li><a href="#modifying-content">Thay Đổi Nội Dung</a></li>
+            <li><a href="#creating-elements">Tạo & Quản Lý Phần Tử</a></li>
+            <li><a href="#event-handling">Xử Lý Sự Kiện</a></li>
+            <li><a href="#advanced-techniques">Kỹ Thuật Nâng Cao</a></li>
+            <li><a href="#practical-example">Ví Dụ Thực Tế</a></li>
+            <li><a href="#performance">Tối Ưu Hiệu Suất</a></li>
+            <li><a href="#conclusion">Kết Luận</a></li>
+          </ul>
         </div>
 
-        <img src="https://aptech.fpt.edu.vn/wp-content/uploads/2022/11/tim-hieu-ve-dom-trong-ngon-ngu-nguyen-thuy-js.jpg"
-          alt="JavaScript DOM Manipulation" class="blog-image">
-
         <!-- Introduction -->
+        <h2 id="introduction">1. Giới thiệu về DOM</h2>
         <div class="feature-card">
-          <h3><i class="fas fa-star"></i> Giới Thiệu</h3>
+          <h4><i class="fas fa-rocket"></i> DOM Là Gì Và Tại Sao Quan Trọng?</h4>
           <p>
             <strong>DOM (Document Object Model)</strong> là giao diện lập trình (API) cho phép JavaScript tương tác với
             nội dung, cấu trúc và style của trang web.
             Hiểu và làm chủ DOM Manipulation là kỹ năng quan trọng nhất của mọi Frontend Developer.
           </p>
-          <p>
-            Trong bài viết này, chúng ta sẽ khám phá từ những khái niệm cơ bản nhất đến các kỹ thuật nâng cao,
-            kèm theo ví dụ thực tế và best practices.
-          </p>
         </div>
 
-        <!-- What is DOM -->
-        <div class="blog-section">
-          <h2>1. DOM Là Gì Và Tại Sao Quan Trọng?</h2>
+        <h3>1.1. Khái Niệm Cơ Bản</h3>
+        <p>
+          Khi trình duyệt tải một trang HTML, nó phân tích cấu trúc và tạo ra một <strong>cây DOM</strong> -
+          một biểu diễn dạng cây của toàn bộ tài liệu HTML. Mỗi phần tử HTML trở thành một <strong>nút (node)</strong>
+          trong cây này.
+        </p>
 
-          <h3>1.1. Khái Niệm Cơ Bản</h3>
-          <p>
-            Khi trình duyệt tải một trang HTML, nó phân tích cấu trúc và tạo ra một <strong>cây DOM</strong> -
-            một biểu diễn dạng cây của toàn bộ tài liệu HTML. Mỗi phần tử HTML trở thành một <strong>nút (node)</strong>
-            trong cây này.
-          </p>
-
-          <div class="code-block">
-            <code>&lt;!DOCTYPE html&gt;
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>HTML Structure</h5>
+            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;My Page&lt;/title&gt;
@@ -359,29 +958,43 @@
         &lt;p&gt;This is a paragraph&lt;/p&gt;
     &lt;/div&gt;
 &lt;/body&gt;
-&lt;/html&gt;</code>
+&lt;/html&gt;</code></pre>
           </div>
+          <div class="code-example">
+            <h5>DOM Tree Structure</h5>
+            <pre><code class="language-text">Document
+├── html
+    ├── head
+    │   └── title
+    │       └── "My Page"
+    └── body
+        ├── h1 (id="title")
+        │   └── "Hello World"
+        └── div (class="container")
+            └── p
+                └── "This is a paragraph"</code></pre>
+          </div>
+        </div>
 
-          <p>
-            Cấu trúc DOM sẽ là: <strong>Document → html → (head, body) → body chứa h1 và div → div chứa p</strong>
-          </p>
+        <h3>1.2. Các Loại Node Quan Trọng</h3>
+        <ul>
+          <li><strong>Element Node:</strong> Các thẻ HTML (div, p, h1, ...)</li>
+          <li><strong>Text Node:</strong> Văn bản bên trong các element</li>
+          <li><strong>Attribute Node:</strong> Các thuộc tính của element (class, id, src, ...)</li>
+          <li><strong>Comment Node:</strong> Các comment trong HTML</li>
+        </ul>
 
-          <h3>1.2. Các Loại Node Quan Trọng</h3>
-          <ul>
-            <li><strong>Element Node:</strong> Các thẻ HTML (div, p, h1, ...)</li>
-            <li><strong>Text Node:</strong> Văn bản bên trong các element</li>
-            <li><strong>Attribute Node:</strong> Các thuộc tính của element (class, id, src, ...)</li>
-            <li><strong>Comment Node:</strong> Các comment trong HTML</li>
-          </ul>
+        <div class="technical-diagram">
+          <img src="https://aptech.fpt.edu.vn/wp-content/uploads/2022/11/tim-hieu-ve-dom-trong-ngon-ngu-nguyen-thuy-js.jpg"
+            alt="JavaScript DOM Manipulation" class="blog-image">
+          <span class="caption">Hình ảnh minh họa cấu trúc DOM trong JavaScript</span>
         </div>
 
         <!-- DOM Access Methods -->
-        <div class="blog-section">
-          <h2>2. Truy Cập Phần Tử DOM</h2>
+        <h2 id="dom-access">2. Truy Cập Phần Tử DOM</h2>
 
-          <h3>2.1. Phương Thức Cổ Điển</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">Truy cập theo ID - trả về một phần tử</span>
+        <h3>2.1. Phương Thức Cổ Điển</h3>
+        <pre><code class="language-javascript">// <span class="code-comment">Truy cập theo ID - trả về một phần tử</span>
 const titleElement = document.getElementById('title');
 
 // <span class="code-comment">Truy cập theo class - trả về HTMLCollection (live collection)</span>
@@ -391,12 +1004,10 @@ const items = document.getElementsByClassName('item');
 const paragraphs = document.getElementsByTagName('p');
 
 // <span class="code-comment">Truy cập theo name attribute</span>
-const forms = document.getElementsByName('username');</code>
-          </div>
+const forms = document.getElementsByName('username');</code></pre>
 
-          <h3>2.2. Phương Thức Hiện Đại (Khuyến Nghị)</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">querySelector - trả về phần tử đầu tiên khớp với CSS selector</span>
+        <h3>2.2. Phương Thức Hiện Đại (Khuyến Nghị)</h3>
+        <pre><code class="language-javascript">// <span class="code-comment">querySelector - trả về phần tử đầu tiên khớp với CSS selector</span>
 const button = document.querySelector('#submitBtn');
 const firstItem = document.querySelector('.item');
 const firstParagraph = document.querySelector('p');
@@ -408,30 +1019,23 @@ const allParagraphs = document.querySelectorAll('p');
 // <span class="code-comment">Sử dụng CSS selectors phức tạp</span>
 const activeItems = document.querySelectorAll('.item.active');
 const directChildren = document.querySelectorAll('div > p');
-const siblings = document.querySelectorAll('h1 + p');</code>
-          </div>
+const siblings = document.querySelectorAll('h1 + p');</code></pre>
 
-          <div class="tip-card">
-            <h3><i class="fas fa-lightbulb"></i> Mẹo Quan Trọng</h3>
-            <p>
-              Luôn ưu tiên sử dụng <code>querySelector</code> và <code>querySelectorAll</code> vì:
-            </p>
-            <ul>
-              <li>Hỗ trợ tất cả CSS selectors</li>
-              <li>Trả về NodeList (có thể sử dụng forEach)</li>
-              <li>Linh hoạt và dễ đọc hơn</li>
-              <li>Không phải là live collection (hiệu suất tốt hơn)</li>
-            </ul>
-          </div>
+        <div class="feature-card">
+          <h4>💡 Ưu điểm của querySelector</h4>
+          <ul>
+            <li><strong>Hỗ trợ tất cả CSS selectors</strong> - Linh hoạt và mạnh mẽ</li>
+            <li><strong>Trả về NodeList</strong> - Có thể sử dụng forEach</li>
+            <li><strong>Không phải live collection</strong> - Hiệu suất tốt hơn</li>
+            <li><strong>Dễ đọc và bảo trì</strong> - Code rõ ràng hơn</li>
+          </ul>
         </div>
 
         <!-- Modifying Content -->
-        <div class="blog-section">
-          <h2>3. Thay Đổi Nội Dung & Thuộc Tính</h2>
+        <h2 id="modifying-content">3. Thay Đổi Nội Dung & Thuộc Tính</h2>
 
-          <h3>3.1. Thao Tác Với Nội Dung</h3>
-          <div class="code-block">
-            <code>const element = document.querySelector('#myElement');
+        <h3>3.1. Thao Tác Với Nội Dung</h3>
+        <pre><code class="language-javascript">const element = document.querySelector('#myElement');
 
 // <span class="code-comment">Thay đổi nội dung văn bản</span>
 element.textContent = 'Nội dung mới'; <span class="code-comment">// Chỉ lấy text, an toàn hơn</span>
@@ -446,12 +1050,10 @@ element.removeAttribute('data-custom'); <span class="code-comment">// Xóa attri
 // <span class="code-comment">Thuộc tính trực tiếp</span>
 element.id = 'newId';
 element.className = 'new-class';
-element.href = 'https://example.com';</code>
-          </div>
+element.href = 'https://example.com';</code></pre>
 
-          <h3>3.2. Làm Việc Với CSS Classes</h3>
-          <div class="code-block">
-            <code>const box = document.querySelector('.box');
+        <h3>3.2. Làm Việc Với CSS Classes</h3>
+        <pre><code class="language-javascript">const box = document.querySelector('.box');
 
 // <span class="code-comment">classList - phương thức hiện đại</span>
 box.classList.add('active', 'highlight'); <span class="code-comment">// Thêm nhiều class</span>
@@ -463,17 +1065,13 @@ box.classList.contains('active');         <span class="code-comment">// Kiểm t
 // <span class="code-comment">Thao tác style trực tiếp</span>
 box.style.backgroundColor = 'blue';
 box.style.fontSize = '20px';
-box.style.display = 'none';</code>
-          </div>
-        </div>
+box.style.display = 'none';</code></pre>
 
         <!-- Creating Elements -->
-        <div class="blog-section">
-          <h2>4. Tạo & Quản Lý Phần Tử Mới</h2>
+        <h2 id="creating-elements">4. Tạo & Quản Lý Phần Tử Mới</h2>
 
-          <h3>4.1. Tạo Và Chèn Phần Tử</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">Tạo phần tử mới</span>
+        <h3>4.1. Tạo Và Chèn Phần Tử</h3>
+        <pre><code class="language-javascript">// <span class="code-comment">Tạo phần tử mới</span>
 const newDiv = document.createElement('div');
 newDiv.textContent = 'Đây là div mới';
 newDiv.className = 'custom-div';
@@ -492,12 +1090,10 @@ container.insertAdjacentHTML('beforeend', '&lt;p&gt;Đoạn văn mới&lt;/p&gt;
 // 'beforebegin': Trước element
 // 'afterbegin': Bên trong, ở đầu
 // 'beforeend': Bên trong, ở cuối  
-// 'afterend': Sau element</code>
-          </div>
+// 'afterend': Sau element</code></pre>
 
-          <h3>4.2. Xóa Và Thay Thế Phần Tử</h3>
-          <div class="code-block">
-            <code>const element = document.querySelector('#toRemove');
+        <h3>4.2. Xóa Và Thay Thế Phần Tử</h3>
+        <pre><code class="language-javascript">const element = document.querySelector('#toRemove');
 const newElement = document.createElement('span');
 
 // <span class="code-comment">Xóa phần tử</span>
@@ -512,17 +1108,13 @@ element.parentNode.replaceChild(newElement, element); <span class="code-comment"
 container.innerHTML = '';            <span class="code-comment">// Nhanh nhưng không an toàn</span>
 while (container.firstChild) {
     container.removeChild(container.firstChild); <span class="code-comment">// An toàn hơn</span>
-}</code>
-          </div>
-        </div>
+}</code></pre>
 
         <!-- Event Handling -->
-        <div class="blog-section">
-          <h2>5. Xử Lý Sự Kiện (Event Handling)</h2>
+        <h2 id="event-handling">5. Xử Lý Sự Kiện (Event Handling)</h2>
 
-          <h3>5.1. Các Loại Sự Kiện Phổ Biến</h3>
-          <div class="code-block">
-            <code>const button = document.querySelector('#myButton');
+        <h3>5.1. Các Loại Sự Kiện Phổ Biến</h3>
+        <pre><code class="language-javascript">const button = document.querySelector('#myButton');
 
 // <span class="code-comment">Thêm event listener</span>
 button.addEventListener('click', function(event) {
@@ -538,45 +1130,45 @@ element.addEventListener('mouseout', handleMouseOut);
 element.addEventListener('focus', handleFocus);
 element.addEventListener('blur', handleBlur);
 element.addEventListener('keydown', handleKeyDown);
-element.addEventListener('submit', handleSubmit);</code>
-          </div>
+element.addEventListener('submit', handleSubmit);</code></pre>
 
-          <h3>5.2. Event Delegation - Kỹ Thuật Quan Trọng</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">THÔNG THƯỜNG - Không hiệu quả</span>
-const items = document.querySelectorAll('.item');
+        <h3>5.2. Event Delegation - Kỹ Thuật Quan Trọng</h3>
+        <div class="code-comparison">
+          <div class="code-example">
+            <h5>Không Hiệu Quả</h5>
+            <pre><code class="language-javascript">const items = document.querySelectorAll('.item');
 items.forEach(item => {
     item.addEventListener('click', () => {
         console.log('Item clicked');
     });
-});
-
-// <span class="code-comment">EVENT DELEGATION - Hiệu quả</span>
-const list = document.querySelector('#itemList');
+});</code></pre>
+          </div>
+          <div class="code-example">
+            <h5>Event Delegation</h5>
+            <pre><code class="language-javascript">const list = document.querySelector('#itemList');
 list.addEventListener('click', (event) => {
     if (event.target.classList.contains('item')) {
         console.log('Item clicked:', event.target.textContent);
     }
-});</code>
-          </div>
-
-          <div class="tip-card">
-            <h3><i class="fas fa-lightbulb"></i> Tại Sao Event Delegation Quan Trọng?</h3>
-            <ul>
-              <li><strong>Hiệu suất:</strong> Chỉ cần một event listener thay vì nhiều</li>
-              <li><strong>Dynamic Content:</strong> Hoạt động với phần tử được thêm sau</li>
-              <li><strong>Bộ nhớ:</strong> Tiết kiệm bộ nhớ với danh sách lớn</li>
-            </ul>
+});</code></pre>
           </div>
         </div>
 
-        <!-- Advanced Techniques -->
-        <div class="blog-section">
-          <h2>6. Kỹ Thuật Nâng Cao & Best Practices</h2>
+        <div class="feature-card">
+          <h4>🎯 Tại Sao Event Delegation Quan Trọng?</h4>
+          <ul>
+            <li><strong>Hiệu suất:</strong> Chỉ cần một event listener thay vì nhiều</li>
+            <li><strong>Dynamic Content:</strong> Hoạt động với phần tử được thêm sau</li>
+            <li><strong>Bộ nhớ:</strong> Tiết kiệm bộ nhớ với danh sách lớn</li>
+            <li><strong>Dễ bảo trì:</strong> Quản lý tập trung các event handlers</li>
+          </ul>
+        </div>
 
-          <h3>6.1. Data Attributes & Dataset</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">HTML: &lt;div data-user-id="123" data-role="admin"&gt;&lt;/div&gt;</span>
+        <!-- Advanced Techniques -->
+        <h2 id="advanced-techniques">6. Kỹ Thuật Nâng Cao & Best Practices</h2>
+
+        <h3>6.1. Data Attributes & Dataset</h3>
+        <pre><code class="language-javascript">// <span class="code-comment">HTML: &lt;div data-user-id="123" data-role="admin"&gt;&lt;/div&gt;</span>
 
 const userDiv = document.querySelector('[data-user-id]');
 
@@ -586,12 +1178,10 @@ const userRole = userDiv.dataset.role;     <span class="code-comment">// "admin"
 
 // <span class="code-comment">Thay đổi data attributes</span>
 userDiv.dataset.userId = '456';
-userDiv.dataset.status = 'active';</code>
-          </div>
+userDiv.dataset.status = 'active';</code></pre>
 
-          <h3>6.2. DocumentFragment - Tối Ưu Hiệu Suất</h3>
-          <div class="code-block">
-            <code>// <span class="code-comment">Tạo nhiều phần tử cùng lúc</span>
+        <h3>6.2. DocumentFragment - Tối Ưu Hiệu Suất</h3>
+        <pre><code class="language-javascript">// <span class="code-comment">Tạo nhiều phần tử cùng lúc</span>
 const fragment = document.createDocumentFragment();
 
 for (let i = 0; i < 1000; i++) {
@@ -601,12 +1191,10 @@ for (let i = 0; i < 1000; i++) {
 }
 
 // <span class="code-comment">Chèn một lần duy nhất</span>
-document.querySelector('#list').appendChild(fragment);</code>
-          </div>
+document.querySelector('#list').appendChild(fragment);</code></pre>
 
-          <h3>6.3. MutationObserver - Theo Dõi Thay Đổi DOM</h3>
-          <div class="code-block">
-            <code>const observer = new MutationObserver((mutations) => {
+        <h3>6.3. MutationObserver - Theo Dõi Thay Đổi DOM</h3>
+        <pre><code class="language-javascript">const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
             console.log('Có phần tử được thêm/xóa');
@@ -617,16 +1205,12 @@ document.querySelector('#list').appendChild(fragment);</code>
 observer.observe(document.querySelector('#container'), {
     childList: true,
     subtree: true
-});</code>
-          </div>
-        </div>
+});</code></pre>
 
         <!-- Practical Example -->
-        <div class="blog-section">
-          <h2>7. Ví Dụ Thực Tế: Ứng Dụng Todo List</h2>
+        <h2 id="practical-example">7. Ví Dụ Thực Tế: Ứng Dụng Todo List</h2>
 
-          <div class="code-block">
-            <code>class TodoApp {
+        <pre><code class="language-javascript">class TodoApp {
     constructor() {
         this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         this.initializeApp();
@@ -723,42 +1307,67 @@ observer.observe(document.querySelector('#container'), {
 // <span class="code-comment">Khởi chạy ứng dụng</span>
 document.addEventListener('DOMContentLoaded', () => {
     new TodoApp();
-});</code>
-          </div>
-        </div>
+});</code></pre>
 
         <!-- Performance Tips -->
-        <div class="blog-section">
-          <h2>8. Tối Ưu Hiệu Suất DOM</h2>
+        <h2 id="performance">8. Tối Ưu Hiệu Suất DOM</h2>
 
-          <div class="feature-card">
-            <h3><i class="fas fa-rocket"></i> Best Practices</h3>
-            <ul>
-              <li><strong>Tránh Forced Synchronous Layout:</strong> Đọc và ghi DOM riêng biệt</li>
-              <li><strong>Sử dụng DocumentFragment:</strong> Khi thêm nhiều phần tử cùng lúc</li>
-              <li><strong>Event Delegation:</strong> Giảm số lượng event listeners</li>
-              <li><strong>Debounce Input Events:</strong> Với search, resize, scroll</li>
-              <li><strong>Virtual DOM:</strong> Hiểu nguyên lý để học React/Vue sau này</li>
-            </ul>
-          </div>
+        <div class="best-practices">
+          <h4>✅ Best Practices DOM Performance</h4>
+          <ul>
+            <li><strong>Tránh Forced Synchronous Layout:</strong> Đọc và ghi DOM riêng biệt</li>
+            <li><strong>Sử dụng DocumentFragment:</strong> Khi thêm nhiều phần tử cùng lúc</li>
+            <li><strong>Event Delegation:</strong> Giảm số lượng event listeners</li>
+            <li><strong>Debounce Input Events:</strong> Với search, resize, scroll</li>
+            <li><strong>Virtual DOM:</strong> Hiểu nguyên lý để học React/Vue sau này</li>
+            <li><strong>Batch DOM Updates:</strong> Nhóm các thay đổi DOM lại với nhau</li>
+            <li><strong>Use requestAnimationFrame:</strong> Cho animations và updates</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <h4><i class="fas fa-exclamation-triangle"></i> Common Performance Pitfalls</h4>
+          <ul>
+            <li><strong>Layout Thrashing:</strong> Đọc và ghi DOM liên tục trong vòng lặp</li>
+            <li><strong>Memory Leaks:</strong> Không remove event listeners khi không cần</li>
+            <li><strong>Inefficient Selectors:</strong> Sử dụng CSS selectors phức tạp</li>
+            <li><strong>Too Many Reflows:</strong> Thay đổi style nhiều lần liên tiếp</li>
+          </ul>
         </div>
 
         <!-- Conclusion -->
-        <div class="blog-section">
-          <h2>Kết Luận</h2>
-          <p>
-            DOM Manipulation là nền tảng của mọi ứng dụng web hiện đại. Bằng cách làm chủ các kỹ thuật trong bài viết
-            này,
-            bạn đã trang bị cho mình công cụ mạnh mẽ để xây dựng những trải nghiệm web phong phú và tương tác.
-          </p>
-          <p>
-            Hãy thực hành thường xuyên, bắt đầu từ những dự án nhỏ và dần dần áp dụng các kỹ thuật nâng cao.
-            Mỗi dòng code bạn viết hôm nay là bước đệm cho những ứng dụng phức tạp trong tương lai.
-          </p>
+        <h2 id="conclusion">9. Kết Luận</h2>
+
+        <div class="feature-card">
+          <h4>🎯 Key Takeaways</h4>
+          <ul>
+            <li><strong>Hiểu rõ cấu trúc DOM</strong> và các loại node</li>
+            <li><strong>Sử dụng querySelector/querySelectorAll</strong> thay vì phương thức cũ</li>
+            <li><strong>Áp dụng Event Delegation</strong> để tối ưu hiệu suất</li>
+            <li><strong>Làm chủ classList và dataset</strong> cho code sạch hơn</li>
+            <li><strong>Sử dụng DocumentFragment</strong> khi thêm nhiều phần tử</li>
+            <li><strong>Tuân thủ best practices</strong> để tránh performance issues</li>
+          </ul>
         </div>
 
-        <div class="feature-card tip-card">
-          <h3><i class="fas fa-graduation-cap"></i> Bước Tiếp Theo</h3>
+        <p>
+          <strong>DOM Manipulation</strong> là nền tảng của mọi ứng dụng web hiện đại. Bằng cách làm chủ các kỹ thuật trong bài viết
+          này, bạn đã trang bị cho mình công cụ mạnh mẽ để xây dựng những trải nghiệm web phong phú và tương tác.
+        </p>
+
+        <p>
+          Việc nắm vững các nguyên tắc cơ bản như DOM traversal, event handling, và performance optimization là nền tảng 
+          để xây dựng các ứng dụng web robust và hiệu quả. Các kỹ thuật nâng cao như Event Delegation và DocumentFragment 
+          giúp đơn giản hóa việc phát triển các ứng dụng phức tạp.
+        </p>
+
+        <blockquote>
+          <p>"DOM Manipulation không chỉ là kỹ năng - đó là nghệ thuật biến ý tưởng thành trải nghiệm người dùng sống động. 
+          Mỗi dòng code bạn viết hôm nay là bước đệm cho những ứng dụng phức tạp trong tương lai."</p>
+        </blockquote>
+
+        <div class="technical-diagram">
+          <h4>🚀 Hướng dẫn tiếp theo</h4>
           <p>
             Sau khi thành thạo DOM Manipulation, hãy khám phá:
           </p>
@@ -767,48 +1376,136 @@ document.addEventListener('DOMContentLoaded', () => {
             <li><strong>Asynchronous JavaScript:</strong> Promises, async/await, AJAX</li>
             <li><strong>Modern Frameworks:</strong> React, Vue, Angular</li>
             <li><strong>State Management:</strong> Redux, Vuex, Context API</li>
+            <li><strong>Web Components:</strong> Custom Elements, Shadow DOM</li>
+            <li><strong>Performance Optimization:</strong> Bundle splitting, lazy loading</li>
           </ul>
         </div>
+
+        <p>
+          👉 Bắt đầu bằng những dự án nhỏ — tạo ứng dụng Todo List, xây dựng gallery ảnh, hay phát triển một simple game.
+          Mỗi dự án sẽ giúp bạn củng cố kiến thức và khám phá những khía cạnh mới của DOM Manipulation!
+        </p>
+
       </article>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
+  <section class="footer">
     <div class="container">
-      <a href="index.html" class="logo" style="color: white; font-size: 1.8rem;">DevFolio</a>
-
-      <ul class="footer-links">
-        <li><a href="index.html" class="footer-link">Trang Chủ</a></li>
-        <li><a href="articles.html" class="footer-link">Bài Viết</a></li>
-        <li><a href="about.html" class="footer-link">Giới Thiệu</a></li>
-        <li><a href="contact.html" class="footer-link">Liên Hệ</a></li>
-      </ul>
-
-      <div class="copyright">
-        <p>© 2024 DevFolio. All Rights Reserved.</p>
+      <div class="footer-content">
+        <div class="footer-about">
+          <a href="index.html" class="footer-brand">DevBlog</a>
+          <p class="footer-description">
+            Chia sẻ kiến thức về lập trình, công nghệ và phát triển phần mềm. 
+            Nơi kết nối cộng đồng developer Việt Nam.
+          </p>
+          <div class="sociale-icon">
+            <ul>
+              <li>
+                <a href="#" target="_blank" aria-label="GitHub">
+                  <i class="fab fa-github"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" target="_blank" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" target="_blank" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" target="_blank" aria-label="YouTube">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Liên kết</h4>
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="about.html">Giới thiệu</a></li>
+            <li><a href="articles.html">Bài viết</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <ul>
+            <li><i class="fas fa-envelope"></i> contact@devblog.com</li>
+            <li><i class="fas fa-phone"></i> +84 123 456 789</li>
+            <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copy-right">
+        <p>© Copyright <span id="copyrightYear"></span> DevBlog. All Rights Reserved.</p>
       </div>
     </div>
-  </footer>
+  </section>
 
   <script>
     // Set current year in footer
-    document.querySelector('.copyright p').innerHTML =
-      `© ${new Date().getFullYear()} DevFolio. All Rights Reserved.`;
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
 
     // Navbar scroll effect
     window.addEventListener('scroll', function () {
       if (window.scrollY > 100) {
-        document.querySelector('.navbar').style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        document.querySelector('.main-nav').classList.add('scrolled');
       } else {
-        document.querySelector('.navbar').style.boxShadow = 'none';
+        document.querySelector('.main-nav').classList.remove('scrolled');
       }
     });
 
-    // Simple DOM manipulation demo
+    // Toggle navbar on mobile
+    document.getElementById('navbarToggle').addEventListener('click', function() {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = this;
+      
+      navList.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = document.getElementById('navbarToggle');
+      const isClickInsideNav = navList.contains(event.target);
+      const isClickOnToggle = toggleButton.contains(event.target);
+      
+      if (window.innerWidth <= 768 && !isClickInsideNav && !isClickOnToggle) {
+        navList.classList.remove('active');
+        toggleButton.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for table of contents
+    document.querySelectorAll('.toc a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Interactive code blocks
     document.addEventListener('DOMContentLoaded', function () {
-      // Add interactive elements to code blocks
-      const codeBlocks = document.querySelectorAll('.code-block');
+      const codeBlocks = document.querySelectorAll('pre');
       codeBlocks.forEach(block => {
         block.style.cursor = 'pointer';
         block.addEventListener('click', function () {
