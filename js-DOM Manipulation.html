@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript DOM Manipulation | Tech Blog</title>
+
+  <!-- Meta tags -->
+  <meta name="description" content="Hướng dẫn toàn diện về JavaScript DOM Manipulation - từ cơ bản đến nâng cao">
+  <meta name="keywords" content="JavaScript DOM, DOM Manipulation, JavaScript cơ bản, web development">
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --border: #e2e8f0;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* ===== GLOBAL STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.8;
+      color: var(--dark);
+      background: var(--light);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    /* ===== BLOG CONTENT ===== */
+    .blog-single {
+      padding: 120px 0 80px;
+    }
+
+    .single-blog {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .blog-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .blog-image {
+      width: 100%;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+      box-shadow: var(--shadow);
+    }
+
+    .blog-section {
+      margin: 2.5rem 0;
+    }
+
+    .blog-section h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .blog-section h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin: 1.5rem 0 1rem;
+    }
+
+    .blog-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+
+    .blog-section ul,
+    .blog-section ol {
+      margin: 1rem 0 1.5rem 2rem;
+    }
+
+    .blog-section li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    /* ===== CODE BLOCKS ===== */
+    .code-block {
+      background: #1e293b;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .code-block code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .code-comment {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary);
+    }
+
+    .feature-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tip-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-left: 4px solid var(--accent);
+    }
+
+    .tip-card h3 {
+      color: var(--accent);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0 2rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      list-style: none;
+    }
+
+    .footer-link {
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+    }
+
+    .copyright {
+      color: #94a3b8;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #374151;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .single-blog {
+        padding: 2rem;
+        margin: 0 1rem;
+      }
+
+      .blog-title {
+        font-size: 2rem;
+      }
+
+      .blog-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .blog-single {
+        padding: 100px 0 60px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-container">
+        <a href="index.html" class="logo">DevFolio</a>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Trang Chủ</a></li>
+          <li><a href="index.html#about.html" class="nav-link">Giới Thiệu</a></li>
+          <li><a href="index.html#articles.html" class="nav-link active">Bài Viết</a></li>
+          <li><a href="index.html#contact.html" class="nav-link">Liên Hệ</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Blog Content -->
+  <section class="blog-single">
+    <div class="container">
+      <article class="single-blog">
+        <h1 class="blog-title">Làm Chủ JavaScript DOM Manipulation: Hướng Dẫn Toàn Diện</h1>
+
+        <div class="blog-meta">
+          <span><i class="fas fa-calendar"></i> 19 tháng 10, 2024</span>
+          <span><i class="fas fa-clock"></i> 20 phút đọc</span>
+          <span><i class="fas fa-tags"></i> JavaScript, DOM, Frontend</span>
+        </div>
+
+        <img src="https://aptech.fpt.edu.vn/wp-content/uploads/2022/11/tim-hieu-ve-dom-trong-ngon-ngu-nguyen-thuy-js.jpg"
+          alt="JavaScript DOM Manipulation" class="blog-image">
+
+        <!-- Introduction -->
+        <div class="feature-card">
+          <h3><i class="fas fa-star"></i> Giới Thiệu</h3>
+          <p>
+            <strong>DOM (Document Object Model)</strong> là giao diện lập trình (API) cho phép JavaScript tương tác với
+            nội dung, cấu trúc và style của trang web.
+            Hiểu và làm chủ DOM Manipulation là kỹ năng quan trọng nhất của mọi Frontend Developer.
+          </p>
+          <p>
+            Trong bài viết này, chúng ta sẽ khám phá từ những khái niệm cơ bản nhất đến các kỹ thuật nâng cao,
+            kèm theo ví dụ thực tế và best practices.
+          </p>
+        </div>
+
+        <!-- What is DOM -->
+        <div class="blog-section">
+          <h2>1. DOM Là Gì Và Tại Sao Quan Trọng?</h2>
+
+          <h3>1.1. Khái Niệm Cơ Bản</h3>
+          <p>
+            Khi trình duyệt tải một trang HTML, nó phân tích cấu trúc và tạo ra một <strong>cây DOM</strong> -
+            một biểu diễn dạng cây của toàn bộ tài liệu HTML. Mỗi phần tử HTML trở thành một <strong>nút (node)</strong>
+            trong cây này.
+          </p>
+
+          <div class="code-block">
+            <code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="title"&gt;Hello World&lt;/h1&gt;
+    &lt;div class="container"&gt;
+        &lt;p&gt;This is a paragraph&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+          </div>
+
+          <p>
+            Cấu trúc DOM sẽ là: <strong>Document → html → (head, body) → body chứa h1 và div → div chứa p</strong>
+          </p>
+
+          <h3>1.2. Các Loại Node Quan Trọng</h3>
+          <ul>
+            <li><strong>Element Node:</strong> Các thẻ HTML (div, p, h1, ...)</li>
+            <li><strong>Text Node:</strong> Văn bản bên trong các element</li>
+            <li><strong>Attribute Node:</strong> Các thuộc tính của element (class, id, src, ...)</li>
+            <li><strong>Comment Node:</strong> Các comment trong HTML</li>
+          </ul>
+        </div>
+
+        <!-- DOM Access Methods -->
+        <div class="blog-section">
+          <h2>2. Truy Cập Phần Tử DOM</h2>
+
+          <h3>2.1. Phương Thức Cổ Điển</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">Truy cập theo ID - trả về một phần tử</span>
+const titleElement = document.getElementById('title');
+
+// <span class="code-comment">Truy cập theo class - trả về HTMLCollection (live collection)</span>
+const items = document.getElementsByClassName('item');
+
+// <span class="code-comment">Truy cập theo tag name - trả về HTMLCollection</span>
+const paragraphs = document.getElementsByTagName('p');
+
+// <span class="code-comment">Truy cập theo name attribute</span>
+const forms = document.getElementsByName('username');</code>
+          </div>
+
+          <h3>2.2. Phương Thức Hiện Đại (Khuyến Nghị)</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">querySelector - trả về phần tử đầu tiên khớp với CSS selector</span>
+const button = document.querySelector('#submitBtn');
+const firstItem = document.querySelector('.item');
+const firstParagraph = document.querySelector('p');
+
+// <span class="code-comment">querySelectorAll - trả về NodeList (static collection)</span>
+const allButtons = document.querySelectorAll('.btn');
+const allParagraphs = document.querySelectorAll('p');
+
+// <span class="code-comment">Sử dụng CSS selectors phức tạp</span>
+const activeItems = document.querySelectorAll('.item.active');
+const directChildren = document.querySelectorAll('div > p');
+const siblings = document.querySelectorAll('h1 + p');</code>
+          </div>
+
+          <div class="tip-card">
+            <h3><i class="fas fa-lightbulb"></i> Mẹo Quan Trọng</h3>
+            <p>
+              Luôn ưu tiên sử dụng <code>querySelector</code> và <code>querySelectorAll</code> vì:
+            </p>
+            <ul>
+              <li>Hỗ trợ tất cả CSS selectors</li>
+              <li>Trả về NodeList (có thể sử dụng forEach)</li>
+              <li>Linh hoạt và dễ đọc hơn</li>
+              <li>Không phải là live collection (hiệu suất tốt hơn)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Modifying Content -->
+        <div class="blog-section">
+          <h2>3. Thay Đổi Nội Dung & Thuộc Tính</h2>
+
+          <h3>3.1. Thao Tác Với Nội Dung</h3>
+          <div class="code-block">
+            <code>const element = document.querySelector('#myElement');
+
+// <span class="code-comment">Thay đổi nội dung văn bản</span>
+element.textContent = 'Nội dung mới'; <span class="code-comment">// Chỉ lấy text, an toàn hơn</span>
+element.innerText = 'Nội dung mới';   <span class="code-comment">// Tính đến CSS, hiệu suất kém hơn</span>
+element.innerHTML = '&lt;strong&gt;Nội dung HTML&lt;/strong&gt;'; <span class="code-comment">// Cho phép HTML</span>
+
+// <span class="code-comment">Thao tác với thuộc tính</span>
+element.setAttribute('data-custom', 'value'); <span class="code-comment">// Thêm attribute</span>
+const value = element.getAttribute('data-custom'); <span class="code-comment">// Lấy giá trị attribute</span>
+element.removeAttribute('data-custom'); <span class="code-comment">// Xóa attribute</span>
+
+// <span class="code-comment">Thuộc tính trực tiếp</span>
+element.id = 'newId';
+element.className = 'new-class';
+element.href = 'https://example.com';</code>
+          </div>
+
+          <h3>3.2. Làm Việc Với CSS Classes</h3>
+          <div class="code-block">
+            <code>const box = document.querySelector('.box');
+
+// <span class="code-comment">classList - phương thức hiện đại</span>
+box.classList.add('active', 'highlight'); <span class="code-comment">// Thêm nhiều class</span>
+box.classList.remove('hidden');           <span class="code-comment">// Xóa class</span>
+box.classList.toggle('dark-mode');        <span class="code-comment">// Bật/tắt class</span>
+box.classList.replace('old', 'new');      <span class="code-comment">// Thay thế class</span>
+box.classList.contains('active');         <span class="code-comment">// Kiểm tra class tồn tại</span>
+
+// <span class="code-comment">Thao tác style trực tiếp</span>
+box.style.backgroundColor = 'blue';
+box.style.fontSize = '20px';
+box.style.display = 'none';</code>
+          </div>
+        </div>
+
+        <!-- Creating Elements -->
+        <div class="blog-section">
+          <h2>4. Tạo & Quản Lý Phần Tử Mới</h2>
+
+          <h3>4.1. Tạo Và Chèn Phần Tử</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">Tạo phần tử mới</span>
+const newDiv = document.createElement('div');
+newDiv.textContent = 'Đây là div mới';
+newDiv.className = 'custom-div';
+
+// <span class="code-comment">Các phương thức chèn</span>
+const container = document.querySelector('#container');
+
+container.appendChild(newDiv);              <span class="code-comment">// Thêm vào cuối</span>
+container.prepend(newDiv);                  <span class="code-comment">// Thêm vào đầu</span>
+container.insertBefore(newDiv, reference);  <span class="code-comment">// Chèn trước phần tử khác</span>
+
+// <span class="code-comment">Chèn HTML trực tiếp</span>
+container.insertAdjacentHTML('beforeend', '&lt;p&gt;Đoạn văn mới&lt;/p&gt;');
+
+// <span class="code-comment">Các vị trí insertAdjacentHTML</span>
+// 'beforebegin': Trước element
+// 'afterbegin': Bên trong, ở đầu
+// 'beforeend': Bên trong, ở cuối  
+// 'afterend': Sau element</code>
+          </div>
+
+          <h3>4.2. Xóa Và Thay Thế Phần Tử</h3>
+          <div class="code-block">
+            <code>const element = document.querySelector('#toRemove');
+const newElement = document.createElement('span');
+
+// <span class="code-comment">Xóa phần tử</span>
+element.remove();                    <span class="code-comment">// Phương thức hiện đại</span>
+element.parentNode.removeChild(element); <span class="code-comment">// Phương thức cũ</span>
+
+// <span class="code-comment">Thay thế phần tử</span>
+element.replaceWith(newElement);     <span class="code-comment">// Phương thức hiện đại</span>
+element.parentNode.replaceChild(newElement, element); <span class="code-comment">// Phương thức cũ</span>
+
+// <span class="code-comment">Xóa tất cả con</span>
+container.innerHTML = '';            <span class="code-comment">// Nhanh nhưng không an toàn</span>
+while (container.firstChild) {
+    container.removeChild(container.firstChild); <span class="code-comment">// An toàn hơn</span>
+}</code>
+          </div>
+        </div>
+
+        <!-- Event Handling -->
+        <div class="blog-section">
+          <h2>5. Xử Lý Sự Kiện (Event Handling)</h2>
+
+          <h3>5.1. Các Loại Sự Kiện Phổ Biến</h3>
+          <div class="code-block">
+            <code>const button = document.querySelector('#myButton');
+
+// <span class="code-comment">Thêm event listener</span>
+button.addEventListener('click', function(event) {
+    event.preventDefault(); <span class="code-comment">// Ngăn hành vi mặc định</span>
+    console.log('Button được click!');
+    console.log('Target:', event.target);
+    console.log('Current Target:', event.currentTarget);
+});
+
+// <span class="code-comment">Các sự kiện thông dụng</span>
+element.addEventListener('mouseover', handleMouseOver);
+element.addEventListener('mouseout', handleMouseOut);
+element.addEventListener('focus', handleFocus);
+element.addEventListener('blur', handleBlur);
+element.addEventListener('keydown', handleKeyDown);
+element.addEventListener('submit', handleSubmit);</code>
+          </div>
+
+          <h3>5.2. Event Delegation - Kỹ Thuật Quan Trọng</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">THÔNG THƯỜNG - Không hiệu quả</span>
+const items = document.querySelectorAll('.item');
+items.forEach(item => {
+    item.addEventListener('click', () => {
+        console.log('Item clicked');
+    });
+});
+
+// <span class="code-comment">EVENT DELEGATION - Hiệu quả</span>
+const list = document.querySelector('#itemList');
+list.addEventListener('click', (event) => {
+    if (event.target.classList.contains('item')) {
+        console.log('Item clicked:', event.target.textContent);
+    }
+});</code>
+          </div>
+
+          <div class="tip-card">
+            <h3><i class="fas fa-lightbulb"></i> Tại Sao Event Delegation Quan Trọng?</h3>
+            <ul>
+              <li><strong>Hiệu suất:</strong> Chỉ cần một event listener thay vì nhiều</li>
+              <li><strong>Dynamic Content:</strong> Hoạt động với phần tử được thêm sau</li>
+              <li><strong>Bộ nhớ:</strong> Tiết kiệm bộ nhớ với danh sách lớn</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Advanced Techniques -->
+        <div class="blog-section">
+          <h2>6. Kỹ Thuật Nâng Cao & Best Practices</h2>
+
+          <h3>6.1. Data Attributes & Dataset</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">HTML: &lt;div data-user-id="123" data-role="admin"&gt;&lt;/div&gt;</span>
+
+const userDiv = document.querySelector('[data-user-id]');
+
+// <span class="code-comment">Truy cập data attributes</span>
+const userId = userDiv.dataset.userId;     <span class="code-comment">// "123"</span>
+const userRole = userDiv.dataset.role;     <span class="code-comment">// "admin"</span>
+
+// <span class="code-comment">Thay đổi data attributes</span>
+userDiv.dataset.userId = '456';
+userDiv.dataset.status = 'active';</code>
+          </div>
+
+          <h3>6.2. DocumentFragment - Tối Ưu Hiệu Suất</h3>
+          <div class="code-block">
+            <code>// <span class="code-comment">Tạo nhiều phần tử cùng lúc</span>
+const fragment = document.createDocumentFragment();
+
+for (let i = 0; i < 1000; i++) {
+    const li = document.createElement('li');
+    li.textContent = `Item ${i}`;
+    fragment.appendChild(li);
+}
+
+// <span class="code-comment">Chèn một lần duy nhất</span>
+document.querySelector('#list').appendChild(fragment);</code>
+          </div>
+
+          <h3>6.3. MutationObserver - Theo Dõi Thay Đổi DOM</h3>
+          <div class="code-block">
+            <code>const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+            console.log('Có phần tử được thêm/xóa');
+        }
+    });
+});
+
+observer.observe(document.querySelector('#container'), {
+    childList: true,
+    subtree: true
+});</code>
+          </div>
+        </div>
+
+        <!-- Practical Example -->
+        <div class="blog-section">
+          <h2>7. Ví Dụ Thực Tế: Ứng Dụng Todo List</h2>
+
+          <div class="code-block">
+            <code>class TodoApp {
+    constructor() {
+        this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        this.initializeApp();
+    }
+
+    initializeApp() {
+        this.form = document.querySelector('#todoForm');
+        this.input = document.querySelector('#taskInput');
+        this.list = document.querySelector('#todoList');
+
+        this.form.addEventListener('submit', (e) => this.addTask(e));
+        this.list.addEventListener('click', (e) => this.handleTaskClick(e));
+        
+        this.renderTasks();
+    }
+
+    addTask(e) {
+        e.preventDefault();
+        const taskText = this.input.value.trim();
+        
+        if (taskText) {
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            this.tasks.push(task);
+            this.saveTasks();
+            this.renderTasks();
+            this.input.value = '';
+        }
+    }
+
+    handleTaskClick(e) {
+        const taskElement = e.target.closest('.task');
+        if (!taskElement) return;
+
+        const taskId = parseInt(taskElement.dataset.id);
+        
+        if (e.target.classList.contains('delete-btn')) {
+            this.deleteTask(taskId);
+        } else if (e.target.classList.contains('complete-btn')) {
+            this.toggleComplete(taskId);
+        }
+    }
+
+    deleteTask(id) {
+        this.tasks = this.tasks.filter(task => task.id !== id);
+        this.saveTasks();
+        this.renderTasks();
+    }
+
+    toggleComplete(id) {
+        this.tasks = this.tasks.map(task => 
+            task.id === id ? { ...task, completed: !task.completed } : task
+        );
+        this.saveTasks();
+        this.renderTasks();
+    }
+
+    renderTasks() {
+        this.list.innerHTML = '';
+        
+        const fragment = document.createDocumentFragment();
+        
+        this.tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.className = `task ${task.completed ? 'completed' : ''}`;
+            li.dataset.id = task.id;
+            
+            li.innerHTML = `
+                <span class="task-text">${task.text}</span>
+                <div class="task-actions">
+                    <button class="complete-btn">
+                        ${task.completed ? '↶' : '✓'}
+                    </button>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            `;
+            
+            fragment.appendChild(li);
+        });
+        
+        this.list.appendChild(fragment);
+    }
+
+    saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
+}
+
+// <span class="code-comment">Khởi chạy ứng dụng</span>
+document.addEventListener('DOMContentLoaded', () => {
+    new TodoApp();
+});</code>
+          </div>
+        </div>
+
+        <!-- Performance Tips -->
+        <div class="blog-section">
+          <h2>8. Tối Ưu Hiệu Suất DOM</h2>
+
+          <div class="feature-card">
+            <h3><i class="fas fa-rocket"></i> Best Practices</h3>
+            <ul>
+              <li><strong>Tránh Forced Synchronous Layout:</strong> Đọc và ghi DOM riêng biệt</li>
+              <li><strong>Sử dụng DocumentFragment:</strong> Khi thêm nhiều phần tử cùng lúc</li>
+              <li><strong>Event Delegation:</strong> Giảm số lượng event listeners</li>
+              <li><strong>Debounce Input Events:</strong> Với search, resize, scroll</li>
+              <li><strong>Virtual DOM:</strong> Hiểu nguyên lý để học React/Vue sau này</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="blog-section">
+          <h2>Kết Luận</h2>
+          <p>
+            DOM Manipulation là nền tảng của mọi ứng dụng web hiện đại. Bằng cách làm chủ các kỹ thuật trong bài viết
+            này,
+            bạn đã trang bị cho mình công cụ mạnh mẽ để xây dựng những trải nghiệm web phong phú và tương tác.
+          </p>
+          <p>
+            Hãy thực hành thường xuyên, bắt đầu từ những dự án nhỏ và dần dần áp dụng các kỹ thuật nâng cao.
+            Mỗi dòng code bạn viết hôm nay là bước đệm cho những ứng dụng phức tạp trong tương lai.
+          </p>
+        </div>
+
+        <div class="feature-card tip-card">
+          <h3><i class="fas fa-graduation-cap"></i> Bước Tiếp Theo</h3>
+          <p>
+            Sau khi thành thạo DOM Manipulation, hãy khám phá:
+          </p>
+          <ul>
+            <li><strong>JavaScript ES6+ Features:</strong> Arrow functions, destructuring, modules</li>
+            <li><strong>Asynchronous JavaScript:</strong> Promises, async/await, AJAX</li>
+            <li><strong>Modern Frameworks:</strong> React, Vue, Angular</li>
+            <li><strong>State Management:</strong> Redux, Vuex, Context API</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <a href="index.html" class="logo" style="color: white; font-size: 1.8rem;">DevFolio</a>
+
+      <ul class="footer-links">
+        <li><a href="index.html" class="footer-link">Trang Chủ</a></li>
+        <li><a href="articles.html" class="footer-link">Bài Viết</a></li>
+        <li><a href="about.html" class="footer-link">Giới Thiệu</a></li>
+        <li><a href="contact.html" class="footer-link">Liên Hệ</a></li>
+      </ul>
+
+      <div class="copyright">
+        <p>© 2024 DevFolio. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.querySelector('.copyright p').innerHTML =
+      `© ${new Date().getFullYear()} DevFolio. All Rights Reserved.`;
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 100) {
+        document.querySelector('.navbar').style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+      } else {
+        document.querySelector('.navbar').style.boxShadow = 'none';
+      }
+    });
+
+    // Simple DOM manipulation demo
+    document.addEventListener('DOMContentLoaded', function () {
+      // Add interactive elements to code blocks
+      const codeBlocks = document.querySelectorAll('.code-block');
+      codeBlocks.forEach(block => {
+        block.style.cursor = 'pointer';
+        block.addEventListener('click', function () {
+          this.style.backgroundColor = this.style.backgroundColor === '#2d3748' ? '#1e293b' : '#2d3748';
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

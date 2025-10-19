@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Java Spring Framework | Dev Blog</title>
+
+  <!-- Meta For No Index -->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- Mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0b3d91;
+      --secondary-color: #0077b5;
+      --accent-color: #005b8c;
+      --light-bg: #f8f9fa;
+      --dark-text: #222;
+      --light-text: #666;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Font mặc định cho toàn bộ trang */
+    body,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a,
+    li,
+    span {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.25px;
+      color: var(--dark-text);
+      font-weight: 400;
+    }
+
+    /* Tiêu đề chính & phụ */
+    h1,
+    h2,
+    h3 {
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+    }
+
+    /* Đoạn văn in đậm */
+    strong,
+    b {
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* Trích dẫn */
+    blockquote p {
+      font-style: italic;
+      color: #333;
+      font-weight: 500;
+      background: #f3f6fa;
+      border-left: 4px solid var(--secondary-color);
+      padding: 12px 18px;
+      border-radius: var(--border-radius);
+    }
+
+    /* Liên kết */
+    a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    /* Custom styles for article readability */
+    .single-blog p,
+    .single-blog li {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .single-blog pre {
+      background-color: #f4f4f9;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 16px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    .single-blog pre code {
+      font-size: 16px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .single-blog img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: 20px 0;
+    }
+
+    .single-blog .title {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .single-blog .meta {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      color: var(--light-text);
+    }
+
+    .single-blog .meta i {
+      margin-right: 5px;
+    }
+
+    /* Navigation styles */
+    .main-nav {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+    }
+
+    .main-nav .logo-main {
+      height: 40px;
+    }
+
+    .main-nav .nav-link {
+      color: #333;
+      font-weight: 500;
+      padding: 10px 15px;
+    }
+
+    .main-nav .nav-link:hover {
+      color: var(--secondary-color);
+    }
+
+    .main-nav-social li {
+      display: inline-block;
+      margin-left: 15px;
+    }
+
+    .main-nav-social a {
+      color: #333;
+      font-size: 18px;
+    }
+
+    .main-nav-social a:hover {
+      color: var(--secondary-color);
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: var(--light-bg);
+      padding: 50px 0 20px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    .footer-nav .navbar-nav {
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav .nav-item {
+      margin: 0 15px;
+    }
+
+    .sociale-icon ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .sociale-icon li {
+      margin: 0 10px;
+    }
+
+    .sociale-icon a {
+      color: #333;
+      font-size: 18px;
+    }
+
+    .copy-right {
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+      color: var(--light-text);
+    }
+
+    /* Instagram section */
+    .instagram {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+      padding: 30px 0;
+      text-align: center;
+      color: white;
+    }
+
+    .instagram a {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .instagram-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .instagram-item-thum {
+      width: calc(16.66% - 10px);
+    }
+
+    .instagram-item-thum img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    /* Blog section styling */
+    .blog-single {
+      padding: 60px 0;
+      background-color: #fff;
+    }
+
+    /* Code highlighting */
+    .language-java {
+      color: #d63384;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .instagram-item-thum {
+        width: calc(33.33% - 10px);
+      }
+
+      .single-blog .title {
+        font-size: 28px;
+      }
+
+      .single-blog p,
+      .single-blog li {
+        font-size: 16px;
+      }
+
+      .single-blog .meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    /* Table of Contents */
+    .toc {
+      background-color: var(--light-bg);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 30px 0;
+    }
+
+    .toc h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    .toc ul {
+      padding-left: 20px;
+    }
+
+    .toc li {
+      margin-bottom: 8px;
+    }
+
+    .toc a {
+      color: var(--secondary-color);
+    }
+
+    /* Special styling for Spring concepts */
+    .concept-box {
+      background: linear-gradient(135deg, #f5f7ff 0%, #e1e9ff 100%);
+      border-left: 4px solid var(--primary-color);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin: 25px 0;
+    }
+
+    .flow-diagram {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .caption {
+      font-style: italic;
+      color: #555;
+      font-size: 15px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Spring modules grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--box-shadow);
+      border-top: 4px solid var(--secondary-color);
+    }
+
+    .module-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    /* Enhanced Image Styles for Better Display */
+    .single-blog img {
+      width: 95%;
+      max-width: 900px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      margin: 40px auto;
+      display: block;
+      transition: all 0.4s ease;
+      border: 3px solid #ffffff;
+      background: #ffffff;
+      filter: brightness(1.05) contrast(1.1);
+      object-fit: cover;
+    }
+
+    /* Featured Image - Larger and More Prominent */
+    .single-blog .featured-image img {
+      width: 98%;
+      max-width: 1000px;
+      border-radius: 20px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
+      margin: 50px auto;
+      border: 4px solid #ffffff;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      padding: 10px;
+    }
+
+    /* Flow Diagram Images */
+    .single-blog .flow-diagram img {
+      width: 92%;
+      max-width: 950px;
+      border: 3px solid #f8f9fa;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 18px;
+    }
+
+    /* Code-related Images */
+    .single-blog pre+img {
+      width: 88%;
+      max-width: 880px;
+      border: 2px solid #e9ecef;
+      background: #fdfdfd;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    /* Image with Caption Container */
+    .image-container {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: 18px;
+      padding: 25px;
+      margin: 40px 0;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .image-container img {
+      width: 90%;
+      max-width: 850px;
+      margin: 0 auto 15px auto;
+      border: 2px solid #e9ecef;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hover Effects */
+    .single-blog img:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      filter: brightness(1.08) contrast(1.15);
+      border-color: var(--secondary-color);
+    }
+
+    .single-blog .featured-image img:hover {
+      transform: scale(1.01) translateY(-3px);
+      box-shadow: 0 20px 65px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Image Caption Styling */
+    .caption {
+      font-style: italic;
+      color: #666;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      display: inline-block;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    /* Image Quality Optimization */
+    .single-blog img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      -webkit-font-smoothing: antialiased;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    /* Loading State for Images */
+    .single-blog img {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    .single-blog img:not([src]),
+    .single-blog img[src=""] {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      min-height: 300px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .single-blog img {
+        width: 92%;
+        max-width: 800px;
+      }
+
+      .single-blog .featured-image img {
+        width: 95%;
+        max-width: 900px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .single-blog img {
+        width: 100%;
+        max-width: 100%;
+        margin: 30px 0;
+        border-width: 2px;
+        border-radius: 12px;
+      }
+
+      .single-blog .featured-image img {
+        width: 100%;
+        margin: 35px 0;
+        border-radius: 16px;
+      }
+
+      .single-blog .flow-diagram img {
+        width: 100%;
+        padding: 15px;
+      }
+
+      .image-container {
+        padding: 20px;
+        margin: 30px 0;
+      }
+
+      .single-blog img:hover {
+        transform: scale(1.01);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .single-blog img {
+        border-radius: 10px;
+        margin: 25px 0;
+      }
+
+      .single-blog .featured-image img {
+        border-radius: 14px;
+        margin: 30px 0;
+      }
+
+      .caption {
+        font-size: 14px;
+        padding: 8px 15px;
+      }
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      .single-blog img {
+        border-color: #374151;
+        background: #374151;
+        filter: brightness(1.1) contrast(1.05);
+      }
+
+      .single-blog .flow-diagram img {
+        background: #4b5563;
+        border-color: #4b5563;
+      }
+
+      .image-container {
+        background: #374151;
+        border-color: #4b5563;
+      }
+
+      .caption {
+        background: #4b5563;
+        color: #d1d5db;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .single-blog img {
+        box-shadow: none;
+        border: 2px solid #000;
+        max-width: 100%;
+        margin: 20px 0;
+      }
+
+      .single-blog img:hover {
+        transform: none;
+      }
+    }
+
+    /* Accessibility */
+    .single-blog img:focus {
+      outline: 3px solid var(--secondary-color);
+      outline-offset: 3px;
+    }
+
+    /* Lazy Loading Enhancement */
+    .single-blog img[loading="lazy"] {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .single-blog img[loading="lazy"].loaded {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar Start -->
+  <nav class="main-nav navbar navbar-expand-lg">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand" href="index.html">
+        <h2 class="logo-text">DevFolio</h2>
+      </a>
+      <!-- Toogle Button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-list" id="mainNav">
+        <!-- Navigation Links -->
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="articles.html">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+        <!-- Social Link -->
+        <ul class="main-nav-social list-inline ms-3">
+          <li class="list-inline-item">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <section class="blog-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <article class="single-blog">
+            <p class="title">Java Spring Framework</p>
+            <ul class="meta">
+              <li>By <a href="about.html">Thanh Dat</a></li>
+              <li>
+                <i class="far fa-clock"></i>
+                October 19, 2024
+              </li>
+              <li>
+                <i class="far fa-folder"></i>
+                Java, Backend
+              </li>
+            </ul>
+
+            <div class="featured-image">
+              <img src="https://tse4.mm.bing.net/th/id/OIP.wiiVYREzxYcjY6cbrthxDAHaD4?pid=Api&P=0&h=220"
+                alt="Java Spring Framework" class="img-fluid">
+            </div>
+
+            <div class="toc">
+              <h4>Nội dung bài viết</h4>
+              <ul>
+                <li><a href="#intro">Giới thiệu Spring Framework</a></li>
+                <li><a href="#di">Dependency Injection (DI)</a></li>
+                <li><a href="#ioc">Inversion of Control (IoC)</a></li>
+                <li><a href="#spring-boot">Spring Boot</a></li>
+                <li><a href="#rest-api">RESTful Web Services</a></li>
+                <li><a href="#spring-data">Spring Data JPA</a></li>
+                <li><a href="#advantages">Ưu điểm của Spring</a></li>
+                <li><a href="#conclusion">Tổng kết</a></li>
+              </ul>
+            </div>
+
+            <h3 id="intro">Giới thiệu Spring Framework</h3>
+            <p>
+              <strong>Spring Framework</strong> là một trong những framework mạnh mẽ và phổ biến nhất trong hệ sinh thái
+              Java.
+              Nó giúp các lập trình viên xây dựng ứng dụng <strong>linh hoạt, dễ bảo trì, và mở rộng nhanh
+                chóng</strong> nhờ triết lý "Inversion of Control" (IoC) và "Dependency Injection" (DI).
+            </p>
+
+            <p>
+              Nếu bạn từng thấy việc khởi tạo, cấu hình và quản lý các đối tượng trong dự án Java trở nên phức tạp,
+              Spring chính là giải pháp tối ưu hóa mọi thứ đó.
+              Bài viết này sẽ hướng dẫn bạn hiểu các khái niệm cốt lõi của Spring, cách Spring Boot đơn giản hóa phát
+              triển ứng dụng, và cách xây dựng RESTful API nhanh chóng chỉ trong vài dòng code.
+            </p>
+
+            <div class="flow-diagram">
+              <h4>Spring Framework Architecture</h4>
+              <img src="https://tse3.mm.bing.net/th/id/OIP.xU7EZrDlWXjCDDVPsfmtKAHaFj?pid=Api&P=0&h=220"
+                alt="Spring Framework Architecture" class="img-fluid">
+              <p class="caption">Kiến trúc tổng thể của Spring Framework</p>
+            </div>
+
+            <div class="modules-grid">
+              <div class="module-card">
+                <h4>Core Container</h4>
+                <p>Beans, Core, Context, SpEL - Trái tim của Spring với Dependency Injection</p>
+              </div>
+              <div class="module-card">
+                <h4>Data Access</h4>
+                <p>JDBC, ORM, Transactions - Xử lý dữ liệu và tích hợp cơ sở dữ liệu</p>
+              </div>
+              <div class="module-card">
+                <h4>Web Module</h4>
+                <p>Spring MVC, WebSocket - Xây dựng ứng dụng web linh hoạt</p>
+              </div>
+              <div class="module-card">
+                <h4>AOP & Aspects</h4>
+                <p>Lập trình hướng khía cạnh cho mã nguồn hiệu quả hơn</p>
+              </div>
+            </div>
+
+            <blockquote>
+              <p>"Spring giống như một 'nhạc trưởng' — điều phối mọi đối tượng trong ứng dụng của bạn hoạt động hài
+                hòa."</p>
+            </blockquote>
+
+            <h3 id="di">2. Dependency Injection (DI) – Trái tim của Spring</h3>
+            <p>
+              <strong>Dependency Injection</strong> là cơ chế cho phép Spring tự động cung cấp (inject) các đối tượng
+              phụ thuộc vào class khác, giúp giảm sự gắn kết (coupling) giữa các module.
+            </p>
+
+            <p>Thay vì:</p>
+            <pre><code class="language-java">public class UserService {
+  private UserRepository userRepository = new UserRepository();
+}</code></pre>
+
+            <p>Bạn có thể viết:</p>
+            <pre><code class="language-java">@Service
+public class UserService {
+  private final UserRepository userRepository;
+
+  @Autowired
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+}</code></pre>
+
+            <p>
+              Ở đây, Spring sẽ tự động "tiêm" <code>UserRepository</code> vào <code>UserService</code> mà bạn không cần
+              khởi tạo thủ công.
+              Điều này giúp việc test, bảo trì và thay đổi code dễ dàng hơn rất nhiều.
+            </p>
+
+            <h3 id="ioc">3. Inversion of Control (IoC)</h3>
+            <p>
+              IoC là nguyên lý cốt lõi của Spring, nơi mà việc <strong>quản lý vòng đời của các đối tượng</strong>
+              (bean) được chuyển giao cho framework.
+            </p>
+
+            <p>
+              Tất cả các bean được Spring quản lý nằm trong <strong>IoC Container</strong>, và được khai báo bằng
+              annotation (<code>@Component</code>, <code>@Service</code>, <code>@Repository</code>) hoặc trong file cấu
+              hình XML.
+            </p>
+
+            <h3 id="spring-boot">4. Spring Boot – Cách nhanh nhất để bắt đầu</h3>
+            <p>
+              <strong>Spring Boot</strong> ra đời để đơn giản hóa việc khởi tạo và cấu hình ứng dụng Spring truyền
+              thống.
+              Không cần cấu hình XML phức tạp — chỉ cần vài annotation, bạn có thể chạy ứng dụng backend trong vài giây.
+            </p>
+
+            <pre><code class="language-java">@SpringBootApplication
+public class DemoApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(DemoApplication.class, args);
+  }
+}</code></pre>
+
+            <p>Khi chạy, Spring Boot tự động:</p>
+            <ul>
+              <li>Tạo IoC Container và quản lý bean</li>
+              <li>Cấu hình server (Tomcat) mặc định</li>
+              <li>Quét các component trong project</li>
+              <li>Hỗ trợ build REST API, JPA, Security chỉ với một vài dependency</li>
+            </ul>
+
+            <div class="concept-box">
+              <h4>🚀 Spring Boot Auto-Configuration</h4>
+              <p>Spring Boot tự động cấu hình dựa trên các dependency trong classpath. Thêm spring-boot-starter-web sẽ
+                tự động cấu hình Tomcat và Spring MVC.</p>
+            </div>
+
+            <h3 id="rest-api">5. Xây dựng RESTful Web Services với Spring Boot</h3>
+            <p>
+              Một trong những tính năng mạnh mẽ nhất của Spring Boot là xây dựng <strong>REST API</strong> cực nhanh.
+              Dưới đây là ví dụ đơn giản:
+            </p>
+
+            <pre><code class="language-java">@RestController
+@RequestMapping("/api")
+public class HelloController {
+
+  @GetMapping("/hello")
+  public String sayHello() {
+    return "Xin chào từ Spring Boot!";
+  }
+}</code></pre>
+
+            <p>
+              Chạy ứng dụng và truy cập <code>http://localhost:8080/api/hello</code>, bạn sẽ thấy kết quả trả về từ API
+              mà không cần thêm bất kỳ cấu hình server nào.
+            </p>
+
+            <blockquote>
+              <p>"Spring Boot biến việc viết API trở nên đơn giản như viết một dòng println()."</p>
+            </blockquote>
+
+            <h3 id="spring-data">6. Spring và tầng dữ liệu (Spring Data JPA)</h3>
+            <p>
+              Với module <strong>Spring Data JPA</strong>, bạn có thể tương tác với cơ sở dữ liệu mà không cần viết câu
+              SQL dài dòng.
+              Chỉ cần định nghĩa interface:
+            </p>
+
+            <pre><code class="language-java">public interface UserRepository extends JpaRepository<User, Long> {
+  List<User> findByName(String name);
+}</code></pre>
+
+            <p>
+              Spring Boot sẽ tự động tạo các truy vấn tương ứng nhờ vào tên phương thức — cực kỳ tiện lợi và tiết kiệm
+              thời gian.
+            </p>
+
+            <div class="flow-diagram">
+              <h4>Spring Data JPA Architecture</h4>
+              <img src="https://tse3.mm.bing.net/th/id/OIP.PcnF5qOb5rHnXrnRyOvPIAHaE3?pid=Api&P=0&h=220"
+                alt="Spring Data JPA Flow" class="img-fluid">
+              <p class="caption">Luồng hoạt động của Spring Data JPA</p>
+            </div>
+
+            <h3 id="advantages">7. Ưu điểm của Spring Framework</h3>
+            <ul>
+              <li>Giảm sự phụ thuộc giữa các module nhờ DI</li>
+              <li>Dễ mở rộng, dễ test, dễ bảo trì</li>
+              <li>Tích hợp mạnh mẽ với Hibernate, JPA, Security, Kafka, v.v.</li>
+              <li>Spring Boot giúp khởi chạy ứng dụng chỉ trong vài giây</li>
+              <li>Cộng đồng lớn, tài liệu phong phú, cập nhật liên tục</li>
+            </ul>
+
+            <div class="concept-box">
+              <h4>📌 Spring Ecosystem</h4>
+              <ul>
+                <li><strong>Spring MVC:</strong> Framework web truyền thống</li>
+                <li><strong>Spring Boot:</strong> Rapid application development</li>
+                <li><strong>Spring Security:</strong> Authentication & Authorization</li>
+                <li><strong>Spring Data:</strong> Unified data access</li>
+                <li><strong>Spring Cloud:</strong> Microservices architecture</li>
+              </ul>
+            </div>
+
+            <h3 id="conclusion">8. Tổng kết</h3>
+            <p>
+              Spring Framework là lựa chọn hàng đầu cho các lập trình viên Java khi xây dựng ứng dụng web, microservice
+              hoặc hệ thống doanh nghiệp.
+              Việc hiểu và áp dụng <strong>Dependency Injection</strong>, <strong>IoC Container</strong> và
+              <strong>Spring Boot</strong> sẽ giúp bạn tiết kiệm hàng chục giờ cấu hình và phát triển.
+            </p>
+
+            <p>
+              👉 Hãy bắt đầu với một project Spring Boot nhỏ — tạo một REST API đơn giản, thêm tầng dữ liệu JPA — bạn sẽ
+              hiểu ngay vì sao Spring được gọi là "xương sống của Java backend".
+            </p>
+
+            <blockquote>
+              <p>"Học Spring là bước chuyển mình từ lập trình Java cơ bản sang xây dựng hệ thống chuyên nghiệp."</p>
+            </blockquote>
+
+            <div class="article-footer mt-5 pt-4 border-top">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5>Tags:</h5>
+                  <div class="tags">
+                    <span class="badge bg-primary">Spring Framework</span>
+                    <span class="badge bg-secondary">Java</span>
+                    <span class="badge bg-success">Backend</span>
+                    <span class="badge bg-info">Spring Boot</span>
+                  </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                  <h5>Chia sẻ:</h5>
+                  <div class="share-buttons">
+                    <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-outline-info btn-sm me-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn btn-outline-danger btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="btn btn-outline-success btn-sm"><i class="fas fa-link"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mx-auto">
+          <div class="sociale-icon">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="copy-right">
+            <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Dat</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Set current year in copyright
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>

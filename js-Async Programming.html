@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript Async Programming | Dev Blog</title>
+
+  <!-- Meta For No Index -->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- Mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0b3d91;
+      --secondary-color: #0077b5;
+      --accent-color: #005b8c;
+      --light-bg: #f8f9fa;
+      --dark-text: #222;
+      --light-text: #666;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Font mặc định cho toàn bộ trang */
+    body, p, h1, h2, h3, h4, h5, h6, a, li, span {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.25px;
+      color: var(--dark-text);
+      font-weight: 400;
+    }
+
+    /* Tiêu đề chính & phụ */
+    h1, h2, h3 {
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+    }
+
+    /* Đoạn văn in đậm */
+    strong, b {
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* Trích dẫn */
+    blockquote p {
+      font-style: italic;
+      color: #333;
+      font-weight: 500;
+      background: #f3f6fa;
+      border-left: 4px solid var(--secondary-color);
+      padding: 12px 18px;
+      border-radius: var(--border-radius);
+    }
+
+    /* Liên kết */
+    a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    /* Custom styles for article readability */
+    .single-blog p, .single-blog li {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .single-blog pre {
+      background-color: #f4f4f9;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 16px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .single-blog pre code {
+      font-size: 16px;
+      font-family: 'Courier New', monospace;
+    }
+    .single-blog img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: 20px 0;
+    }
+    .single-blog .title {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .single-blog .meta {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      color: var(--light-text);
+    }
+    .single-blog .meta i {
+      margin-right: 5px;
+    }
+    
+    /* Navigation styles */
+    .main-nav {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 15px 0;
+    }
+    .main-nav .logo-main {
+      height: 40px;
+    }
+    .main-nav .nav-link {
+      color: #333;
+      font-weight: 500;
+      padding: 10px 15px;
+    }
+    .main-nav .nav-link:hover {
+      color: var(--secondary-color);
+    }
+    .main-nav-social li {
+      display: inline-block;
+      margin-left: 15px;
+    }
+    .main-nav-social a {
+      color: #333;
+      font-size: 18px;
+    }
+    .main-nav-social a:hover {
+      color: var(--secondary-color);
+    }
+    
+    /* Footer styles */
+    .footer {
+      background-color: var(--light-bg);
+      padding: 50px 0 20px;
+      text-align: center;
+    }
+    .footer-logo img {
+      height: 40px;
+      margin-bottom: 20px;
+    }
+    .footer-nav .navbar-nav {
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .footer-nav .nav-item {
+      margin: 0 15px;
+    }
+    .sociale-icon ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .sociale-icon li {
+      margin: 0 10px;
+    }
+    .sociale-icon a {
+      color: #333;
+      font-size: 18px;
+    }
+    .copy-right {
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+      color: var(--light-text);
+    }
+    
+    /* Instagram section */
+    .instagram {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+      padding: 30px 0;
+      text-align: center;
+      color: white;
+    }
+    .instagram a {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    .instagram-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .instagram-item-thum {
+      width: calc(16.66% - 10px);
+    }
+    .instagram-item-thum img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    
+    /* Blog section styling */
+    .blog-single {
+      padding: 60px 0;
+      background-color: #fff;
+    }
+    
+    /* Code highlighting */
+    .language-javascript {
+      color: #d63384;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .instagram-item-thum {
+        width: calc(33.33% - 10px);
+      }
+      .single-blog .title {
+        font-size: 28px;
+      }
+      .single-blog p, .single-blog li {
+        font-size: 16px;
+      }
+      .single-blog .meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    
+    /* Table of Contents */
+    .toc {
+      background-color: var(--light-bg);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 30px 0;
+    }
+    .toc h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    .toc ul {
+      padding-left: 20px;
+    }
+    .toc li {
+      margin-bottom: 8px;
+    }
+    .toc a {
+      color: var(--secondary-color);
+    }
+    
+    /* Special styling for async concepts */
+    .concept-box {
+      background: linear-gradient(135deg, #f5f7ff 0%, #e1e9ff 100%);
+      border-left: 4px solid var(--primary-color);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin: 25px 0;
+    }
+    
+    .flow-diagram {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .caption {
+      font-style: italic;
+      color: #555;
+      font-size: 15px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    /* Diagram container styling */
+    .diagram-container {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .diagram {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+    
+    /* Code block styling */
+    .code-block {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    /* Badge styling */
+    .badge {
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    
+    /* Share buttons */
+    .share-buttons .btn {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar Start -->
+<nav class="main-nav navbar navbar-expand-lg">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="index.html">
+      <h1 class="sitename">DevFolio</h1>
+    </a>
+    <!-- Toogle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse nav-list" id="mainNav">
+      <!-- Navigation Links -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Contact</a>
+        </li>
+      </ul>
+      <!-- Social Link -->
+      <ul class="main-nav-social list-inline ms-3">
+        <li class="list-inline-item">
+          <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+        </li>                
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar End -->
+
+<section class="blog-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <article class="single-blog">
+          <p class="title">JavaScript Async Programming</p>
+          <ul class="meta">
+            <li>By <a href="about.html">Thanh Dat</a></li>
+            <li>
+              <i class="far fa-clock"></i>
+              October 19, 2024
+            </li>
+            <li>
+              <i class="far fa-folder"></i>
+              JavaScript
+            </li>
+          </ul>
+
+          <div class="featured-image">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="JavaScript Async Programming" class="img-fluid">
+          </div>
+
+          <div class="toc">
+            <h4>Nội dung bài viết</h4>
+            <ul>
+              <li><a href="#intro">Giới thiệu</a></li>
+              <li><a href="#async-basics">Bất đồng bộ là gì?</a></li>
+              <li><a href="#callbacks">Callbacks</a></li>
+              <li><a href="#promises">Promises</a></li>
+              <li><a href="#async-await">Async/Await</a></li>
+              <li><a href="#promise-methods">Promise.all & Promise.race</a></li>
+              <li><a href="#async-flow">Tổng quan chu trình bất đồng bộ</a></li>
+              <li><a href="#conclusion">Tổng kết</a></li>
+            </ul>
+          </div>
+
+          <h3 id="intro">Giới thiệu</h3>
+          <p>
+            <strong>JavaScript Async Programming</strong> là một trong những chủ đề quan trọng nhất trong lập trình web hiện đại.  
+            JavaScript là ngôn ngữ <strong>đơn luồng (single-threaded)</strong>, nghĩa là chỉ chạy một tác vụ tại một thời điểm.  
+            Vậy làm sao để xử lý nhiều công việc cùng lúc như tải dữ liệu, chờ phản hồi API mà không <strong>đóng băng</strong> trang web?  
+            Câu trả lời nằm ở cơ chế <strong>bất đồng bộ (asynchronous programming)</strong>.
+          </p>
+
+          <div class="concept-box">
+            <h4>💡 Tại sao cần bất đồng bộ?</h4>
+            <p>Nếu JavaScript chỉ chạy đồng bộ, mọi tác vụ tốn thời gian (gọi API, đọc file, xử lý ảnh) sẽ chặn luồng chính, làm giao diện người dùng bị đơ cho đến khi hoàn tất.</p>
+          </div>
+
+          <h3 id="async-basics">1. Bất đồng bộ là gì?</h3>
+          <p>
+            Trong JavaScript, các tác vụ tốn thời gian như đọc file, truy cập API, hay chờ người dùng nhập liệu,  
+            thường được thực hiện theo cách bất đồng bộ – nghĩa là chương trình <strong>không chờ</strong> chúng hoàn tất mà tiếp tục thực thi phần còn lại.
+            <br><br>
+            Cơ chế này được quản lý bởi <strong>Event Loop</strong> – một vòng lặp theo dõi hàng đợi sự kiện (callback queue) và thực thi chúng khi luồng chính rảnh.
+          </p>
+
+          <div class="diagram-container">
+            <h4>Event Loop Visualization</h4>
+            <div class="diagram">
+              <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Call Stack -->
+                <rect x="50" y="50" width="150" height="200" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+                <text x="125" y="40" text-anchor="middle" font-weight="bold" fill="#01579b">Call Stack</text>
+                <rect x="70" y="70" width="110" height="30" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="125" y="90" text-anchor="middle" fill="#000">main()</text>
+                <rect x="70" y="110" width="110" height="30" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="125" y="130" text-anchor="middle" fill="#000">func1()</text>
+                <rect x="70" y="150" width="110" height="30" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="125" y="170" text-anchor="middle" fill="#000">func2()</text>
+                
+                <!-- Web APIs -->
+                <rect x="250" y="50" width="150" height="200" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+                <text x="325" y="40" text-anchor="middle" font-weight="bold" fill="#4a148c">Web APIs</text>
+                <rect x="270" y="70" width="110" height="30" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="325" y="90" text-anchor="middle" fill="#000">setTimeout</text>
+                <rect x="270" y="110" width="110" height="30" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="325" y="130" text-anchor="middle" fill="#000">fetch</text>
+                <rect x="270" y="150" width="110" height="30" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="325" y="170" text-anchor="middle" fill="#000">DOM Events</text>
+                
+                <!-- Callback Queue -->
+                <rect x="450" y="50" width="150" height="200" fill="#e8f5e8" stroke="#1b5e20" stroke-width="2"/>
+                <text x="525" y="40" text-anchor="middle" font-weight="bold" fill="#1b5e20">Callback Queue</text>
+                <rect x="470" y="70" width="110" height="30" fill="#66bb6a" stroke="#388e3c" stroke-width="1"/>
+                <text x="525" y="90" text-anchor="middle" fill="#000">cb1()</text>
+                <rect x="470" y="110" width="110" height="30" fill="#66bb6a" stroke="#388e3c" stroke-width="1"/>
+                <text x="525" y="130" text-anchor="middle" fill="#000">cb2()</text>
+                <rect x="470" y="150" width="110" height="30" fill="#66bb6a" stroke="#388e3c" stroke-width="1"/>
+                <text x="525" y="170" text-anchor="middle" fill="#000">cb3()</text>
+                
+                <!-- Event Loop -->
+                <circle cx="650" cy="150" r="40" fill="#ffecb3" stroke="#f57c00" stroke-width="2"/>
+                <text x="650" y="155" text-anchor="middle" font-weight="bold" fill="#f57c00">Event Loop</text>
+                
+                <!-- Arrows -->
+                <path d="M200 150 L220 150 L220 180 L240 180" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M400 180 L420 180 L420 150 L440 150" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M600 150 L620 150 L620 120 L640 120" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M600 150 L620 150 L620 180 L640 180" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <p class="caption">Sơ đồ mô phỏng Event Loop (Call Stack, Web APIs, Callback Queue)</p>
+          </div>
+
+          <p>
+            Nhờ cơ chế này, JavaScript có thể thực hiện nhiều tác vụ cùng lúc mà không bị <strong>đơ</strong> giao diện, giúp chương trình mượt mà và phản hồi nhanh hơn.
+          </p>
+
+          <blockquote>
+            <p>"JavaScript không làm mọi thứ cùng lúc – nó biết khi nào nên tạm dừng và khi nào nên tiếp tục."</p>
+          </blockquote>
+
+          <h3 id="callbacks">2. Callbacks – Cách tiếp cận ban đầu</h3>
+          <p>
+            <strong>Callback</strong> là hàm được truyền như đối số cho hàm khác, được gọi lại khi tác vụ hoàn tất.  
+            Đây là cách phổ biến để xử lý bất đồng bộ trong JavaScript trước khi <code>Promises</code> và <code>async/await</code> xuất hiện.
+          </p>
+          <div class="code-block">
+            <code>
+              function fetchData(callback) {<br>
+              &nbsp;&nbsp;setTimeout(() => {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log("Dữ liệu đã sẵn sàng!");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;callback();<br>
+              &nbsp;&nbsp;}, 2000);<br>
+              }<br><br>
+              fetchData(() => {<br>
+              &nbsp;&nbsp;console.log("Xử lý dữ liệu sau khi tải xong.");<br>
+              });
+            </code>
+          </div>
+          <p>
+            Tuy nhiên, khi có nhiều callback lồng nhau, mã trở nên khó đọc và bảo trì — hiện tượng này gọi là <strong>"callback hell"</strong>.
+          </p>
+
+          <div class="diagram-container">
+            <h4>Callback Hell Visualization</h4>
+            <div class="diagram">
+              <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Callback Hell Pyramid -->
+                <rect x="300" y="50" width="200" height="40" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+                <text x="400" y="75" text-anchor="middle" fill="#000">getData(function(data) {</text>
+                
+                <rect x="250" y="100" width="300" height="40" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+                <text x="400" y="125" text-anchor="middle" fill="#000">&nbsp;&nbsp;getMoreData(data, function(moreData) {</text>
+                
+                <rect x="200" y="150" width="400" height="40" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+                <text x="400" y="175" text-anchor="middle" fill="#000">&nbsp;&nbsp;&nbsp;&nbsp;getEvenMoreData(moreData, function(evenMore) {</text>
+                
+                <rect x="150" y="200" width="500" height="40" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+                <text x="400" y="225" text-anchor="middle" fill="#000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ... và tiếp tục lồng nhau</text>
+                
+                <!-- Closing braces -->
+                <rect x="200" y="250" width="400" height="20" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+                <text x="400" y="265" text-anchor="middle" fill="#000">&nbsp;&nbsp;&nbsp;&nbsp;});</text>
+                
+                <rect x="250" y="270" width="300" height="20" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+                <text x="400" y="285" text-anchor="middle" fill="#000">&nbsp;&nbsp;});</text>
+                
+                <rect x="300" y="290" width="200" height="20" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+                <text x="400" y="305" text-anchor="middle" fill="#000">});</text>
+              </svg>
+            </div>
+            <p class="caption">Hình minh họa callback hell: các hàm lồng nhau nhiều tầng</p>
+          </div>
+
+          <p>
+            Cơ chế này giúp lập trình viên dễ dàng thực hiện các thao tác nối tiếp nhau, tuy nhiên khi có nhiều callback lồng vào nhau — ví dụ khi cần tải nhiều dữ liệu hoặc xử lý theo chuỗi — mã sẽ trở nên khó đọc, khó bảo trì, và dễ sinh lỗi.
+          </p>
+
+          <h3 id="promises">3. Promises – Giải pháp thay thế hiện đại</h3>
+          <p>
+            <strong>Promise</strong> ra đời để xử lý bất đồng bộ một cách mạch lạc hơn.  
+            Một Promise biểu diễn một giá trị có thể có ngay bây giờ, trong tương lai hoặc không bao giờ có.
+          </p>
+          <div class="code-block">
+            <code>
+              const getData = new Promise((resolve, reject) => {<br>
+              &nbsp;&nbsp;setTimeout(() => {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const success = true;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;if (success) resolve("Tải dữ liệu thành công!");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;else reject("Lỗi khi tải dữ liệu!");<br>
+              &nbsp;&nbsp;}, 2000);<br>
+              });<br><br>
+              getData<br>
+              &nbsp;&nbsp;.then(result => console.log(result))<br>
+              &nbsp;&nbsp;.catch(error => console.error(error))<br>
+              &nbsp;&nbsp;.finally(() => console.log("Hoàn tất!"));
+            </code>
+          </div>
+          <p>
+            Nhờ Promise, việc xử lý chuỗi bất đồng bộ trở nên rõ ràng, tránh lồng hàm và dễ debug hơn.
+          </p>
+
+          <div class="concept-box">
+            <h4>📌 Promise States</h4>
+            <ul>
+              <li><strong>Pending:</strong> Đang chờ xử lý</li>
+              <li><strong>Fulfilled:</strong> Đã hoàn thành thành công</li>
+              <li><strong>Rejected:</strong> Đã thất bại</li>
+            </ul>
+          </div>
+
+          <h3 id="async-await">4. Async / Await – Cú pháp gọn gàng hơn</h3>
+          <p>
+            Cú pháp <strong>async/await</strong> (từ ES8) cho phép bạn viết code bất đồng bộ trông như đồng bộ.  
+            Từ khóa <code>await</code> tạm dừng hàm cho đến khi Promise hoàn tất, giúp mã dễ đọc hơn.
+          </p>
+          <div class="code-block">
+            <code>
+              async function fetchUser() {<br>
+              &nbsp;&nbsp;try {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch("https://api.example.com/user");<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log("Người dùng:", data);<br>
+              &nbsp;&nbsp;} catch (error) {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.error("Lỗi:", error);<br>
+              &nbsp;&nbsp;} finally {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log("Hoàn tất quá trình tải dữ liệu.");<br>
+              &nbsp;&nbsp;}<br>
+              }<br><br>
+              fetchUser();
+            </code>
+          </div>
+          <p>
+            Như vậy, bạn có thể dùng <code>async/await</code> kết hợp <code>try...catch</code> để quản lý lỗi tự nhiên như khi viết mã đồng bộ.
+          </p>
+
+          <h3 id="promise-methods">5. Promise.all & Promise.race</h3>
+          <p>
+            Khi bạn cần xử lý nhiều Promise cùng lúc (ví dụ tải nhiều API),  
+            các phương thức như <code>Promise.all()</code> và <code>Promise.race()</code> giúp quản lý hiệu quả hơn.
+          </p>
+          <div class="code-block">
+            <code>
+              const api1 = fetch("https://api.example.com/posts");<br>
+              const api2 = fetch("https://api.example.com/comments");<br><br>
+              Promise.all([api1, api2])<br>
+              &nbsp;&nbsp;.then(results => console.log("Tất cả API đã phản hồi:", results))<br>
+              &nbsp;&nbsp;.catch(err => console.error("Có lỗi xảy ra:", err));
+            </code>
+          </div>
+          <p>
+            👉 <code>Promise.all()</code> đợi tất cả hoàn tất,  
+            trong khi <code>Promise.race()</code> trả kết quả của Promise hoàn thành đầu tiên.
+          </p>
+
+          <div class="concept-box">
+            <h4>🔍 Promise.all vs Promise.race</h4>
+            <p><strong>Promise.all</strong>: Chờ tất cả Promise hoàn thành, nếu một Promise thất bại → toàn bộ thất bại.</p>
+            <p><strong>Promise.race</strong>: Trả về kết quả của Promise đầu tiên hoàn thành (thành công hoặc thất bại).</p>
+          </div>
+
+          <h3 id="async-flow">6. Tổng quan chu trình bất đồng bộ</h3>
+          <p>
+            Một vòng đời của tác vụ bất đồng bộ trong JS có thể mô tả như sau:
+          </p>
+          <ul>
+            <li><strong>1.</strong> Tác vụ được gửi tới Web API (ví dụ: setTimeout, fetch).</li>
+            <li><strong>2.</strong> Khi hoàn tất, callback được đưa vào hàng đợi (Callback Queue).</li>
+            <li><strong>3.</strong> Event Loop kiểm tra Stack trống → đẩy callback vào thực thi.</li>
+          </ul>
+
+          <div class="diagram-container">
+            <h4>Async Flow Diagram</h4>
+            <div class="diagram">
+              <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Call Stack -->
+                <rect x="50" y="50" width="200" height="300" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+                <text x="150" y="40" text-anchor="middle" font-weight="bold" fill="#01579b">Call Stack</text>
+                
+                <!-- Web APIs -->
+                <rect x="300" y="50" width="200" height="300" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+                <text x="400" y="40" text-anchor="middle" font-weight="bold" fill="#4a148c">Web APIs</text>
+                
+                <!-- Callback Queue -->
+                <rect x="550" y="50" width="200" height="300" fill="#e8f5e8" stroke="#1b5e20" stroke-width="2"/>
+                <text x="650" y="40" text-anchor="middle" font-weight="bold" fill="#1b5e20">Callback Queue</text>
+                
+                <!-- Event Loop -->
+                <circle cx="400" cy="200" r="30" fill="#ffecb3" stroke="#f57c00" stroke-width="2"/>
+                <text x="400" y="205" text-anchor="middle" font-weight="bold" fill="#f57c00">Event Loop</text>
+                
+                <!-- Arrows -->
+                <path d="M250 150 L275 150 L275 100 L300 100" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M500 100 L525 100 L525 150 L550 150" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M650 150 L675 150 L675 200 L700 200 L700 175 L725 175" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M400 230 L400 260 L375 260 L375 300 L350 300" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                
+                <!-- Labels -->
+                <text x="275" y="140" text-anchor="middle" fill="#333">Gửi tác vụ</text>
+                <text x="525" y="140" text-anchor="middle" fill="#333">Callback hoàn tất</text>
+                <text x="650" y="190" text-anchor="middle" fill="#333">Đẩy vào Stack</text>
+                <text x="350" y="280" text-anchor="middle" fill="#333">Kiểm tra Stack trống</text>
+                
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <p class="caption">Sơ đồ thể hiện chu trình bất đồng bộ: Stack, Queue, Web APIs</p>
+          </div>
+
+          <p>
+            JavaScript hoạt động theo mô hình đơn luồng <strong>single-threaded</strong>, tức là tại một thời điểm chỉ có thể xử lý một tác vụ trong Call Stack. 
+            Tuy nhiên, nhờ cơ chế bất đồng bộ, các tác vụ như setTimeout, fetch, hay xử lý sự kiện <strong>(event listener)</strong> có thể được giao cho Web APIs để thực hiện song song, trong khi luồng chính vẫn tiếp tục chạy các đoạn mã khác.
+          </p>
+
+          <p>
+            <strong>Cụ thể, quá trình diễn ra như sau:</strong>
+          </p>
+
+          <ul>
+            <li><strong>1.</strong> Khi một hàm bất đồng bộ được gọi (ví dụ <code>setTimeout(sum, 2000)</code>), nó được gửi đến Web API. Web API chịu trách nhiệm xử lý tác vụ này trong nền.</li>
+            <li><strong>2.</strong> Sau khi tác vụ hoàn tất (ví dụ hết thời gian chờ), callback tương ứng (ở đây là <code>sum()</code>) sẽ được đưa vào <code>Event Queue</code> (hàng đợi sự kiện).</li>
+            <li><strong>3.</strong> Event Loop liên tục kiểm tra <code>Call Stack</code> — nếu Stack trống, nó sẽ lấy callback từ Event Queue và đẩy vào Stack để thực thi.</li>
+          </ul>
+
+          <p>
+            Quá trình này giúp JavaScript có thể xử lý đồng thời nhiều tác vụ mà không bị <strong>đóng băng</strong> giao diện người dùng hoặc dừng chương trình.
+          </p>
+
+          <blockquote>
+            <p>"Async programming biến JavaScript từ ngôn ngữ chậm rãi thành công cụ mạnh mẽ cho web hiện đại."</p>
+          </blockquote>
+
+          <h3 id="conclusion">7. Tổng kết</h3>
+          <p>
+            Hiểu rõ <strong>Callbacks</strong>, <strong>Promises</strong> và <strong>Async/Await</strong> giúp bạn viết mã dễ đọc, hiệu quả và tránh lỗi phổ biến trong xử lý bất đồng bộ.  
+            <br><br>
+            👉 Hãy thử viết một hàm gọi API thật, hiển thị dữ liệu và xử lý lỗi để cảm nhận sự khác biệt giữa callback và async/await.
+          </p>
+
+          <div class="concept-box">
+            <h4>📝 Tóm tắt các phương pháp</h4>
+            <ul>
+              <li><strong>Callbacks:</strong> Cơ bản nhưng dễ gây callback hell</li>
+              <li><strong>Promises:</strong> Giải quyết callback hell, dễ xử lý chuỗi</li>
+              <li><strong>Async/Await:</strong> Cú pháp gọn gàng, dễ đọc nhất</li>
+            </ul>
+          </div>
+
+          <blockquote>
+            <p>"Async/Await – cú pháp khiến JavaScript bất đồng bộ trở nên dễ hiểu và thân thiện hơn bao giờ hết."</p>
+          </blockquote>
+
+          <div class="article-footer mt-5 pt-4 border-top">
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Tags:</h5>
+                <div class="tags">
+                  <span class="badge bg-primary">JavaScript</span>
+                  <span class="badge bg-secondary">Async</span>
+                  <span class="badge bg-success">Promises</span>
+                  <span class="badge bg-info">Async/Await</span>
+                  <span class="badge bg-warning">Callbacks</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <h5>Chia sẻ:</h5>
+                <div class="share-buttons">
+                  <a href="#" class="btn btn-outline-primary btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" class="btn btn-outline-info btn-sm me-2"><i class="fab fa-twitter"></i></a>
+                  <a href="#" class="btn btn-outline-danger btn-sm me-2"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#" class="btn btn-outline-success btn-sm"><i class="fas fa-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="sociale-icon">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+            </li>            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="copy-right">
+          <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by <a href="https://staticmania.com/" target="_blank">StaticMania</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Set current year in copyright
+  document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

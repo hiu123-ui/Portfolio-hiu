@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Java Exception Handling | Dev Blog</title>
+
+  <!-- Meta For No Index -->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+  <meta name="description" content="Hướng dẫn toàn diện về Java Exception Handling - từ cơ bản đến nâng cao. Tìm hiểu cách xử lý lỗi, tạo custom exceptions và best practices.">
+  <meta name="keywords" content="Java Exception, Exception Handling, Java Programming, Error Handling, Try Catch">
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+  <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #dc2626;
+      --primary-dark: #b91c1c;
+      --accent: #f59e0b;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --border: #e2e8f0;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* ===== GLOBAL STYLES ===== */
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.8;
+      color: var(--dark);
+      background: var(--light);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .main-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      transition: var(--transition);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .main-nav.scrolled {
+      box-shadow: var(--shadow);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark);
+      padding: 0.5rem 1rem;
+      transition: var(--transition);
+      position: relative;
+      text-decoration: none;
+      display: block;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 80%;
+    }
+
+    .main-nav-social {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .main-nav-social li {
+      margin: 0;
+    }
+
+    .main-nav-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--light);
+      border-radius: 50%;
+      color: var(--dark);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .main-nav-social a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .navbar-toggler {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+      padding: 5px;
+    }
+
+    .icon-bar {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ===== BLOG CONTENT ===== */
+    .blog-single {
+      padding: 120px 0 80px;
+      background: linear-gradient(135deg, #fef2f2 0%, #f8fafc 100%);
+    }
+
+    .single-blog {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .single-blog .title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .single-blog .meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .single-blog .meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .single-blog .meta a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .single-blog img {
+      width: 100%;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .single-blog img:hover {
+      transform: scale(1.02);
+    }
+
+    .single-blog h2,
+    .single-blog h3 {
+      color: var(--dark);
+      margin: 2.5rem 0 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .single-blog h2 {
+      font-size: 2rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .single-blog h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .single-blog p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+    }
+
+    .single-blog strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .single-blog ul,
+    .single-blog ol {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+
+    .single-blog li {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .single-blog li strong {
+      color: var(--primary-dark);
+    }
+
+    /* ===== CODE BLOCKS ===== */
+    .single-blog pre {
+      background: #1e293b;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .single-blog code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .single-blog pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .single-blog p code {
+      background: #fef2f2;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+    }
+
+    /* ===== BLOCKQUOTE ===== */
+    .single-blog blockquote {
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    .single-blog blockquote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.2;
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      font-family: serif;
+    }
+
+    .single-blog blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--dark);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ===== FEATURE CARDS ===== */
+    .feature-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card h4 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    /* ===== DIAGRAM CONTAINER ===== */
+    .diagram-container {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .diagram {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    /* ===== INSTAGRAM SECTION ===== */
+    .instagram {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 4rem 0;
+      text-align: center;
+      color: white;
+    }
+
+    .instagram a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+
+    .instagram-item {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .instagram-item-thum {
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .instagram-item-thum:hover {
+      transform: scale(1.05);
+    }
+
+    .instagram-item-thum img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .instagram-item-thum:hover img {
+      transform: scale(1.1);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-logo {
+      margin-bottom: 2rem;
+    }
+
+    .footer-logo img {
+      height: 40px;
+    }
+
+    .footer-nav .navbar-nav {
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-nav .nav-link {
+      color: white;
+      padding: 0.5rem 1rem;
+    }
+
+    .footer-nav .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .sociale-icon ul {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .sociale-icon a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #374151;
+      border-radius: 50%;
+      color: white;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .sociale-icon a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copy-right {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #374151;
+      color: #94a3b8;
+    }
+
+    .copy-right a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .navbar-toggler {
+        display: flex;
+      }
+      
+      .nav-list {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: none;
+        padding: 20px;
+        gap: 10px;
+      }
+      
+      .nav-list.active {
+        display: flex;
+      }
+      
+      .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+      }
+      
+      .nav-item {
+        width: 100%;
+      }
+      
+      .nav-link {
+        padding: 12px 15px;
+        border-radius: 6px;
+        text-align: center;
+      }
+      
+      .main-nav-social {
+        justify-content: center;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        margin-top: 15px;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar-toggler.active .icon-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      .single-blog {
+        padding: 2rem;
+        margin: 0 1rem;
+      }
+
+      .single-blog .title {
+        font-size: 2rem;
+      }
+
+      .single-blog .meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .blog-single {
+        padding: 100px 0 60px;
+      }
+
+      .footer-nav .navbar-nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .instagram-item {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .single-blog {
+        padding: 1.5rem;
+      }
+
+      .single-blog .title {
+        font-size: 1.75rem;
+      }
+
+      .single-blog h2 {
+        font-size: 1.5rem;
+      }
+
+      .single-blog h3 {
+        font-size: 1.25rem;
+      }
+
+      .single-blog pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-3 {
+      margin-bottom: 1rem;
+    }
+
+    .mb-4 {
+      margin-bottom: 1.5rem;
+    }
+
+    .mt-4 {
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-light {
+      background: white;
+      color: #667eea;
+    }
+
+    .btn-light:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar Start -->
+  <nav class="main-nav navbar">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand" href="index.html">
+        DevBlog
+      </a>
+      <!-- Toggle Button -->
+      <button class="navbar-toggler" type="button" id="navbarToggle">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="nav-list" id="mainNav">
+        <!-- Navigation Links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="articles.html">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+        <!-- Social Links -->
+        <ul class="main-nav-social">
+          <li>
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.coursera.org/" target="_blank" aria-label="Coursera">
+              <i class="fas fa-graduation-cap"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <!-- Blog Content -->
+  <section class="blog-single">
+    <div class="container">
+      <div class="single-blog">
+        <h1 class="title">Java Exception Handling - Hướng Dẫn Toàn Diện</h1>
+        <ul class="meta">
+          <li>
+            <i class="fas fa-user"></i>
+            Tác giả: Thanh Dat
+          </li>
+          <li>
+            <i class="fas fa-calendar"></i>
+            Ngày đăng: 19 tháng 10, 2024
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            Thời gian đọc: 12 phút
+          </li>
+        </ul>
+
+
+        <!-- Introduction -->
+        <div class="feature-card">
+          <h3>📖 Giới Thiệu</h3>
+          <p>
+            Trong quá trình lập trình Java, lỗi (error) và ngoại lệ (exception) là điều không thể tránh khỏi.  
+            <strong>Java Exception Handling</strong> giúp bạn kiểm soát luồng chương trình khi có sự cố xảy ra — 
+            thay vì để ứng dụng bị dừng đột ngột.  
+            <br><br>
+            Việc hiểu rõ cơ chế xử lý ngoại lệ, cách tạo custom exceptions và áp dụng best practices sẽ giúp code của bạn
+            trở nên <strong>ổn định, dễ bảo trì và thân thiện với người dùng hơn</strong>.
+          </p>
+        </div>
+
+        <!-- What is Exception -->
+        <h2>1. Khái niệm cơ bản về Exception</h2>
+        <p>
+          Một <strong>Exception</strong> là một sự kiện bất thường xảy ra trong quá trình thực thi chương trình, 
+          làm gián đoạn luồng thực thi bình thường.
+          <br><br>
+          Java chia exceptions thành 2 loại chính:
+        </p>
+        <ul>
+          <li><strong>Checked Exceptions</strong> – được kiểm tra tại thời điểm biên dịch (ví dụ: <code>IOException</code>, <code>SQLException</code>).</li>
+          <li><strong>Unchecked Exceptions</strong> – xảy ra tại runtime, thường do lỗi logic (ví dụ: <code>NullPointerException</code>, <code>ArithmeticException</code>).</li>
+        </ul>
+
+        <div class="diagram-container">
+          <h4>Cấu trúc phân cấp Exception trong Java</h4>
+          <div class="diagram">
+            <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+              <!-- Exception Hierarchy -->
+              <rect x="350" y="20" width="100" height="40" fill="#dc2626" stroke="#b91c1c" stroke-width="2"/>
+              <text x="400" y="45" text-anchor="middle" fill="white" font-weight="bold">Throwable</text>
+              
+              <rect x="200" y="80" width="100" height="40" fill="#ef4444" stroke="#dc2626" stroke-width="1"/>
+              <text x="250" y="105" text-anchor="middle" fill="white">Error</text>
+              
+              <rect x="500" y="80" width="100" height="40" fill="#22c55e" stroke="#16a34a" stroke-width="1"/>
+              <text x="550" y="105" text-anchor="middle" fill="white">Exception</text>
+              
+              <rect x="100" y="140" width="100" height="40" fill="#f87171" stroke="#ef4444" stroke-width="1"/>
+              <text x="150" y="165" text-anchor="middle" fill="white">VirtualMachineError</text>
+              
+              <rect x="300" y="140" width="100" height="40" fill="#4ade80" stroke="#22c55e" stroke-width="1"/>
+              <text x="350" y="165" text-anchor="middle" fill="white">IOException</text>
+              
+              <rect x="500" y="140" width="100" height="40" fill="#4ade80" stroke="#22c55e" stroke-width="1"/>
+              <text x="550" y="165" text-anchor="middle" fill="white">SQLException</text>
+              
+              <rect x="700" y="140" width="100" height="40" fill="#86efac" stroke="#4ade80" stroke-width="1"/>
+              <text x="750" y="165" text-anchor="middle" fill="white">RuntimeException</text>
+              
+              <rect x="600" y="200" width="100" height="40" fill="#bbf7d0" stroke="#86efac" stroke-width="1"/>
+              <text x="650" y="225" text-anchor="middle" fill="white">NullPointerException</text>
+              
+              <rect x="800" y="200" width="100" height="40" fill="#bbf7d0" stroke="#86efac" stroke-width="1"/>
+              <text x="850" y="225" text-anchor="middle" fill="white">ArithmeticException</text>
+              
+              <!-- Lines -->
+              <path d="M400 60 L250 80" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M400 60 L550 80" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M250 120 L150 140" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M550 120 L350 140" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M550 120 L550 140" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M550 120 L750 140" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M750 180 L650 200" stroke="#333" stroke-width="2" fill="none"/>
+              <path d="M750 180 L850 200" stroke="#333" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <p class="caption">Phân cấp Exception trong Java - Màu đỏ: Error, Xanh lá: Checked Exception, Xanh nhạt: Unchecked Exception</p>
+        </div>
+
+        <blockquote>
+          <p>"Hiểu rõ phân cấp của Exception là bước đầu để kiểm soát lỗi một cách thông minh."</p>
+        </blockquote>
+
+        <!-- Try-Catch-Finally -->
+        <h2>2. Cấu trúc try–catch–finally</h2>
+        <p>
+          Java cung cấp khối <code>try–catch</code> để bắt và xử lý ngoại lệ.  
+          Ngoài ra, khối <code>finally</code> luôn được thực thi — kể cả khi có lỗi hay không — 
+          giúp bạn giải phóng tài nguyên như kết nối file, database, hoặc stream.
+        </p>
+        <pre><code>public class TryCatchExample {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0; // Lỗi chia cho 0
+            System.out.println("Kết quả: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Lỗi: Không thể chia cho 0!");
+        } finally {
+            System.out.println("Khối finally luôn được thực thi.");
+        }
+    }
+}</code></pre>
+        <div class="feature-card">
+          <h4>💡 Lời Khuyên Thực Tế</h4>
+          <p>
+            Hãy luôn dùng <code>finally</code> (hoặc <code>try-with-resources</code>) để đảm bảo tài nguyên được đóng đúng cách.
+          </p>
+        </div>
+
+        <!-- Custom Exception -->
+        <h2>3. Tạo Custom Exception</h2>
+        <p>
+          Đôi khi, bạn cần định nghĩa lỗi riêng phù hợp với logic nghiệp vụ của mình.  
+          Khi đó, có thể tạo <strong>Custom Exception</strong> bằng cách kế thừa lớp <code>Exception</code> hoặc <code>RuntimeException</code>.
+        </p>
+        <pre><code>class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionDemo {
+    static void checkAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Tuổi phải lớn hơn hoặc bằng 18!");
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            checkAge(16);
+        } catch (InvalidAgeException e) {
+            System.out.println("Lỗi: " + e.getMessage());
+        }
+    }
+}</code></pre>
+        <p>
+          👉 Custom Exception giúp chương trình diễn giải lỗi rõ ràng hơn, thay vì chỉ hiển thị lỗi hệ thống.
+        </p>
+
+        <!-- Multi-Catch -->
+        <h2>4. Multi-Catch & Nested Try</h2>
+        <p>
+          Khi có nhiều loại lỗi có thể xảy ra, bạn có thể dùng <strong>multi-catch</strong> hoặc <strong>nested try</strong> để xử lý chi tiết từng trường hợp.
+        </p>
+        <pre><code>public class MultiCatchExample {
+    public static void main(String[] args) {
+        try {
+            String text = null;
+            System.out.println(text.length()); // NullPointerException
+        } catch (ArithmeticException | NullPointerException e) {
+            System.out.println("Đã xảy ra lỗi: " + e);
+        }
+    }
+}</code></pre>
+        <p>
+          👉 Multi-catch giúp code gọn hơn khi các lỗi có cùng cách xử lý.
+        </p>
+
+        <!-- Throw vs Throws -->
+        <h2>5. Throw vs Throws</h2>
+        <ul>
+          <li><strong>throw</strong>: dùng để ném một exception cụ thể trong code.</li>
+          <li><strong>throws</strong>: khai báo rằng phương thức có thể ném exception để người gọi xử lý.</li>
+        </ul>
+        <pre><code>public class ThrowExample {
+    static void validate(int age) throws ArithmeticException {
+        if (age < 18)
+            throw new ArithmeticException("Không đủ tuổi đăng ký!");
+        else
+            System.out.println("Đăng ký thành công!");
+    }
+
+    public static void main(String args[]) {
+        validate(15);
+        System.out.println("Hoàn tất!");
+    }
+}</code></pre>
+
+        <blockquote>
+          <p>"Sử dụng throw và throws hợp lý giúp bạn quản lý lỗi có kiểm soát và rõ ràng."</p>
+        </blockquote>
+
+        <!-- Best Practices -->
+        <h2>6. Best Practices khi xử lý Exception</h2>
+        <div class="feature-card">
+          <h4>🚫 Chỉ bắt những exception mà bạn có thể xử lý hợp lý</h4>
+          <p>Không nên bắt tất cả exceptions mà không có xử lý phù hợp.</p>
+        </div>
+
+        <div class="feature-card">
+          <h4>📝 Luôn ghi log chi tiết</h4>
+          <p>Sử dụng logging framework để ghi lại thông tin lỗi đầy đủ.</p>
+        </div>
+
+        <div class="feature-card">
+          <h4>🧹 Dọn dẹp tài nguyên</h4>
+          <p>Luôn sử dụng finally hoặc try-with-resources để đảm bảo tài nguyên được giải phóng.</p>
+        </div>
+
+        <!-- Try-with-resources -->
+        <h2>7. Ví dụ hoàn chỉnh: try-with-resources</h2>
+        <p>
+          Dưới đây là ví dụ về cách dùng <code>try-with-resources</code> để đọc file mà không cần đóng thủ công.
+        </p>
+        <pre><code>import java.io.*;
+
+public class ReadFileExample {
+    public static void main(String[] args) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Lỗi đọc file: " + e.getMessage());
+        }
+    }
+}</code></pre>
+        <p>
+          👉 <code>try-with-resources</code> giúp tự động đóng tài nguyên, tránh rò rỉ bộ nhớ và code gọn hơn.
+        </p>
+
+        <div class="diagram-container">
+          <h4>Luồng xử lý try-catch-finally</h4>
+          <div class="diagram">
+            <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+              <!-- Flow Diagram -->
+              <rect x="350" y="50" width="100" height="40" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+              <text x="400" y="75" text-anchor="middle" fill="white" font-weight="bold">Bắt đầu</text>
+              
+              <rect x="350" y="120" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+              <text x="400" y="145" text-anchor="middle" fill="white" font-weight="bold">Khối try</text>
+              
+              <rect x="200" y="190" width="100" height="40" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+              <text x="250" y="215" text-anchor="middle" fill="white">Exception xảy ra?</text>
+              
+              <rect x="500" y="190" width="100" height="40" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+              <text x="550" y="215" text-anchor="middle" fill="white">Không có lỗi</text>
+              
+              <rect x="200" y="260" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+              <text x="250" y="285" text-anchor="middle" fill="white">Khối catch</text>
+              
+              <rect x="500" y="260" width="100" height="40" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+              <text x="550" y="285" text-anchor="middle" fill="white">Tiếp tục</text>
+              
+              <rect x="350" y="330" width="100" height="40" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+              <text x="400" y="355" text-anchor="middle" fill="white" font-weight="bold">Khối finally</text>
+              
+              <!-- Lines and arrows -->
+              <path d="M400 90 L400 120" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              <path d="M400 160 L400 190" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              <path d="M250 230 L250 260" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              <path d="M550 230 L550 260" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              <path d="M250 300 L325 300 L325 330" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              <path d="M550 300 L475 300 L475 330" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+              
+              <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <p class="caption">Luồng xử lý của try-catch-finally trong Java</p>
+        </div>
+
+        <!-- Conclusion -->
+        <h2>8. Tổng kết</h2>
+        <p>
+          Exception Handling là kỹ năng quan trọng giúp bạn viết ứng dụng Java an toàn và đáng tin cậy hơn.  
+          Biết cách sử dụng <code>try-catch</code>, <code>throw</code>, <code>throws</code> và custom exception đúng lúc sẽ giúp bạn kiểm soát luồng lỗi linh hoạt.  
+          <br><br>
+          👉 Hãy luyện tập bằng cách cố tình tạo lỗi trong chương trình nhỏ, sau đó xử lý chúng theo nhiều cách khác nhau — 
+          bạn sẽ nhanh chóng hiểu sâu hơn về cơ chế Exception trong Java.
+        </p>
+
+        <blockquote>
+          <p>"Xử lý ngoại lệ tốt không chỉ làm chương trình chạy ổn định — mà còn giúp người dùng tin tưởng sản phẩm của bạn."</p>
+        </blockquote>
+
+        <!-- Call to Action -->
+        <div class="feature-card text-center"
+          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+          <h4>🎯 Sẵn Sàng Cho Bước Tiếp Theo?</h4>
+          <p class="mb-3">
+            Khám phá thêm các bài viết về Java nâng cao và các chủ đề lập trình khác
+            trong chuyên mục bài viết của tôi.
+          </p>
+          <a href="articles.html" class="btn btn-light">
+            Xem Tất Cả Bài Viết
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <section class="footer">
+    <div class="container">
+      
+      <div class="sociale-icon">
+        <ul>
+          <li>
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.coursera.org/" target="_blank" aria-label="Coursera">
+              <i class="fas fa-graduation-cap"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="copy-right">
+        <p>© Copyright <span id="copyrightYear"></span> - DevBlog. All Rights Reserved.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script>
+    // Set current year in footer
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 100) {
+        document.querySelector('.main-nav').classList.add('scrolled');
+      } else {
+        document.querySelector('.main-nav').classList.remove('scrolled');
+      }
+    });
+
+    // Toggle navbar on mobile
+    document.getElementById('navbarToggle').addEventListener('click', function() {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = this;
+      
+      navList.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = document.getElementById('navbarToggle');
+      const isClickInsideNav = navList.contains(event.target);
+      const isClickOnToggle = toggleButton.contains(event.target);
+      
+      if (window.innerWidth <= 768 && !isClickInsideNav && !isClickOnToggle) {
+        navList.classList.remove('active');
+        toggleButton.classList.remove('active');
+      }
+    });
+
+    // Close menu when window is resized to desktop size
+    window.addEventListener('resize', function() {
+      const navList = document.getElementById('mainNav');
+      const toggleButton = document.getElementById('navbarToggle');
+      
+      if (window.innerWidth > 768) {
+        navList.classList.remove('active');
+        toggleButton.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript API Integration | Dev Blog</title>
+
+  <!-- Meta For No Index -->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- Mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+  <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+
+  <style>
+    /* Reset và base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.25px;
+      color: #222;
+      font-weight: 400;
+      background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      color: #0b3d91;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    a {
+      color: #0077b5;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #005b8c;
+      text-decoration: underline;
+    }
+
+    strong, b {
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .container-fluid {
+      width: 100%;
+      padding: 0 15px;
+    }
+
+    /* Navbar */
+    .main-nav {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0b3d91;
+      text-decoration: none;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin-right: 20px;
+    }
+
+    .nav-item {
+      margin: 0 10px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .nav-link:hover {
+      color: #0077b5;
+    }
+
+    .main-nav-social {
+      display: flex;
+      list-style: none;
+    }
+
+    .main-nav-social li {
+      margin: 0 8px;
+    }
+
+    .main-nav-social a {
+      color: #555;
+      font-size: 16px;
+    }
+
+    .main-nav-social a:hover {
+      color: #0077b5;
+    }
+
+    .navbar-toggler {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Blog Single */
+    .blog-single {
+      padding: 60px 0;
+    }
+
+    .single-blog {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .single-blog .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0b3d91;
+      margin-bottom: 15px;
+    }
+
+    .single-blog .meta {
+      display: flex;
+      list-style: none;
+      margin-bottom: 30px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .single-blog .meta li {
+      margin-right: 20px;
+    }
+
+    .single-blog .meta i {
+      margin-right: 5px;
+    }
+
+    .single-blog img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .single-blog h3 {
+      font-size: 24px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #0b3d91;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 8px;
+    }
+
+    .single-blog p, .single-blog li {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .single-blog ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .single-blog li {
+      margin-bottom: 10px;
+    }
+
+    .single-blog pre {
+      background-color: #f4f4f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    .single-blog pre code {
+      font-size: 16px;
+      font-family: 'Courier New', monospace;
+    }
+
+    blockquote {
+      background: #f3f6fa;
+      border-left: 4px solid #0077b5;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 6px;
+    }
+
+    blockquote p {
+      font-style: italic;
+      color: #333;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    /* Diagram container styling */
+    .diagram-container {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .diagram {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Code block styling */
+    .code-block {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Instagram Section */
+    .instagram {
+      background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+      padding: 40px 0;
+      text-align: center;
+      color: #fff;
+    }
+
+    .instagram a {
+      color: #fff;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .instagram-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .instagram-item-thum {
+      width: 16.666%;
+      padding: 5px;
+    }
+
+    .instagram-item-thum img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #222;
+      color: #fff;
+      padding: 50px 0 20px;
+      text-align: center;
+    }
+
+    .footer-logo img {
+      height: 40px;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-nav li {
+      margin: 0 15px;
+    }
+
+    .footer-nav a {
+      color: #fff;
+    }
+
+    .footer-nav a:hover {
+      color: #0077b5;
+    }
+
+    .sociale-icon ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .sociale-icon li {
+      margin: 0 10px;
+    }
+
+    .sociale-icon a {
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .sociale-icon a:hover {
+      color: #0077b5;
+    }
+
+    .copy-right {
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .copy-right a {
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .instagram-item-thum {
+        width: 33.333%;
+      }
+      
+      .single-blog {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-toggler {
+        display: block;
+      }
+      
+      .nav-list {
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+      
+      .nav-list.active {
+        display: flex;
+      }
+      
+      .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        margin-right: 0;
+      }
+      
+      .nav-item {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      
+      .nav-link {
+        display: block;
+        padding: 15px;
+      }
+      
+      .main-nav-social {
+        justify-content: center;
+        padding: 15px 0;
+      }
+      
+      .instagram-item-thum {
+        width: 50%;
+      }
+      
+      .footer-nav ul {
+        flex-direction: column;
+      }
+      
+      .footer-nav li {
+        margin: 5px 0;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .single-blog {
+        padding: 20px;
+      }
+      
+      .single-blog .title {
+        font-size: 26px;
+      }
+      
+      .instagram-item-thum {
+        width: 100%;
+      }
+    }
+
+    /* Navbar styles */
+
+    .main-nav navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-nav {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0b3d91;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #333;
+  padding: 8px 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: block;
+}
+
+.nav-link:hover {
+  color: #0077b5;
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  color: #0077b5;
+  background-color: #e3f2fd;
+}
+
+.main-nav-social {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+  align-items: center;
+}
+
+.main-nav-social li {
+  margin: 0;
+}
+
+.main-nav-social a {
+  color: #555;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.main-nav-social a:hover {
+  color: #fff;
+  background-color: #0077b5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 119, 181, 0.3);
+}
+
+/* Toggle button for mobile */
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+  padding: 5px;
+}
+
+.icon-bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: flex;
+  }
+  
+  .nav-list {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+    padding: 20px;
+    gap: 10px;
+  }
+  
+  .nav-list.active {
+    display: flex;
+  }
+  
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+  }
+  
+  .nav-item {
+    width: 100%;
+  }
+  
+  .nav-link {
+    padding: 12px 15px;
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .main-nav-social {
+    justify-content: center;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+  }
+  
+  /* Toggle button animation */
+  .navbar-toggler.active .icon-bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  
+  .navbar-toggler.active .icon-bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .navbar-toggler.active .icon-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 769px) {
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #0077b5;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .nav-link:hover::after {
+    width: 80%;
+  }
+  
+  .nav-link.active::after {
+    width: 80%;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar Start -->
+<nav class="main-nav navbar">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="index.html">
+      <h1 class="sitename">DevFolio</h1>
+    </a>
+    <!-- Toggle Button -->
+    <button class="navbar-toggler" type="button" id="navbarToggle">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class="nav-list" id="mainNav">
+      <!-- Navigation Links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Contact</a>
+        </li>
+      </ul>
+      <!-- Social Links -->
+      <ul class="main-nav-social">
+        <li>
+          <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        </li>
+        <li>
+          <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+        </li>                
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar End -->
+
+<section class="blog-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <article class="single-blog">
+          <p class="title">JavaScript API Integration</p>
+          <ul class="meta">
+            <li>By <a href="about.html">Thanh Dat</a></li>
+            <li>
+              <i class="far fa-clock"></i>
+              October 19, 2025
+            </li>
+          </ul>
+
+          <div class="diagram-container">
+            <h3>JavaScript API Integration</h3>
+            <div class="diagram">
+              <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Client -->
+                <rect x="50" y="50" width="200" height="200" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+                <text x="150" y="40" text-anchor="middle" font-weight="bold" fill="#01579b">Client</text>
+                <rect x="70" y="70" width="160" height="40" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="150" y="95" text-anchor="middle" fill="#000">Browser</text>
+                <rect x="70" y="120" width="160" height="40" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="150" y="145" text-anchor="middle" fill="#000">JavaScript</text>
+                <rect x="70" y="170" width="160" height="40" fill="#4fc3f7" stroke="#0277bd" stroke-width="1"/>
+                <text x="150" y="195" text-anchor="middle" fill="#000">Fetch API</text>
+                
+                <!-- Server -->
+                <rect x="300" y="50" width="200" height="200" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+                <text x="400" y="40" text-anchor="middle" font-weight="bold" fill="#4a148c">Server</text>
+                <rect x="320" y="70" width="160" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="95" text-anchor="middle" fill="#000">REST API</text>
+                <rect x="320" y="120" width="160" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="145" text-anchor="middle" fill="#000">Database</text>
+                <rect x="320" y="170" width="160" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="195" text-anchor="middle" fill="#000">JSON Data</text>
+                
+                <!-- Data Flow -->
+                <path d="M250 150 L275 150 L275 100 L300 100" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="275" y="140" text-anchor="middle" fill="#333">Request</text>
+                
+                <path d="M500 100 L525 100 L525 150 L550 150" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="525" y="140" text-anchor="middle" fill="#333">Response</text>
+                
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <p class="caption">Mô hình tích hợp API trong JavaScript: Client ↔ Server</p>
+          </div>
+
+          <h3>Giới thiệu</h3>
+          <p>
+            Trong thế giới web hiện đại, hầu hết các ứng dụng đều cần trao đổi dữ liệu với máy chủ hoặc dịch vụ khác thông qua API.  
+            <strong>JavaScript API Integration</strong> chính là kỹ năng giúp bạn "nối cầu" giữa giao diện người dùng và dữ liệu thật.  
+            <br><br>
+            Bằng cách sử dụng <strong>Fetch API</strong>, <strong>RESTful APIs</strong> và thao tác với <strong>JSON data</strong>, bạn có thể xây dựng ứng dụng động – 
+            hiển thị dữ liệu thời gian thực, tạo tương tác mượt mà và cá nhân hóa trải nghiệm người dùng.
+          </p>
+
+          <h3>1. REST API là gì?</h3>
+          <p>
+            REST (Representational State Transfer) là tiêu chuẩn phổ biến nhất để thiết kế API.  
+            Nó hoạt động dựa trên các phương thức HTTP quen thuộc:
+          </p>
+          <ul>
+            <li><strong>GET</strong> – Lấy dữ liệu (ví dụ: danh sách sản phẩm, bài viết,...)</li>
+            <li><strong>POST</strong> – Gửi dữ liệu (ví dụ: tạo tài khoản, thêm bình luận,...)</li>
+            <li><strong>PUT / PATCH</strong> – Cập nhật dữ liệu hiện có</li>
+            <li><strong>DELETE</strong> – Xóa dữ liệu</li>
+          </ul>
+
+          <div class="diagram-container">
+            <h4>REST API Flow</h4>
+            <div class="diagram">
+              <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Client -->
+                <rect x="50" y="50" width="150" height="300" fill="#e1f5fe" stroke="#01579b" stroke-width="2"/>
+                <text x="125" y="40" text-anchor="middle" font-weight="bold" fill="#01579b">Client</text>
+                
+                <!-- HTTP Methods -->
+                <rect x="250" y="50" width="300" height="300" fill="#f3e5f5" stroke="#4a148c" stroke-width="2"/>
+                <text x="400" y="40" text-anchor="middle" font-weight="bold" fill="#4a148c">HTTP Methods</text>
+                
+                <rect x="270" y="80" width="260" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="105" text-anchor="middle" fill="#000">GET - Read Data</text>
+                
+                <rect x="270" y="140" width="260" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="165" text-anchor="middle" fill="#000">POST - Create Data</text>
+                
+                <rect x="270" y="200" width="260" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="225" text-anchor="middle" fill="#000">PUT/PATCH - Update Data</text>
+                
+                <rect x="270" y="260" width="260" height="40" fill="#ba68c8" stroke="#7b1fa2" stroke-width="1"/>
+                <text x="400" y="285" text-anchor="middle" fill="#000">DELETE - Delete Data</text>
+                
+                <!-- Server -->
+                <rect x="600" y="50" width="150" height="300" fill="#e8f5e8" stroke="#1b5e20" stroke-width="2"/>
+                <text x="675" y="40" text-anchor="middle" font-weight="bold" fill="#1b5e20">Server</text>
+                
+                <!-- Arrows -->
+                <path d="M200 150 L225 150 L225 100 L250 100" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M550 100 L575 100 L575 150 L600 150" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <p class="caption">Mô hình Client – Server trong kiến trúc REST API</p>
+          </div>
+
+          <p>
+            Hình trên minh họa mô hình Client – Server trong kiến trúc <strong>REST API (Representational State Transfer)</strong>. 
+            Trong mô hình này, Server đóng vai trò lưu trữ và xử lý dữ liệu, đồng thời cung cấp các API cho phép các <strong>Client</strong> (như máy tính, laptop, điện thoại hoặc trình duyệt web) truy cập và thao tác với dữ liệu thông qua giao thức HTTP. 
+            Các <strong>Client</strong> sẽ gửi yêu cầu (request) đến Server để thực hiện các hành động như <strong>GET</strong> (lấy dữ liệu, ví dụ danh sách sản phẩm hoặc bài viết), <strong>POST</strong> (gửi dữ liệu, ví dụ tạo tài khoản hoặc thêm bình luận), <strong>PUT/PATCH</strong> (cập nhật dữ liệu hiện có) và <strong>DELETE</strong> (xóa dữ liệu). Sau khi nhận được yêu cầu, Server sẽ xử lý và trả về phản hồi (response) tương ứng cho <strong>Client</strong>, giúp việc trao đổi thông tin giữa hai bên trở nên hiệu quả, linh hoạt và thống nhất.
+          </p>
+
+          <blockquote>
+            <p>"API là cầu nối giúp JavaScript trò chuyện với thế giới — từ thời tiết, tin tức đến mạng xã hội."</p>
+          </blockquote>
+
+          <h3>2. Làm quen với Fetch API</h3>
+          <p>
+            <strong>Fetch API</strong> là công cụ tích hợp sẵn trong trình duyệt giúp bạn gửi yêu cầu HTTP và nhận phản hồi một cách đơn giản.
+            Nó trả về <code>Promise</code>, nên rất tiện khi kết hợp với <code>async / await</code>.
+          </p>
+
+          <div class="code-block">
+            <code>
+              // Ví dụ đơn giản sử dụng Fetch API<br>
+              fetch('https://api.example.com/users')<br>
+              .then(response => response.json())<br>
+              .then(data => console.log(data))<br>
+              .catch(error => console.error('Lỗi:', error));
+            </code>
+          </div>
+
+          <p>
+            Đoạn code trên gửi yêu cầu GET đến API, sau đó chuyển phản hồi thành JSON và in kết quả ra console.  
+            Nếu có lỗi (mất mạng, sai URL, lỗi server) thì khối <code>catch</code> sẽ xử lý.
+          </p>
+
+          <h3>3. Xử lý JSON trong JavaScript</h3>
+          <p>
+            Dữ liệu API thường ở định dạng <strong>JSON (JavaScript Object Notation)</strong> – dễ đọc và dễ thao tác.  
+            Bạn có thể chuyển đổi qua lại giữa JSON và Object bằng:
+          </p>
+
+          <div class="code-block">
+            <code>
+              // Object → JSON<br>
+              const user = { name: 'Alex', age: 22 };<br>
+              const jsonString = JSON.stringify(user);<br><br>
+              // JSON → Object<br>
+              const parsed = JSON.parse(jsonString);<br>
+              console.log(parsed.name); // 'Alex'
+            </code>
+          </div>
+
+          <p>
+            👉 Khi làm việc với API, hãy nhớ: <code>response.json()</code> cũng là một Promise — bạn cần <code>await</code> hoặc <code>then()</code> để lấy dữ liệu.
+          </p>
+
+          <h3>4. Async / Await – Code gọn gàng hơn</h3>
+          <p>
+            Sử dụng <code>async / await</code> giúp bạn viết code xử lý API dễ đọc hơn nhiều so với callback lồng nhau.
+          </p>
+
+          <div class="code-block">
+            <code>
+              async function loadUsers() {<br>
+              &nbsp;&nbsp;try {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const res = await fetch('https://jsonplaceholder.typicode.com/users');<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const data = await res.json();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log('Danh sách người dùng:', data);<br>
+              &nbsp;&nbsp;} catch (error) {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.error('Lỗi khi tải dữ liệu:', error);<br>
+              &nbsp;&nbsp;}<br>
+              }<br><br>
+              loadUsers();
+            </code>
+          </div>
+
+          <p>
+            👉 Đây là phong cách hiện đại trong hầu hết framework (React, Vue, Node.js) vì dễ debug và dễ mở rộng.
+          </p>
+
+          <h3>5. Gửi dữ liệu (POST Request)</h3>
+          <p>
+            Ngoài việc đọc dữ liệu, bạn còn có thể gửi thông tin đến server — ví dụ, thêm người dùng mới:
+          </p>
+
+          <div class="code-block">
+            <code>
+              async function createUser() {<br>
+              &nbsp;&nbsp;const newUser = { name: 'Alex', email: 'alex@mail.com' };<br><br>
+              &nbsp;&nbsp;try {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const res = await fetch('https://jsonplaceholder.typicode.com/users', {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers: {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json'<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: JSON.stringify(newUser)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;});<br><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const data = await res.json();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log('Người dùng mới:', data);<br>
+              &nbsp;&nbsp;} catch (err) {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.error('Lỗi khi gửi dữ liệu:', err);<br>
+              &nbsp;&nbsp;}<br>
+              }<br><br>
+              createUser();
+            </code>
+          </div>
+
+          <p>
+            👉 Luôn nhớ thiết lập header <code>Content-Type: application/json</code> khi gửi dữ liệu dạng JSON.
+          </p>
+
+          <h3>6. Xử lý lỗi và Loading UI</h3>
+          <p>
+            API có thể phản hồi chậm hoặc lỗi, vì vậy bạn nên thêm trạng thái loading và kiểm tra mã phản hồi HTTP:
+          </p>
+
+          <div class="code-block">
+            <code>
+              async function getPosts() {<br>
+              &nbsp;&nbsp;const loading = document.querySelector('#loading');<br>
+              &nbsp;&nbsp;loading.textContent = 'Đang tải...';<br><br>
+              &nbsp;&nbsp;try {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const res = await fetch('https://jsonplaceholder.typicode.com/posts');<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;if (!res.ok) throw new Error('Không thể tải dữ liệu!');<br><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;const posts = await res.json();<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.log(posts);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;loading.textContent = 'Hoàn tất!';<br>
+              &nbsp;&nbsp;} catch (err) {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;loading.textContent = 'Lỗi xảy ra!';<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;console.error(err);<br>
+              &nbsp;&nbsp;}<br>
+              }<br><br>
+              getPosts();
+            </code>
+          </div>
+
+          <blockquote>
+            <p>"Trải nghiệm người dùng tốt bắt đầu từ việc xử lý lỗi và trạng thái tải thông minh."</p>
+          </blockquote>
+
+          <h3>7. Kết hợp API với giao diện</h3>
+          <p>
+            Dữ liệu JSON có thể dễ dàng hiển thị lên HTML bằng cách thao tác DOM.  
+            Ví dụ: hiển thị danh sách bài viết lấy từ API:
+          </p>
+
+          <div class="code-block">
+            <code>
+              async function renderPosts() {<br>
+              &nbsp;&nbsp;const container = document.querySelector('#postList');<br>
+              &nbsp;&nbsp;const res = await fetch('https://jsonplaceholder.typicode.com/posts');<br>
+              &nbsp;&nbsp;const posts = await res.json();<br><br>
+              &nbsp;&nbsp;container.innerHTML = posts<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;.slice(0, 5)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;.map(p => `&lt;li&gt;&lt;strong&gt;${p.title}&lt;/strong&gt;&lt;br&gt;${p.body}&lt;/li&gt;`)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;.join('');<br>
+              }<br><br>
+              renderPosts();
+            </code>
+          </div>
+
+          <div class="diagram-container">
+            <h4>Fetch API Workflow</h4>
+            <div class="diagram">
+              <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Steps -->
+                <rect x="50" y="50" width="700" height="60" fill="#4fc3f7" stroke="#0277bd" stroke-width="2"/>
+                <text x="400" y="85" text-anchor="middle" fill="#000" font-weight="bold">1. fetch(url, options)</text>
+                
+                <rect x="50" y="130" width="700" height="60" fill="#4fc3f7" stroke="#0277bd" stroke-width="2"/>
+                <text x="400" y="165" text-anchor="middle" fill="#000" font-weight="bold">2. .then(response => response.json())</text>
+                
+                <rect x="50" y="210" width="700" height="60" fill="#4fc3f7" stroke="#0277bd" stroke-width="2"/>
+                <text x="400" y="245" text-anchor="middle" fill="#000" font-weight="bold">3. .then(data => processData(data))</text>
+                
+                <rect x="50" y="290" width="700" height="60" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+                <text x="400" y="325" text-anchor="middle" fill="#000" font-weight="bold">4. .catch(error => handleError(error))</text>
+                
+                <!-- Arrows -->
+                <path d="M400 110 L400 130" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M400 190 L400 210" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M400 270 L400 290" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <p class="caption">Luồng xử lý của Fetch API trong JavaScript</p>
+          </div>
+
+          <p>
+            Hình trên minh họa cách sử dụng <code>Fetch API</code> trong JavaScript để lấy dữ liệu từ một API và xử lý kết quả trả về. Lệnh <code>fetch(url, options)</code> được dùng để gửi yêu cầu đến máy chủ. Khi phản hồi được trả về, <code>.then(response => {...})</code> kiểm tra xem phản hồi có thành công không <code>(response.ok)</code>, nếu không thì báo lỗi. 
+            Nếu thành công, dữ liệu sẽ được chuyển đổi sang định dạng JSON bằng <code>response.json()</code> để dễ dàng xử lý. Ở phần <code>.then(data => {...})</code>, dữ liệu JSON nhận được sẽ được truy cập và có thể hiển thị lên giao diện web thông qua thao tác DOM, ví dụ như hiển thị danh sách bài viết. 
+            Cuối cùng, <code>.catch(error => {...})</code> được dùng để bắt và xử lý các lỗi xảy ra trong quá trình gửi yêu cầu hoặc nhận phản hồi.
+          </p>
+
+          <h3>8. Tổng kết</h3>
+          <p>
+            <strong>Tích hợp API</strong> là kỹ năng cốt lõi của lập trình web hiện đại.  
+            Khi bạn hiểu rõ cách dùng <code>fetch</code>, xử lý JSON, và kết hợp async/await,  
+            bạn có thể kết nối ứng dụng với hầu hết mọi dịch vụ trực tuyến — từ OpenWeather, GitHub, đến ChatGPT API.  
+            <br><br>
+            👉 Hãy thực hành bằng cách gọi thử các API công khai (như JSONPlaceholder hoặc OpenWeatherMap)  
+            và hiển thị dữ liệu ngay trên giao diện của bạn.
+          </p>
+
+          <blockquote>
+            <p>"API không chỉ là dữ liệu — nó là cánh cửa để JavaScript của bạn kết nối với cả thế giới."</p>
+          </blockquote>
+
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <div class="sociale-icon">
+          <ul>
+            <li>
+              <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="https://www.coursera.org/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+            </li>            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="copy-right">
+          <p>© Copyright <span id="copyrightYear">2025</span> - All Rights Reserved by Thanh Dat</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Toggle navbar on mobile
+  document.getElementById('navbarToggle').addEventListener('click', function() {
+    document.getElementById('mainNav').classList.toggle('active');
+  });
+
+  // Set current year in copyright
+  document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
