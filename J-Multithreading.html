@@ -5,14 +5,17 @@
   <meta charset="utf-8" />
   <title>Java Multithreading | DevBlog</title>
   <meta name="robots" content="noindex, Nofollow, Noimageindex">
-  <meta name="description" content="Hướng dẫn toàn diện về Java Multithreading - từ cơ bản đến nâng cao. Tìm hiểu về Thread, Synchronization, Executor Framework và các kỹ thuật lập trình đa luồng.">
-  <meta name="keywords" content="Java Multithreading, Thread, Synchronization, Concurrent Programming, Executor Framework">
+  <meta name="description"
+    content="Hướng dẫn toàn diện về Java Multithreading - từ cơ bản đến nâng cao. Tìm hiểu về Thread, Synchronization, Executor Framework và các kỹ thuật lập trình đa luồng.">
+  <meta name="keywords"
+    content="Java Multithreading, Thread, Synchronization, Concurrent Programming, Executor Framework">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
   <link rel="icon" href="images/favicon.png" type="image/x-icon" />
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -543,11 +546,35 @@
       border: 1px solid;
     }
 
-    .state-new { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
-    .state-runnable { background: #dcfce7; color: #166534; border-color: #86efac; }
-    .state-running { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
-    .state-blocked { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
-    .state-terminated { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
+    .state-new {
+      background: #dbeafe;
+      color: #1e40af;
+      border-color: #93c5fd;
+    }
+
+    .state-runnable {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #86efac;
+    }
+
+    .state-running {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #fcd34d;
+    }
+
+    .state-blocked {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fca5a5;
+    }
+
+    .state-terminated {
+      background: #f3f4f6;
+      color: #374151;
+      border-color: #d1d5db;
+    }
 
     /* ===== WARNING BOX ===== */
     .warning-box {
@@ -748,7 +775,7 @@
       .navbar-toggler {
         display: flex;
       }
-      
+
       .nav-list {
         flex-direction: column;
         position: absolute;
@@ -761,42 +788,42 @@
         padding: 20px;
         gap: 10px;
       }
-      
+
       .nav-list.active {
         display: flex;
       }
-      
+
       .navbar-nav {
         flex-direction: column;
         width: 100%;
         gap: 5px;
       }
-      
+
       .nav-item {
         width: 100%;
       }
-      
+
       .nav-link {
         padding: 12px 15px;
         border-radius: 6px;
         text-align: center;
       }
-      
+
       .main-nav-social {
         justify-content: center;
         padding-top: 15px;
         border-top: 1px solid #eee;
         margin-top: 15px;
       }
-      
+
       .navbar-toggler.active .icon-bar:nth-child(1) {
         transform: rotate(45deg) translate(6px, 6px);
       }
-      
+
       .navbar-toggler.active .icon-bar:nth-child(2) {
         opacity: 0;
       }
-      
+
       .navbar-toggler.active .icon-bar:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
       }
@@ -872,16 +899,16 @@
         <!-- Navigation Links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="index.html">Trang chủ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="about.html">Giới thiệu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="articles.html">Articles</a>
+            <a class="nav-link active" href="articles.html">Bài viết</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="contact.html">Liên hệ</a>
           </li>
         </ul>
         <!-- Social Links -->
@@ -937,7 +964,7 @@
   <section class="blog-single">
     <div class="container">
       <article class="single-blog">
-        
+
         <!-- Table of Contents -->
         <div class="toc">
           <h3>Mục Lục</h3>
@@ -966,7 +993,8 @@
         </div>
 
         <p>
-          Multithreading là kỹ thuật cho phép một ứng dụng chạy nhiều luồng (thread) đồng thời trong cùng một tiến trình.
+          Multithreading là kỹ thuật cho phép một ứng dụng chạy nhiều luồng (thread) đồng thời trong cùng một tiến
+          trình.
           Mỗi luồng có thể thực thi một nhiệm vụ riêng biệt, giúp:
         </p>
         <ul>
@@ -1138,7 +1166,8 @@ public class RunnableExample {
         <div class="lifecycle-diagram">
           <h4>📊 Vòng Đời Thread trong Java</h4>
           <div class="technical-diagram">
-            <img src="https://tse2.mm.bing.net/th/id/OIP.RxrNGK3TvRonbgXMDxlhaQHaCu?pid=Api&P=0&h=220" alt="Java Thread Lifecycle">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.RxrNGK3TvRonbgXMDxlhaQHaCu?pid=Api&P=0&h=220"
+              alt="Java Thread Lifecycle">
           </div>
           <span class="caption">Sơ đồ minh họa vòng đời của Thread trong Java</span>
         </div>
@@ -1203,7 +1232,7 @@ daemonThread.start();
         <!-- Synchronization -->
         <h2 id="synchronization">4. Synchronization - Đồng bộ hóa</h2>
         <p>
-          Khi nhiều thread cùng truy cập và sửa đổi shared resources (tài nguyên dùng chung), có thể xảy ra 
+          Khi nhiều thread cùng truy cập và sửa đổi shared resources (tài nguyên dùng chung), có thể xảy ra
           <strong>race conditions</strong> (điều kiện chạy đua) dẫn đến dữ liệu không nhất quán.
         </p>
 
@@ -1216,8 +1245,8 @@ daemonThread.start();
         count++; // Không an toàn với multithreading!
     }
 }</code></pre>
-          <p>Operation <code>count++</code> thực tế gồm 3 bước: read → modify → write. 
-          Nhiều thread có thể cùng đọc giá trị cũ, dẫn đến kết quả sai.</p>
+          <p>Operation <code>count++</code> thực tế gồm 3 bước: read → modify → write.
+            Nhiều thread có thể cùng đọc giá trị cũ, dẫn đến kết quả sai.</p>
         </div>
 
         <h3>Các giải pháp đồng bộ hóa:</h3>
@@ -1319,7 +1348,7 @@ class CounterWithLock {
 
         <h3>Atomic Variables</h3>
         <p>
-          Java cung cấp các lớp atomic trong package <code>java.util.concurrent.atomic</code> 
+          Java cung cấp các lớp atomic trong package <code>java.util.concurrent.atomic</code>
           cho các operation thread-safe mà không cần synchronization.
         </p>
 
@@ -1348,12 +1377,13 @@ class AtomicCounter {
         <!-- Thread Pools -->
         <h2 id="thread-pools">5. Thread Pools & Executor Framework</h2>
         <p>
-          Thay vì tạo thread mới cho mỗi task, chúng ta nên sử dụng <strong>Thread Pools</strong> 
+          Thay vì tạo thread mới cho mỗi task, chúng ta nên sử dụng <strong>Thread Pools</strong>
           để tái sử dụng thread và quản lý tài nguyên hiệu quả.
         </p>
 
         <div class="technical-diagram">
-          <img src="https://tse4.mm.bing.net/th/id/OIP.fyxN9DbeUzpCpYqgn55yiQHaEZ?pid=Api&P=0&h=220" alt="Executor Framework Diagram">
+          <img src="https://tse4.mm.bing.net/th/id/OIP.fyxN9DbeUzpCpYqgn55yiQHaEZ?pid=Api&P=0&h=220"
+            alt="Executor Framework Diagram">
           <span class="caption">Kiến trúc Executor Framework trong Java</span>
         </div>
 
@@ -1464,49 +1494,49 @@ public class FutureCallableDemo {
         <!-- Concurrent Collections -->
         <h2 id="concurrent-collections">6. Concurrent Collections</h2>
         <p>
-          Các collection trong <code>java.util.concurrent</code> được thiết kế đặc biệt 
+          Các collection trong <code>java.util.concurrent</code> được thiết kế đặc biệt
           cho môi trường đa luồng, không cần external synchronization.
         </p>
 
-        <table class="comparison-table">
-          <thead>
+        <table class="comparison-table" style="color: black;">
+          <thead style="color: black;">
             <tr>
-              <th>Collection</th>
-              <th>Mục đích</th>
-              <th>Đặc điểm</th>
-              <th>Use Case</th>
+              <th style="color: black;">Collection</th>
+              <th style="color: black;">Mục đích</th>
+              <th style="color: black;">Đặc điểm</th>
+              <th style="color: black;">Use Case</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="color: black;">
             <tr>
-              <td><code>ConcurrentHashMap</code></td>
-              <td>Map thread-safe</td>
-              <td>Hiệu suất cao, lock ở mức segment</td>
-              <td>Shared caches, configuration</td>
+              <td style="color: black;"><code style="color: black;">ConcurrentHashMap</code></td>
+              <td style="color: black;">Map thread-safe</td>
+              <td style="color: black;">Hiệu suất cao, lock ở mức segment</td>
+              <td style="color: black;">Shared caches, configuration</td>
             </tr>
             <tr>
-              <td><code>CopyOnWriteArrayList</code></td>
-              <td>List thread-safe</td>
-              <td>Tạo bản sao khi modify, tốt cho read-heavy</td>
-              <td>Listener lists, rarely modified</td>
+              <td style="color: black;"><code style="color: black;">CopyOnWriteArrayList</code></td>
+              <td style="color: black;">List thread-safe</td>
+              <td style="color: black;">Tạo bản sao khi modify, tốt cho read-heavy</td>
+              <td style="color: black;">Listener lists, rarely modified</td>
             </tr>
             <tr>
-              <td><code>BlockingQueue</code></td>
-              <td>Hàng đợi blocking</td>
-              <td>Chờ khi queue empty/full</td>
-              <td>Producer-Consumer pattern</td>
+              <td style="color: black;"><code style="color: black;">BlockingQueue</code></td>
+              <td style="color: black;">Hàng đợi blocking</td>
+              <td style="color: black;">Chờ khi queue empty/full</td>
+              <td style="color: black;">Producer-Consumer pattern</td>
             </tr>
             <tr>
-              <td><code>ConcurrentLinkedQueue</code></td>
-              <td>Hàng đợi non-blocking</td>
-              <td>Hiệu suất cao, không block</td>
-              <td>Task queues, message passing</td>
+              <td style="color: black;"><code style="color: black;">ConcurrentLinkedQueue</code></td>
+              <td style="color: black;">Hàng đợi non-blocking</td>
+              <td style="color: black;">Hiệu suất cao, không block</td>
+              <td style="color: black;">Task queues, message passing</td>
             </tr>
             <tr>
-              <td><code>ConcurrentSkipListMap</code></td>
-              <td>Sorted map thread-safe</td>
-              <td>Dựa trên skip list, sorted</td>
-              <td>Sorted caches, indexes</td>
+              <td style="color: black;"><code style="color: black;">ConcurrentSkipListMap</code></td>
+              <td style="color: black;">Sorted map thread-safe</td>
+              <td style="color: black;">Dựa trên skip list, sorted</td>
+              <td style="color: black;">Sorted caches, indexes</td>
             </tr>
           </tbody>
         </table>
@@ -1604,7 +1634,7 @@ class ProducerConsumerExample {
 
         <h3>Volatile Keyword</h3>
         <p>
-          Từ khóa <code>volatile</code> đảm bảo các thread luôn thấy giá trị mới nhất của biến, 
+          Từ khóa <code>volatile</code> đảm bảo các thread luôn thấy giá trị mới nhất của biến,
           ngăn chặn việc cache giá trị trong register hoặc local cache của thread.
         </p>
 
@@ -1647,7 +1677,7 @@ class Singleton {
 
         <h3>ThreadLocal</h3>
         <p>
-          <code>ThreadLocal</code> cho phép mỗi thread có bản sao riêng của biến, 
+          <code>ThreadLocal</code> cho phép mỗi thread có bản sao riêng của biến,
           tránh xung đột khi nhiều thread cùng truy cập.
         </p>
 
@@ -1694,7 +1724,7 @@ class RequestProcessor {
 
         <h3>CompletableFuture (Java 8+)</h3>
         <p>
-          <code>CompletableFuture</code> cung cấp API mạnh mẽ cho asynchronous programming 
+          <code>CompletableFuture</code> cung cấp API mạnh mẽ cho asynchronous programming
           với khả năng kết hợp nhiều task phức tạp.
         </p>
 
@@ -1865,7 +1895,8 @@ class PhaserDemo {
         <div class="feature-card">
           <h4>🎯 Key Takeaways</h4>
           <ul>
-            <li><strong>Hiểu rõ vòng đời thread</strong> và các trạng thái NEW, RUNNABLE, BLOCKED, WAITING, TERMINATED</li>
+            <li><strong>Hiểu rõ vòng đời thread</strong> và các trạng thái NEW, RUNNABLE, BLOCKED, WAITING, TERMINATED
+            </li>
             <li><strong>Sử dụng Executor Framework</strong> thay vì quản lý thread thủ công</li>
             <li><strong>Áp dụng proper synchronization</strong> để tránh race conditions và deadlocks</li>
             <li><strong>Ưu tiên concurrent collections</strong> từ java.util.concurrent cho thread safety</li>
@@ -1877,19 +1908,22 @@ class PhaserDemo {
 
         <p>
           <strong>Java Multithreading</strong> là công cụ mạnh mẽ giúp ứng dụng Java trở nên nhanh hơn, phản hồi tốt hơn
-          và tận dụng tối đa phần cứng. Từ những khái niệm cơ bản về Thread và Runnable, đến các kỹ thuật synchronization 
+          và tận dụng tối đa phần cứng. Từ những khái niệm cơ bản về Thread và Runnable, đến các kỹ thuật
+          synchronization
           phức tạp và high-level concurrent utilities, Java cung cấp một hệ sinh thái toàn diện cho lập trình đa luồng.
         </p>
 
         <p>
-          Việc nắm vững các nguyên tắc cơ bản như thread safety, memory visibility, và proper synchronization là nền tảng 
-          để xây dựng các ứng dụng concurrent robust và hiệu quả. Các high-level constructs như Executor Framework, 
+          Việc nắm vững các nguyên tắc cơ bản như thread safety, memory visibility, và proper synchronization là nền
+          tảng
+          để xây dựng các ứng dụng concurrent robust và hiệu quả. Các high-level constructs như Executor Framework,
           Concurrent Collections, và CompletableFuture giúp đơn giản hóa việc phát triển các ứng dụng phức tạp.
         </p>
 
         <blockquote>
-          <p>"Code tốt không chỉ chạy đúng — mà còn chạy nhanh và hiệu quả nhờ sức mạnh của đa luồng. 
-          Hiểu và áp dụng đúng các nguyên tắc concurrent programming là chìa khóa để xây dựng các hệ thống scalable và responsive."</p>
+          <p>"Code tốt không chỉ chạy đúng — mà còn chạy nhanh và hiệu quả nhờ sức mạnh của đa luồng.
+            Hiểu và áp dụng đúng các nguyên tắc concurrent programming là chìa khóa để xây dựng các hệ thống scalable và
+            responsive."</p>
         </blockquote>
 
         <div class="technical-diagram">
@@ -1902,13 +1936,14 @@ class PhaserDemo {
             <li><strong>Reactive Programming</strong> - Với Project Reactor và RxJava</li>
             <li><strong>Parallel Streams</strong> - Xử lý song song collections với Stream API</li>
             <li><strong>Akka Framework</strong> - Actor model cho distributed systems</li>
-            <li><strong>Java Virtual Threads</strong> (Project Loom) - Lightweight threads cho high-throughput applications</li>
+            <li><strong>Java Virtual Threads</strong> (Project Loom) - Lightweight threads cho high-throughput
+              applications</li>
           </ul>
         </div>
 
         <p>
           👉 Bắt đầu bằng những ví dụ nhỏ — rồi dần xây dựng ứng dụng có nhiều tác vụ chạy đồng thời để cảm nhận sức
-          mạnh thực sự của Java Multithreading! Luôn nhớ test kỹ lưỡng trong môi trường đa luồng và sử dụng tools 
+          mạnh thực sự của Java Multithreading! Luôn nhớ test kỹ lưỡng trong môi trường đa luồng và sử dụng tools
           như VisualVM, JConsole để monitor và debug.
         </p>
 
@@ -1923,7 +1958,7 @@ class PhaserDemo {
         <div class="footer-about">
           <a href="index.html" class="footer-brand">DevBlog</a>
           <p class="footer-description">
-            Chia sẻ kiến thức về lập trình, công nghệ và phát triển phần mềm. 
+            Chia sẻ kiến thức về lập trình, công nghệ và phát triển phần mềm.
             Nơi kết nối cộng đồng developer Việt Nam.
           </p>
           <div class="sociale-icon">
@@ -1951,7 +1986,7 @@ class PhaserDemo {
             </ul>
           </div>
         </div>
-        
+
         <div class="footer-links">
           <h4>Liên kết</h4>
           <ul>
@@ -1961,7 +1996,7 @@ class PhaserDemo {
             <li><a href="contact.html">Liên hệ</a></li>
           </ul>
         </div>
-        
+
         <div class="footer-contact">
           <h4>Liên hệ</h4>
           <ul>
@@ -1971,7 +2006,7 @@ class PhaserDemo {
           </ul>
         </div>
       </div>
-      
+
       <div class="copy-right">
         <p>© Copyright <span id="copyrightYear"></span> DevBlog. All Rights Reserved.</p>
       </div>
@@ -1992,21 +2027,21 @@ class PhaserDemo {
     });
 
     // Toggle navbar on mobile
-    document.getElementById('navbarToggle').addEventListener('click', function() {
+    document.getElementById('navbarToggle').addEventListener('click', function () {
       const navList = document.getElementById('mainNav');
       const toggleButton = this;
-      
+
       navList.classList.toggle('active');
       toggleButton.classList.toggle('active');
     });
 
     // Close menu when clicking outside on mobile
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
       const navList = document.getElementById('mainNav');
       const toggleButton = document.getElementById('navbarToggle');
       const isClickInsideNav = navList.contains(event.target);
       const isClickOnToggle = toggleButton.contains(event.target);
-      
+
       if (window.innerWidth <= 768 && !isClickInsideNav && !isClickOnToggle) {
         navList.classList.remove('active');
         toggleButton.classList.remove('active');
@@ -2019,7 +2054,7 @@ class PhaserDemo {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
-        
+
         if (targetElement) {
           targetElement.scrollIntoView({
             behavior: 'smooth',
