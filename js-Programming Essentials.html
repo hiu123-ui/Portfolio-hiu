@@ -3,40 +3,25 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>JavaScript Programming Essentials | Tech Blog</title>
-
-  <!-- Meta For No Index -->
-  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+  <title>JavaScript Essentials | Tech Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Theme Stylesheet -->
-  <link href="css/style.css" rel="stylesheet" />
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
-  <link rel="icon" href="images/favicon.png" type="image/x-icon" />
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap&subset=vietnamese"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* ===== VARIABLES & RESET ===== */
     :root {
-      --primary: #0b3d91;
-      --secondary: #0077b5;
-      --accent: #ff6b35;
-      --dark: #1a1a2e;
-      --light: #f8f9fa;
-      --text: #2d3748;
-      --text-light: #718096;
-      --border: #e2e8f0;
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
-      --radius: 12px;
-      --transition: all 0.3s ease;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --dark: #1f2937;
+      --light: #f8fafc;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --radius: 8px;
+      --transition: all 0.2s ease;
     }
 
     * {
@@ -46,78 +31,55 @@
     }
 
     body {
-      font-family: 'Be Vietnam Pro', sans-serif;
-      line-height: 1.7;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
       color: var(--text);
-      background-color: #ffffff;
+      background: #ffffff;
       font-weight: 400;
-      overflow-x: hidden;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* ===== NAVIGATION ===== */
+    /* Navigation */
     .main-nav {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
+      border-bottom: 1px solid var(--border);
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: 15px 0;
-      transition: var(--transition);
+      padding: 1rem 0;
     }
 
-    .main-nav.scrolled {
-      padding: 10px 0;
-      background: rgba(255, 255, 255, 0.98);
-    }
-
-    .main-nav .container {
+    .nav-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .navbar-brand {
-      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--primary);
-      font-weight: 800;
-      font-size: 1.8rem;
-      transition: var(--transition);
+      text-decoration: none;
     }
 
-    .navbar-brand:hover {
-      color: var(--accent);
-    }
-
-    .nav-list {
+    .nav-links {
       display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .navbar-nav {
-      display: flex;
+      gap: 2rem;
       list-style: none;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
     }
 
     .nav-link {
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      font-size: 16px;
-      padding: 8px 0;
-      position: relative;
       transition: var(--transition);
     }
 
@@ -125,51 +87,8 @@
       color: var(--primary);
     }
 
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: var(--transition);
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    .main-nav-social {
-      display: flex;
-      list-style: none;
-      gap: 15px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .main-nav-social a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: var(--light);
-      border-radius: 50%;
-      color: var(--text);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .main-nav-social a:hover {
-      background: var(--primary);
-      color: white;
-      transform: translateY(-2px);
-    }
-
     .navbar-toggler {
       display: none;
-      flex-direction: column;
       background: none;
       border: none;
       cursor: pointer;
@@ -177,347 +96,246 @@
     }
 
     .icon-bar {
-      width: 25px;
-      height: 3px;
+      width: 20px;
+      height: 2px;
       background: var(--text);
-      margin: 3px 0;
+      margin: 4px 0;
       transition: var(--transition);
-      border-radius: 2px;
     }
 
-    /* ===== BLOG CONTENT ===== */
+    /* Blog Content */
     .blog-single {
-      padding: 120px 0 80px;
+      padding: 160px 0 50px;
     }
 
     .single-blog {
-      max-width: 800px;
-      margin: 0 auto;
+      background: white;
     }
 
-    .single-blog .title {
-      font-size: 3rem;
-      font-weight: 800;
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
       color: var(--dark);
       line-height: 1.2;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 1.5rem;
     }
 
     .meta {
-      list-style: none;
       display: flex;
-      gap: 20px;
-      margin-bottom: 40px;
-      padding: 20px 0;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
       border-bottom: 1px solid var(--border);
-    }
-
-    .meta li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       color: var(--text-light);
-      font-size: 15px;
+      font-size: 0.9rem;
     }
 
     .meta a {
       color: var(--primary);
       text-decoration: none;
-      font-weight: 500;
     }
 
-    .meta a:hover {
-      text-decoration: underline;
-    }
-
-    .single-blog h3 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin: 50px 0 20px;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--primary);
-    }
-
-    .single-blog h4 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 30px 0 15px;
-    }
-
-    .single-blog p {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 25px;
-      color: var(--text);
-    }
-
-    .single-blog strong {
-      font-weight: 600;
-      color: var(--dark);
-    }
-
-    .single-blog ul {
-      margin: 20px 0;
-      padding-left: 25px;
-    }
-
-    .single-blog li {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    /* ===== CODE BLOCKS ===== */
-    .single-blog pre {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border-radius: var(--radius);
-      padding: 25px;
-      margin: 25px 0;
-      overflow-x: auto;
-      box-shadow: var(--shadow-lg);
-      border-left: 4px solid var(--accent);
-      position: relative;
-    }
-
-    .single-blog pre code {
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-      color: #e2e8f0;
-      line-height: 1.5;
-    }
-
-    .single-blog code:not(pre code) {
-      background: var(--light);
-      color: var(--primary);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: 500;
-      border: 1px solid var(--border);
-    }
-
-    /* ===== IMAGES ===== */
-    .blog-single img {
+    .featured-image {
       width: 100%;
-      max-width: 800px;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: var(--shadow-lg);
-      margin: 40px auto;
-      display: block;
-      transition: var(--transition);
-      border: 3px solid #ffffff;
-      background: #ffffff;
-      filter: brightness(1.02) contrast(1.05);
-    }
-
-    .blog-single img:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    }
-
-    /* ===== BLOCKQUOTES ===== */
-    blockquote {
-      background: linear-gradient(135deg, var(--light) 0%, #f0f4f8 100%);
-      border-left: 4px solid var(--accent);
-      padding: 25px;
+      height: 300px;
+      object-fit: cover;
       border-radius: var(--radius);
-      margin: 30px 0;
+      margin: 2rem 0;
       box-shadow: var(--shadow);
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin: 2.5rem 0 1rem;
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 2rem 0 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    ul,
+    ol {
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    /* Code Blocks */
+    pre {
+      background: #1f2937;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    p code {
+      background: #f3f4f6;
+      color: var(--primary-dark);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Cards */
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-card h4 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* Blockquote */
+    blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 var(--radius) var(--radius) 0;
     }
 
     blockquote p {
       font-style: italic;
       color: var(--text);
-      font-weight: 500;
       margin: 0;
-      font-size: 18px;
-      line-height: 1.6;
     }
 
-    /* ===== TABLE OF CONTENTS ===== */
-    .toc {
-      background: linear-gradient(135deg, var(--light) 0%, #f0f4f8 100%);
+    /* Demo Section */
+    .demo-section {
+      background: #f8fafc;
       border-radius: var(--radius);
-      padding: 25px;
-      margin: 30px 0;
-      box-shadow: var(--shadow);
-      border-left: 4px solid var(--primary);
+      padding: 2rem;
+      margin: 3rem 0;
+      text-align: center;
+      border: 1px solid var(--border);
     }
 
-    .toc h4 {
-      margin-top: 0;
-      color: var(--primary);
-      font-size: 1.3rem;
-    }
-
-    .toc ul {
-      margin: 15px 0 0 0;
-      padding-left: 20px;
-    }
-
-    .toc li {
-      margin-bottom: 8px;
-    }
-
-    .toc a {
-      color: var(--text);
-      text-decoration: none;
+    .demo-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
       transition: var(--transition);
+      margin: 1rem 0;
     }
 
-    .toc a:hover {
+    .demo-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .demo-output {
+      font-weight: 500;
       color: var(--primary);
-      text-decoration: underline;
+      margin-top: 1rem;
+      min-height: 1.5rem;
     }
 
-    /* ===== FEATURE CARDS ===== */
-    .feature-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 40px 0;
-    }
-
-    .feature-card {
+    /* Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
       background: white;
       border-radius: var(--radius);
-      padding: 25px;
+      overflow: hidden;
       box-shadow: var(--shadow);
-      transition: var(--transition);
-      border-top: 4px solid var(--primary);
     }
 
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
     }
 
-    .feature-card h4 {
-      margin-top: 0;
-      color: var(--primary);
-      font-size: 1.2rem;
-    }
-
-    .feature-card p {
-      margin-bottom: 0;
-      font-size: 16px;
-    }
-
-    /* ===== INSTAGRAM SECTION ===== */
-    .instagram {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 60px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .instagram::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
-    }
-
-    .instagram a {
+    .comparison-table th {
+      background: var(--primary);
       color: white;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 2;
+      font-weight: 600;
     }
 
-    .instagram-item {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 15px;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
+    .comparison-table tr:hover {
+      background: #f8fafc;
     }
 
-    .instagram-item-thum {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      transition: var(--transition);
-      aspect-ratio: 1;
-    }
-
-    .instagram-item-thum:hover {
-      transform: translateY(-8px) scale(1.05);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-    }
-
-    .instagram-item-thum img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ===== FOOTER ===== */
+    /* Footer */
     .footer {
       background: var(--dark);
       color: white;
-      padding: 60px 0 30px;
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
     }
 
-    .footer-logo img {
-      height: 40px;
-      margin-bottom: 30px;
-      filter: brightness(0) invert(1);
-    }
-
-    .footer-nav ul {
+    .social-links {
       display: flex;
       justify-content: center;
-      list-style: none;
-      gap: 30px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
 
-    .footer-nav .nav-link {
-      color: #cbd5e0;
-      font-size: 16px;
-    }
-
-    .footer-nav .nav-link:hover {
-      color: white;
-    }
-
-    .sociale-icon ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .sociale-icon a {
+    .social-links a {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       color: white;
@@ -525,327 +343,200 @@
       transition: var(--transition);
     }
 
-    .sociale-icon a:hover {
+    .social-links a:hover {
       background: var(--primary);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
-    .copy-right {
+    .copyright {
       text-align: center;
-      color: #a0aec0;
-      font-size: 14px;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #9ca3af;
+      font-size: 0.9rem;
     }
 
-    .copy-right a {
-      color: #cbd5e0;
-      text-decoration: none;
-    }
-
-    .copy-right a:hover {
-      color: white;
-      text-decoration: underline;
-    }
-
-    /* ===== RESPONSIVE DESIGN ===== */
-    @media (max-width: 992px) {
+    /* Responsive */
+    @media (max-width: 768px) {
       .navbar-toggler {
-        display: flex;
+        display: block;
       }
 
-      .nav-list {
+      .nav-links {
         position: fixed;
         top: 70px;
         left: 0;
         right: 0;
         background: white;
         flex-direction: column;
-        padding: 30px;
+        padding: 1rem;
         box-shadow: var(--shadow-lg);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: var(--transition);
+        display: none;
       }
 
-      .nav-list.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
+      .nav-links.active {
+        display: flex;
       }
 
-      .navbar-nav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-      }
-
-      .nav-item {
-        width: 100%;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .nav-link {
-        display: block;
-        padding: 15px 0;
-        width: 100%;
-      }
-
-      .main-nav-social {
-        justify-content: center;
-        margin-top: 20px;
-      }
-
-      .instagram-item {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-
-      .single-blog .title {
-        font-size: 2.5rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .blog-single {
-        padding: 100px 0 60px;
-      }
-
-      .single-blog .title {
+      .title {
         font-size: 2rem;
       }
 
-      .single-blog h3 {
-        font-size: 1.75rem;
+      h2 {
+        font-size: 1.5rem;
       }
 
-      .single-blog h4 {
-        font-size: 1.3rem;
+      h3 {
+        font-size: 1.25rem;
       }
 
-      .single-blog p,
-      .single-blog li {
-        font-size: 17px;
+      .feature-cards {
+        grid-template-columns: 1fr;
       }
 
       .meta {
         flex-direction: column;
-        gap: 10px;
+        gap: 0.5rem;
       }
 
-      .footer-nav ul {
-        gap: 20px;
-      }
-
-      .instagram-item {
-        grid-template-columns: repeat(2, 1fr);
+      .comparison-table {
+        font-size: 0.9rem;
       }
     }
 
     @media (max-width: 480px) {
-      .single-blog .title {
+      .container {
+        padding: 0 15px;
+      }
+
+      .title {
         font-size: 1.75rem;
       }
 
       .blog-single {
-        padding: 90px 0 40px;
+        padding: 80px 0 30px;
       }
-
-      .instagram-item {
-        grid-template-columns: 1fr;
-        max-width: 300px;
-      }
-
-      .footer-nav ul {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
-
-    /* ===== UTILITY CLASSES ===== */
-    .text-center {
-      text-align: center;
-    }
-
-    .mx-auto {
-      margin-left: auto;
-      margin-right: auto;
     }
   </style>
 </head>
 
 <body>
-
-  <!-- Navbar Start -->
+  <!-- Navigation -->
   <nav class="main-nav">
     <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="index.html">
-        Portfolio
-      </a>
-      <!-- Toggle Button -->
-      <button class="navbar-toggler collapsed" type="button" id="navbarToggle">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <div class="nav-list" id="mainNav">
-        <!-- Navigation Links -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Trang chủ</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">Giới thiệu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="articles.html">Bài viết</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Liên hệ</a>
-          </li>
-        </ul>
-        <!-- Social Link -->
-        <ul class="main-nav-social">
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-          </li>
-          <li>
-            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-          </li>
+      <div class="nav-content">
+        <a class="navbar-brand" href="index.html">Portfolio</a>
+
+        <button class="navbar-toggler" id="navbarToggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li><a class="nav-link" href="about.html">Giới thiệu</a></li>
+          <li><a class="nav-link" href="articles.html">Bài viết</a></li>
+          <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Navbar End -->
 
+  <!-- Blog Content -->
   <section class="blog-single">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-10 order-1 order-lg-2 mx-auto">
-          <article class="single-blog">
-            <h1 class="title">JavaScript Programming Essentials</h1>
-            <ul class="meta">
-              <li>By <a href="about.html">Thanh Hieu</a></li>
-              <li>
-                <i class="far fa-clock"></i>
-                October 19, 2024
-              </li>
-              <li>
-                <i class="far fa-clock"></i>
-                Thời gian đọc: 15 phút
-              </li>
-            </ul>
+      <article class="single-blog">
+        <h1 class="title">JavaScript Programming Essentials</h1>
 
-            <img src="https://tse3.mm.bing.net/th/id/OIP.fI_t-dlSLEpH5wq71pdj3gHaD3?pid=Api&P=0&h=220"
-              alt="JavaScript Programming Banner" class="featured-image">
+        <div class="meta">
+          <span>By <a href="#">Thanh Hiếu</a></span>
+          <span>October 19, 2024</span>
+          <span>Thời gian đọc: 15 phút</span>
+        </div>
 
-            <!-- Table of Contents -->
-            <div class="toc">
-              <h4>Mục lục</h4>
-              <ul>
-                <li><a href="#why-learn-js">Vì sao nên học JavaScript?</a></li>
-                <li><a href="#core-concepts">Các khái niệm cốt lõi</a></li>
-                <li><a href="#functions">Hàm (Functions)</a></li>
-                <li><a href="#scope">Phạm vi (Scope)</a></li>
-                <li><a href="#dom-events">DOM & Sự kiện</a></li>
-                <li><a href="#es6">ES6+ - JavaScript hiện đại</a></li>
-                <li><a href="#example">Ví dụ thực tế</a></li>
-                <li><a href="#learning-path">Lộ trình học tập</a></li>
-              </ul>
-            </div>
+        <img src="https://tse3.mm.bing.net/th/id/OIP.fI_t-dlSLEpH5wq71pdj3gHaD3?pid=Api&P=0&h=220"
+          alt="JavaScript Programming" class="featured-image">
 
-            <h3 id="why-learn-js">Vì sao nên học JavaScript?</h3>
-            <p>
-              JavaScript (JS) là "ngôn ngữ của web" – thứ khiến các trang web trở nên sống động,
-              biến những đoạn HTML tĩnh và CSS đơn giản thành những trải nghiệm tương tác:
-              nút bấm phản hồi, biểu mẫu thông minh, hiệu ứng chuyển động mượt mà, hay
-              thậm chí là các ứng dụng web đầy đủ chức năng như Gmail hoặc Facebook.
-            </p>
+        <h2>Vì sao nên học JavaScript?</h2>
+        <p>
+          JavaScript là "ngôn ngữ của web" – thứ khiến các trang web trở nên sống động,
+          biến những đoạn HTML tĩnh và CSS đơn giản thành những trải nghiệm tương tác.
+        </p>
 
-            <p>
-              Với JavaScript, bạn có thể làm được cả <strong>front-end</strong> (giao diện người dùng)
-              lẫn <strong>back-end</strong> (máy chủ qua Node.js), tạo nên những ứng dụng thực sự hoàn chỉnh.
-              Điểm đặc biệt của JS là bạn <strong>thấy kết quả ngay lập tức</strong> – chỉ cần lưu, làm mới,
-              và thay đổi xuất hiện ngay. Điều này giúp người mới học cảm nhận được sự tiến bộ rõ ràng từng ngày.
-            </p>
+        <p>
+          Với JavaScript, bạn có thể làm được cả <strong>front-end</strong> (giao diện người dùng)
+          lẫn <strong>back-end</strong> (máy chủ qua Node.js), tạo nên những ứng dụng thực sự hoàn chỉnh.
+        </p>
 
-            <p>
-              Ngoài ra, việc học JavaScript giúp bạn hình thành tư duy lập trình:
-              hiểu cách sự kiện diễn ra, xử lý bất đồng bộ, chia nhỏ chương trình thành các hàm,
-              và gỡ lỗi hiệu quả. Thành thạo JS sẽ giúp bạn tiếp cận các framework hiện đại như React, Vue, hay Svelte
-              dễ dàng hơn.
-            </p>
+        <div class="feature-cards">
+          <div class="feature-card">
+            <h4>Front-End</h4>
+            <p>Tạo giao diện người dùng tương tác</p>
+          </div>
+          <div class="feature-card">
+            <h4>Back-End</h4>
+            <p>Xây dựng server với Node.js</p>
+          </div>
+          <div class="feature-card">
+            <h4>Mobile Apps</h4>
+            <p>React Native, Ionic</p>
+          </div>
+          <div class="feature-card">
+            <h4>Desktop Apps</h4>
+            <p>Electron, NW.js</p>
+          </div>
+        </div>
 
-            <p>
-              Tóm lại, <strong>JavaScript là một ngôn ngữ linh hoạt, dễ học, và cực kỳ hữu ích</strong> —
-              cánh cửa mở ra thế giới lập trình web đầy sáng tạo.
-            </p>
+        <h2>Các khái niệm cốt lõi</h2>
 
-            <!-- Feature Cards -->
-            <div class="feature-cards">
-              <div class="feature-card">
-                <h4>Front-End</h4>
-                <p>Tạo giao diện người dùng tương tác với HTML, CSS và JavaScript</p>
-              </div>
-              <div class="feature-card">
-                <h4>Back-End</h4>
-                <p>Xây dựng server với Node.js và các framework như Express</p>
-              </div>
-              <div class="feature-card">
-                <h4>Mobile Apps</h4>
-                <p>Phát triển ứng dụng di động với React Native hoặc Ionic</p>
-              </div>
-              <div class="feature-card">
-                <h4>Desktop Apps</h4>
-                <p>Tạo ứng dụng desktop với Electron hoặc NW.js</p>
-              </div>
-            </div>
+        <h3>Biến (Variables)</h3>
+        <p>Biến là "hộp chứa giá trị". JavaScript cung cấp ba cách khai báo:</p>
 
-            <h3 id="core-concepts">Các khái niệm cốt lõi</h3>
-            <h4>Biến (Variables)</h4>
-            <p>
-              Biến là "hộp chứa giá trị". JavaScript cung cấp ba cách khai báo:
-            </p>
+        <pre><code>const PI = 3.14159;  // Không thể thay đổi
+let count = 0;       // Có thể thay đổi
+var oldWay = "Avoid"; // Cách cũ</code></pre>
 
-            <p>
-              <strong>const</strong> – Dùng cho giá trị cố định, không bị thay đổi.<br>
-              <strong>let</strong> – Dùng khi cần thay đổi giá trị.<br>
-              <strong>var</strong> – Cách cũ, có phạm vi theo hàm. Hạn chế sử dụng trong code mới.
-            </p>
+        <h4>So sánh var, let, const</h4>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Scope</th>
+              <th>Hoisting</th>
+              <th>Reassignable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>var</code></td>
+              <td>Function scope</td>
+              <td>Yes (undefined)</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><code>let</code></td>
+              <td>Block scope</td>
+              <td>Yes (TDZ)</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><code>const</code></td>
+              <td>Block scope</td>
+              <td>Yes (TDZ)</td>
+              <td>No</td>
+            </tr>
+          </tbody>
+        </table>
 
-            <pre><code class="language-js">// Khai báo biến
-const PI = 3.14159;  // Không thể thay đổi giá trị
-let count = 0;       // Có thể thay đổi giá trị
-var oldWay = "Avoid"; // Cách cũ, không nên dùng</code></pre>
+        <h3>Kiểu dữ liệu</h3>
+        <p>JavaScript có hai nhóm kiểu dữ liệu chính:</p>
 
-            <h4>Kiểu dữ liệu (Data Types)</h4>
-            <p>
-              JavaScript có hai nhóm chính:
-            </p>
-
-            <p>
-              1️⃣ <strong>Kiểu nguyên thủy (Primitive types):</strong> Number, String, Boolean, Null, Undefined,
-              Symbol.<br>
-              2️⃣ <strong>Kiểu tham chiếu (Reference types):</strong> Object, Array, Function.
-            </p>
-
-            <pre><code class="language-js">// Primitive types
+        <pre><code>// Primitive types
 const age = 25;           // Number
 const name = "John";      // String
 const isStudent = true;   // Boolean
 const nothing = null;     // Null
 let undefinedVar;         // Undefined
+const unique = Symbol();  // Symbol
 
 // Reference types
 const person = {          // Object
@@ -857,267 +548,353 @@ const greet = function() {                // Function
   console.log("Hello!");
 };</code></pre>
 
-            <blockquote>
-              <p>
-                ⚠️ JS là ngôn ngữ "dynamically typed" — nghĩa là một biến có thể thay đổi kiểu giá trị trong lúc chạy.
-                Và nhớ nhé, <code>typeof null</code> trả về "object" — lỗi lịch sử nhỏ nhưng nổi tiếng.
-              </p>
-            </blockquote>
+        <h4>Type Coercion</h4>
+        <p>JavaScript tự động chuyển đổi kiểu dữ liệu trong các phép toán:</p>
+        <pre><code>console.log("5" + 3);      // "53" (string concatenation)
+console.log("5" - 3);      // 2 (numeric subtraction)
+console.log(true + 1);     // 2 (true becomes 1)
+console.log(null == undefined); // true</code></pre>
 
-            <h3 id="functions">Hàm (Functions)</h3>
-            <p>
-              Hàm giúp bạn gom nhóm các đoạn mã có cùng mục đích, giúp code dễ đọc và tái sử dụng.
-              Dưới đây là ba kiểu hàm phổ biến:
-            </p>
+        <blockquote>
+          <p>JS là ngôn ngữ "dynamically typed" — một biến có thể thay đổi kiểu giá trị trong lúc chạy.</p>
+        </blockquote>
 
-            <p><strong>1. Function Declaration:</strong> Cách khai báo truyền thống, dễ đọc và rõ ràng.</p>
-            <pre><code class="language-js">function calculateArea(width, height) {
+        <h2>Hàm (Functions)</h2>
+        <p>Hàm giúp gom nhóm các đoạn mã có cùng mục đích:</p>
+
+        <h4>1. Function Declaration</h4>
+        <pre><code>function calculateArea(width, height) {
   return width * height;
 }</code></pre>
 
-            <p><strong>2. Function Expression:</strong> Gán một hàm vào biến — linh hoạt khi viết hàm ẩn danh.</p>
-            <pre><code class="language-js">const calculateArea = function(width, height) {
+        <h4>2. Function Expression</h4>
+        <pre><code>const calculateArea = function(width, height) {
   return width * height;
 };</code></pre>
 
-            <p><strong>3. Arrow Function:</strong> Cú pháp ngắn gọn, được dùng nhiều trong ES6.</p>
-            <pre><code class="language-js">const calculateArea = (width, height) => {
+        <h4>3. Arrow Function</h4>
+        <pre><code>const calculateArea = (width, height) => {
   return width * height;
 };
 
-// Hoặc ngắn gọn hơn với một biểu thức
+// Ngắn gọn hơn với một biểu thức
 const calculateArea = (width, height) => width * height;</code></pre>
 
-            <p>
-              Arrow function cực kỳ tiện khi viết callback hoặc xử lý ngắn gọn,
-              nhưng hãy nhớ: nó <strong>không có từ khóa this riêng</strong> — điều này ảnh hưởng khi làm việc với
-              object hoặc class.
-            </p>
+        <h4>4. Higher-Order Functions</h4>
+        <p>Hàm có thể nhận hàm khác làm tham số hoặc trả về hàm:</p>
+        <pre><code>// Hàm nhận hàm khác làm tham số
+function operate(a, b, operation) {
+  return operation(a, b);
+}
 
-            <h3 id="scope">Phạm vi (Scope)</h3>
-            <p>
-              "Scope" quyết định biến có thể được truy cập ở đâu:
-            </p>
+const result = operate(5, 3, (x, y) => x * y);
+console.log(result); // 15</code></pre>
 
-            <p>
-              🔸 <strong>Global scope:</strong> Biến khai báo ngoài hàm, dùng được ở mọi nơi.<br>
-              🔸 <strong>Local scope:</strong> Biến chỉ tồn tại trong hàm.<br>
-              🔸 <strong>Block scope:</strong> Với <code>let</code> và <code>const</code>, biến chỉ tồn tại trong cặp
-              ngoặc <code>{ }</code>.
-            </p>
+        <h2>Vòng lặp và điều kiện</h2>
 
-            <pre><code class="language-js">// Global scope
-const globalVar = "I'm global";
+        <h4>If-Else</h4>
+        <pre><code>const age = 18;
 
-function example() {
-  // Local scope
-  const localVar = "I'm local";
-  
-  if (true) {
-    // Block scope
-    let blockVar = "I'm block scoped";
-    console.log(blockVar); // Works
-  }
-  
-  console.log(blockVar); // Error: blockVar is not defined
+if (age >= 18) {
+  console.log("Đã đủ tuổi");
+} else if (age >= 16) {
+  console.log("Gần đủ tuổi");
+} else {
+  console.log("Chưa đủ tuổi");
 }</code></pre>
 
-            <p>
-              Hãy ưu tiên <code>let</code> và <code>const</code> để tránh lỗi "rò rỉ biến" không mong muốn.
-            </p>
+        <h4>Switch-Case</h4>
+        <pre><code>const day = "Monday";
 
-            <h3 id="dom-events">DOM & Sự kiện – làm trang web sống động</h3>
-            <p>
-              DOM (Document Object Model) là cách JavaScript "nhìn thấy" trang HTML của bạn.
-              Nhờ DOM, JS có thể đọc nội dung, thay đổi phần tử, phản hồi thao tác người dùng,
-              và tạo trải nghiệm tương tác.
-            </p>
+switch (day) {
+  case "Monday":
+    console.log("Start of week");
+    break;
+  case "Friday":
+    console.log("Weekend is coming");
+    break;
+  default:
+    console.log("Regular day");
+}</code></pre>
 
-            <h4>Truy xuất phần tử</h4>
-            <ul>
-              <li><code>document.getElementById('id')</code></li>
-              <li><code>document.querySelector('.class')</code> – chọn phần tử đầu tiên khớp.</li>
-              <li><code>document.querySelectorAll('div')</code> – chọn tất cả phần tử cùng loại.</li>
-            </ul>
+        <h4>Vòng lặp</h4>
+        <pre><code>// For loop
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
 
-            <h4>Cập nhật DOM</h4>
-            <ul>
-              <li><code>element.textContent</code> – thay đổi nội dung văn bản.</li>
-              <li><code>element.classList.add('active')</code> – thay đổi lớp CSS.</li>
-              <li><code>parent.appendChild(child)</code> – thêm phần tử mới vào trang.</li>
-            </ul>
+// While loop
+let count = 0;
+while (count < 5) {
+  console.log(count);
+  count++;
+}
 
-            <h4>Lắng nghe sự kiện</h4>
-            <pre><code class="language-js">const btn = document.querySelector('#myBtn');
-btn.addEventListener('click', () => {
-  alert('Bạn vừa bấm nút!');
-});</code></pre>
-            <p>Dùng <code>addEventListener</code> thay vì <code>onclick</code> để có thể gắn nhiều hành vi vào cùng một
-              sự kiện.</p>
+// For...of (cho arrays)
+const fruits = ["apple", "banana", "orange"];
+for (const fruit of fruits) {
+  console.log(fruit);
+}</code></pre>
 
-            <h3 id="es6">ES6+ – viết JavaScript hiện đại</h3>
-            <p>
-              ES6 (2015) mang lại hàng loạt cải tiến khiến JS dễ đọc, mạnh mẽ hơn:
-            </p>
+        <h2>DOM & Sự kiện</h2>
+        <p>DOM giúp JavaScript tương tác với trang web:</p>
 
-            <h4>let & const</h4>
-            <p>
-              Giúp kiểm soát biến rõ ràng và an toàn hơn so với <code>var</code>.
-            </p>
+        <h4>Truy xuất phần tử</h4>
+        <pre><code>// Theo ID
+const header = document.getElementById('header');
 
-            <h4>Arrow function</h4>
-            <pre><code class="language-js">const square = x => x * x;</code></pre>
+// Theo class (phần tử đầu tiên)
+const btn = document.querySelector('.btn-primary');
 
-            <h4>Template literals</h4>
-            <pre><code class="language-js">const name = 'Hieu';
-console.log(`Xin chào, ${name}!`);</code></pre>
+// Theo class (tất cả phần tử)
+const buttons = document.querySelectorAll('.btn');
 
-            <h4>Destructuring</h4>
-            <pre><code class="language-js">const user = { name: 'Linh', age: 23 };
-const { name, age } = user;</code></pre>
+// Theo tag name
+const paragraphs = document.getElementsByTagName('p');</code></pre>
 
-            <h4>Modules</h4>
-            <pre><code class="language-js">// utils.js
-export const sum = (a, b) => a + b;
+        <h4>Thao tác với DOM</h4>
+        <pre><code>// Thay đổi nội dung
+element.textContent = "New text";
+element.innerHTML = "<strong>Bold text</strong>";
+
+// Thay đổi style
+element.style.color = "red";
+element.style.fontSize = "20px";
+
+// Thêm/xóa class
+element.classList.add('active');
+element.classList.remove('inactive');
+element.classList.toggle('hidden');
+
+// Tạo phần tử mới
+const newDiv = document.createElement('div');
+newDiv.textContent = "I'm new!";
+parentElement.appendChild(newDiv);</code></pre>
+
+        <h4>Sự kiện (Events)</h4>
+        <pre><code>const btn = document.querySelector('#myBtn');
+
+// Thêm event listener
+btn.addEventListener('click', function(event) {
+  console.log('Button clicked!');
+  console.log('Event type:', event.type);
+});
+
+// Các sự kiện phổ biến
+element.addEventListener('click', handleClick);
+element.addEventListener('mouseover', handleHover);
+element.addEventListener('keydown', handleKeyPress);
+element.addEventListener('submit', handleFormSubmit);</code></pre>
+
+        <h2>ES6+ Features</h2>
+        <p>ES6 mang lại nhiều cải tiến quan trọng:</p>
+
+        <h4>Template Literals</h4>
+        <pre><code>const name = 'Hiếu';
+const age = 25;
+
+// Thay vì: "Xin chào " + name + ", bạn " + age + " tuổi"
+console.log(`Xin chào ${name}, bạn ${age} tuổi`);
+
+// Multi-line strings
+const message = `
+  Đây là
+  nhiều dòng
+  văn bản
+`;</code></pre>
+
+        <h4>Destructuring</h4>
+        <pre><code>// Array destructuring
+const numbers = [1, 2, 3];
+const [first, second] = numbers;
+
+// Object destructuring
+const user = { name: 'Linh', age: 23, email: 'linh@example.com' };
+const { name, age } = user;
+
+// Destructuring với alias
+const { name: userName, age: userAge } = user;</code></pre>
+
+        <h4>Spread và Rest Operators</h4>
+        <pre><code>// Spread operator
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1, c: 3 }; // { a: 1, b: 2, c: 3 }
+
+// Rest parameter
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sum(1, 2, 3, 4)); // 10</code></pre>
+
+        <h4>Modules</h4>
+        <pre><code>// math.js
+export const PI = 3.14159;
+export function circleArea(radius) {
+  return PI * radius * radius;
+}
 
 // main.js
-import { sum } from './utils.js';</code></pre>
+import { PI, circleArea } from './math.js';
+console.log(circleArea(5));</code></pre>
 
-            <h4>Async/Await</h4>
-            <pre><code class="language-js">async function fetchData() {
-  const res = await fetch('/api/data');
-  const data = await res.json();
-  console.log(data);
+        <h4>Async/Await</h4>
+        <pre><code>async function fetchUserData(userId) {
+  try {
+    const response = await fetch(`/api/users/${userId}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}
+
+// Sử dụng
+fetchUserData(123)
+  .then(user => console.log(user))
+  .catch(error => console.error(error));</code></pre>
+
+        <h2>Xử lý lỗi (Error Handling)</h2>
+        <pre><code>try {
+  // Code có thể gây lỗi
+  const data = JSON.parse(invalidJson);
+} catch (error) {
+  console.error('Lỗi xảy ra:', error.message);
+} finally {
+  console.log('Luôn được thực thi');
+}
+
+// Custom errors
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+function validateEmail(email) {
+  if (!email.includes('@')) {
+    throw new ValidationError('Email không hợp lệ');
+  }
 }</code></pre>
 
-            <h3 id="example">Ví dụ nhỏ – "Xin chào từ JavaScript"</h3>
-            <p>
-              Đặt đoạn mã này vào cuối HTML của bạn và xem kết quả:
-            </p>
-            <pre><code class="language-js">const btn = document.querySelector('#runBtn');
-const output = document.querySelector('#output');
-btn.addEventListener('click', () => {
-  const name = prompt('Nhập tên của bạn:') || 'bạn';
-  output.textContent = `Xin chào, ${name}! Chúc bạn học JS vui vẻ 🎉`;
-});</code></pre>
-
-            <h3 id="learning-path">Lộ trình luyện tập</h3>
-            <ul>
-              <li><strong>2–3 tuần đầu:</strong> biến, kiểu dữ liệu, vòng lặp, hàm, mảng, đối tượng.</li>
-              <li><strong>1–2 tuần tiếp:</strong> DOM, sự kiện, thao tác giao diện.</li>
-              <li><strong>2 tuần:</strong> ES6+, modules, arrow functions, template strings.</li>
-              <li><strong>2 tuần sau:</strong> Async/Await, fetch API, xử lý lỗi.</li>
-            </ul>
-            <p>
-              Hãy luyện tập qua các mini project như: to-do list, quiz app, đồng hồ kỹ thuật số, hay trò chơi đoán số.
-              Càng làm nhiều, bạn càng "ngấm" JavaScript tự nhiên hơn.
-            </p>
-            <p>
-              Khi đã nắm vững nền tảng, hãy tiến lên học React hoặc Vue – đó là lúc JavaScript thật sự phát huy sức
-              mạnh.
-            </p>
-
-            <!-- Interactive Demo -->
-            <div style="background: var(--light); padding: 25px; border-radius: var(--radius); margin: 40px 0;">
-              <h4>Demo tương tác: Thử JavaScript ngay tại đây!</h4>
-              <button id="demoBtn"
-                style="background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 15px 0;">Nhấn
-                vào tôi!</button>
-              <p id="demoOutput" style="font-weight: 500; color: var(--primary);"></p>
-            </div>
-          </article>
+        <!-- Demo Section -->
+        <div class="demo-section">
+          <h3>Demo tương tác</h3>
+          <p>Thử JavaScript ngay tại đây!</p>
+          <button class="demo-btn" id="demoBtn">Nhấn vào tôi!</button>
+          <p class="demo-output" id="demoOutput"></p>
         </div>
-      </div>
+
+        <h2>Lộ trình học tập</h2>
+        <h4>Giai đoạn 1: Cơ bản (2-3 tuần)</h4>
+        <ul>
+          <li>Biến và kiểu dữ liệu</li>
+          <li>Toán tử và biểu thức</li>
+          <li>Hàm và scope</li>
+          <li>Mảng và Object</li>
+          <li>Vòng lặp và điều kiện</li>
+        </ul>
+
+        <h4>Giai đoạn 2: DOM & Events (1-2 tuần)</h4>
+        <ul>
+          <li>Truy xuất và thao tác DOM</li>
+          <li>Xử lý sự kiện</li>
+          <li>Form validation</li>
+          <li>Local Storage</li>
+        </ul>
+
+        <h4>Giai đoạn 3: ES6+ (2 tuần)</h4>
+        <ul>
+          <li>Arrow functions, Template literals</li>
+          <li>Destructuring, Spread/Rest</li>
+          <li>Modules</li>
+          <li>Promises, Async/Await</li>
+        </ul>
+
+        <h4>Giai đoạn 4: Nâng cao (2 tuần)</h4>
+        <ul>
+          <li>Fetch API, AJAX</li>
+          <li>Error handling</li>
+          <li>Regular Expressions</li>
+          <li>Performance optimization</li>
+        </ul>
+
+        <h2>Dự án thực hành đề xuất</h2>
+        <ol>
+          <li><strong>To-Do List:</strong> CRUD cơ bản với Local Storage</li>
+          <li><strong>Weather App:</strong> Fetch API từ weather service</li>
+          <li><strong>Quiz App:</strong> Xử lý form và tính điểm</li>
+          <li><strong>Memory Game:</strong> Logic game và timer</li>
+          <li><strong>Expense Tracker:</strong> Quản lý state phức tạp</li>
+        </ol>
+
+        <p>
+          Hãy luyện tập qua các mini project như: to-do list, quiz app, đồng hồ kỹ thuật số.
+          Càng làm nhiều, bạn càng "ngấm" JavaScript tự nhiên hơn.
+        </p>
+
+        <blockquote>
+          <p>"The only way to learn a new programming language is by writing programs in it." - Dennis Ritchie</p>
+        </blockquote>
+      </article>
     </div>
   </section>
 
-  <section class="footer">
-    <div class="container text-center">
-      <div class="row">
-        <div class="col-lg-6 mx-auto">
-          <div class="sociale-icon">
-            <ul>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-              </li>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              </li>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-              </li>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-              </li>
-              <li>
-                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="copy-right">
-            <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Hieu</p>
-          </div>
-        </div>
+      <div class="copyright">
+        <p>© Copyright <span id="copyrightYear"></span> - All Rights Reserved by Thanh Hiếu</p>
       </div>
     </div>
-  </section>
-
-  <!-- Vendor JS -->
-  <script src="vendor/jQuery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/bootstrap.min.js"></script>
-  <script src="vendor/slick/slick.min.js"></script>
-  <!-- Main JS -->
-  <script src="js/script.js"></script>
+  </footer>
 
   <script>
-    // Toggle mobile menu
+    // Mobile menu toggle
     document.getElementById('navbarToggle').addEventListener('click', function () {
-      this.classList.toggle('collapsed');
-      document.getElementById('mainNav').classList.toggle('active');
+      document.getElementById('navLinks').classList.toggle('active');
     });
 
-    // Scroll effect
-    window.addEventListener('scroll', function () {
-      const nav = document.querySelector('.main-nav');
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    });
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        document.getElementById('navbarToggle').classList.remove('collapsed');
-        document.getElementById('mainNav').classList.remove('active');
-      });
+    // Demo functionality
+    document.getElementById('demoBtn').addEventListener('click', function () {
+      const name = prompt('Nhập tên của bạn:') || 'bạn';
+      document.getElementById('demoOutput').textContent =
+        `Xin chào, ${name}! Chúc bạn học JavaScript vui vẻ 🎉`;
     });
 
     // Set copyright year
     document.getElementById('copyrightYear').textContent = new Date().getFullYear();
 
-    // Demo interactive functionality
-    document.getElementById('demoBtn').addEventListener('click', function () {
-      const name = prompt('Nhập tên của bạn:') || 'bạn';
-      document.getElementById('demoOutput').textContent = `Xin chào, ${name}! Chúc bạn học JavaScript vui vẻ 🎉`;
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
     });
 
-    // Smooth scrolling for table of contents
-    document.querySelectorAll('.toc a').forEach(anchor => {
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 100,
-            behavior: 'smooth'
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
           });
         }
       });

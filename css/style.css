@@ -2229,4 +2229,66 @@ html {
 }
 
 /* contact */
+.contact-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
 
+.contact-item:hover {
+    background: #ffffff;
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-action .btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.contact-action .btn:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+.hover-effect {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rounded-3 {
+    border-radius: 12px !important;
+}
+
+/* Đảm bảo các item có chiều cao đồng nhất */
+.contact-item {
+    min-height: 100px;
+    align-items: stretch;
+}
+
+.contact-icon-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.flex-grow-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-action {
+    display: flex;
+    align-items: center;
+}
