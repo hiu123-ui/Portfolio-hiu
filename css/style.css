@@ -2292,3 +2292,51 @@ html {
     display: flex;
     align-items: center;
 }
+/* chứng chỉ */
+.certificate-badge {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+.certificate-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.certificate-badge.active {
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+
+/* Modal styles */
+.certificate-modal .modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+}
+.certificate-modal .modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.certificate-modal .modal-header {
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+    border-radius: 15px 15px 0 0;
+    padding: 1rem 1.5rem;
+}
+.certificate-modal .modal-body {
+    padding: 0;
+    text-align: center;
+    background: #fff;
+}
+.certificate-modal .certificate-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0 0 15px 15px;
+    display: block;
+}
+.certificate-modal .btn-close {
+    padding: 0.5rem;
+    margin: -0.5rem -0.5rem -0.5rem auto;
+}
